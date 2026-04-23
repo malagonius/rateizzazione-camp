@@ -87,6 +87,28 @@
     height: 20px;
     display: block;
   }
+  .row-eye-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--muted);
+    padding: 0;
+    margin-right: 8px;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+  .row-eye-btn:hover {
+    color: var(--text);
+  }
+  .row-eye-btn .eye-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .censored-amount {
+    color: var(--muted);
+    font-style: italic;
+  }
   main { padding: 24px; max-width: 1400px; margin: 0 auto; }
   .card {
     background: var(--surface);
@@ -304,6 +326,12 @@
           <option value="overpaid">💙 Sovrappagato</option>
           <option value="assistenza">🤝 Assistenza</option>
         </select>
+        <button id="btn-toggle-table-visibility" class="icon-only" title="Nascondi/Mostra tutti gli importi">
+          <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
       </div>
       <div class="table-wrap">
         <table id="people-table">
@@ -674,7 +702,8 @@ async function importExcel(file) {
       totale: num(row[2]),
       dataIscrizione: excelDateToISO(row[3]),
       installments,
-      assistenza: normalizeAssistenza(row[23])
+      assistenza: normalizeAssistenza(row[23]),
+      visibilityHidden: false
     });
   }
 
@@ -816,19 +845,44 @@ function renderList() {
     const residuo = due - paid;
     const status = statusOf(p);
     const pct = due > 0 ? Math.min(100, (paid / due) * 100) : (paid > 0 ? 100 : 0);
+    
+    // Row visibility is determined solely by its own state
+    const isCensored = !!p.visibilityHidden;
+    
+    // Eye icon for row-level toggle - reflects this row's state
+    const eyeIcon = p.visibilityHidden
+      ? `<svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>`
+      : `<svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>`;
+    
+    const displayDue = isCensored ? '<span class="censored-amount">************</span>' : fmtMoney(due);
+    const displayPaid = isCensored ? '<span class="censored-amount">************</span>' : fmtMoney(paid);
+    const displayResiduo = isCensored ? '<span class="censored-amount">************</span>' : fmtMoney(residuo);
+    const displayPct = isCensored ? 0 : pct;
+    const displayStatus = isCensored
+      ? '<span class="badge" style="background: #e5e7eb; color: #9ca3af;">Nascosto</span>'
+      : `<span class="badge badge-${status}">${STATUS_LABEL[status]}</span>`;
+    
     return `
       <tr class="row-${status}" data-id="${escapeHtml(p.id)}">
         <td><strong>${escapeHtml(p.nome)}</strong></td>
         <td>${escapeHtml(p.telefono || '')}</td>
-        <td class="num">${fmtMoney(due)}</td>
-        <td class="num" style="color: var(--green);">${fmtMoney(paid)}</td>
-        <td class="num" style="color: ${residuo > 0.01 ? 'var(--red)' : 'var(--muted)'};">${fmtMoney(residuo)}</td>
+        <td class="num">
+          <button class="row-eye-btn" data-action="toggle-row-visibility" data-id="${escapeHtml(p.id)}" title="${p.visibilityHidden ? 'Mostra' : 'Nascondi'} importi riga">${eyeIcon}</button>${displayDue}
+        </td>
+        <td class="num" style="color: var(--green);">${displayPaid}</td>
+        <td class="num" style="color: ${residuo > 0.01 ? 'var(--red)' : 'var(--muted)'};">${displayResiduo}</td>
         <td>
-          <div class="progress" title="${pct.toFixed(0)}%">
-            <div class="progress-bar ${status}" style="width: ${pct}%"></div>
+          <div class="progress" title="${displayPct.toFixed(0)}%">
+            <div class="progress-bar ${status}" style="width: ${displayPct}%"></div>
           </div>
         </td>
-        <td><span class="badge badge-${status}">${STATUS_LABEL[status]}</span></td>
+        <td>${displayStatus}</td>
       </tr>
     `;
   }).join('');
@@ -1130,7 +1184,8 @@ function bindGlobalEvents() {
       installments: DEFAULT_INSTALLMENTS.map(t => ({
         key: t.key, label: t.label, ipotesi: 0, reale: 0, data: null, metodo: '', iban: ''
       })),
-      assistenza: 'No'
+      assistenza: 'No',
+      visibilityHidden: false
     };
     state.people.push(newP);
     await dbPut(newP);
@@ -1214,11 +1269,62 @@ function bindGlobalEvents() {
     });
   });
 
-  // Row click → detail
+  // Row click → detail (but not if clicking eye button)
   document.getElementById('people-tbody').addEventListener('click', (e) => {
+    // Don't navigate to detail if clicking the eye button
+    if (e.target.closest('[data-action="toggle-row-visibility"]')) {
+      return;
+    }
     const tr = e.target.closest('tr[data-id]');
     if (!tr) return;
     showDetail(tr.dataset.id);
+  });
+
+  // Toggle table-level visibility: set ALL rows to the new state
+  document.getElementById('btn-toggle-table-visibility').addEventListener('click', async () => {
+    // Determine target state: if any row is currently visible, hide all; otherwise show all
+    const anyVisible = state.people.some(p => !p.visibilityHidden);
+    const newHiddenState = anyVisible; // true = hide all, false = show all
+    
+    // Apply to every person and persist
+    state.people.forEach(p => { p.visibilityHidden = newHiddenState; });
+    await dbBulkPut(state.people);
+    
+    const btn = document.getElementById('btn-toggle-table-visibility');
+    if (newHiddenState) {
+      btn.innerHTML = `
+        <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+      `;
+      btn.title = 'Mostra tutti gli importi';
+    } else {
+      btn.innerHTML = `
+        <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      `;
+      btn.title = 'Nascondi tutti gli importi';
+    }
+    
+    renderList();
+  });
+
+  // Toggle row-level visibility
+  document.getElementById('people-tbody').addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="toggle-row-visibility"]');
+    if (!btn) return;
+    e.stopPropagation(); // Prevent row click
+    
+    const id = btn.dataset.id;
+    const person = state.people.find(p => p.id === id);
+    if (!person) return;
+    
+    person.visibilityHidden = !person.visibilityHidden;
+    await dbPut(person);
+    renderList();
   });
 }
 
@@ -1230,8 +1336,11 @@ async function init() {
   bindDetailEvents();
   try {
     state.people = await dbGetAll();
-    // Normalize legacy assistenza values to 'Si'/'No'
-    state.people.forEach(p => { p.assistenza = normalizeAssistenza(p.assistenza); });
+    // Normalize legacy assistenza values to 'Si'/'No' and ensure visibilityHidden exists
+    state.people.forEach(p => {
+      p.assistenza = normalizeAssistenza(p.assistenza);
+      if (p.visibilityHidden === undefined) p.visibilityHidden = false;
+    });
   } catch (err) {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');
