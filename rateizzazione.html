@@ -442,7 +442,7 @@ const state = {
   sortKey: 'nome',
   sortDir: 'asc',
   currentId: null,
-  amountsVisible: true
+  amountsVisible: false
 };
 
 // ============================================================
@@ -1151,6 +1151,15 @@ function bindGlobalEvents() {
 
   // Toggle amounts visibility
   document.getElementById('btn-toggle-amounts').addEventListener('click', () => {
+    // If trying to show amounts, require password
+    if (!state.amountsVisible) {
+      const password = prompt('Inserisci la password per visualizzare gli importi:');
+      if (password !== 'Kira') {
+        toast('Password errata', 'error');
+        return;
+      }
+    }
+    
     state.amountsVisible = !state.amountsVisible;
     const btn = document.getElementById('btn-toggle-amounts');
     btn.classList.toggle('active', state.amountsVisible);
@@ -1175,9 +1184,9 @@ function bindGlobalEvents() {
     }
     
     renderStats();
-    // Persist preference
+    // Don't persist - always start hidden for security
     try {
-      localStorage.setItem('rateizzazione-amounts-visible', state.amountsVisible);
+      localStorage.removeItem('rateizzazione-amounts-visible');
     } catch (e) { /* ignore */ }
   });
 
@@ -1227,33 +1236,20 @@ async function init() {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');
   }
-  // Restore visibility preference
+  // Always start with amounts hidden (security requirement)
+  // Set the eye-off icon to match the hidden state
   try {
-    const saved = localStorage.getItem('rateizzazione-amounts-visible');
-    if (saved !== null) {
-      state.amountsVisible = saved === 'true';
-      const btn = document.getElementById('btn-toggle-amounts');
-      btn.classList.toggle('active', state.amountsVisible);
-      
-      // Set correct icon
-      if (state.amountsVisible) {
-        btn.innerHTML = `
-          <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
-          </svg>
-        `;
-        btn.title = 'Nascondi importi';
-      } else {
-        btn.innerHTML = `
-          <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-            <line x1="1" y1="1" x2="23" y2="23"></line>
-          </svg>
-        `;
-        btn.title = 'Mostra importi';
-      }
-    }
+    const btn = document.getElementById('btn-toggle-amounts');
+    btn.classList.remove('active');
+    btn.innerHTML = `
+      <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+      </svg>
+    `;
+    btn.title = 'Mostra importi';
+    // Clear any saved preference
+    localStorage.removeItem('rateizzazione-amounts-visible');
   } catch (e) { /* ignore */ }
   applyFilters();
 }
