@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rateizzazione Camp 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg: #f3f4f6;
+    --surface: #ffffff;
+    --border: #e5e7eb;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --green: #16a34a;
+    --green-bg: #dcfce7;
+    --yellow: #ca8a04;
+    --yellow-bg: #fef9c3;
+    --red: #dc2626;
+    --red-bg: #fee2e2;
+    --blue-bg: #dbeafe;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+  }
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  header h1 { margin: 0; font-size: 20px; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+  button, .btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s;
+  }
+  button:hover, .btn:hover { background: var(--primary-dark); }
+  button.secondary { background: #6b7280; }
+  button.secondary:hover { background: #4b5563; }
+  button.danger { background: var(--red); }
+  button.danger:hover { background: #991b1b; }
+  button.ghost {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+  button.ghost:hover { background: var(--blue-bg); color: var(--primary-dark); }
+  button.icon-only {
+    padding: 8px 12px;
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    font-size: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  button.icon-only:hover {
+    background: var(--bg);
+    color: var(--text);
+  }
+  .eye-icon {
+    width: 20px;
+    height: 20px;
+    display: block;
+  }
+  main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .card {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin-bottom: 16px;
+  }
+  .filters {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  input[type="text"], input[type="number"], input[type="date"], select {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+  }
+  input[type="text"]:focus, input[type="number"]:focus, input[type="date"]:focus, select:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: -1px;
+  }
+  .search { flex: 1; min-width: 200px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  th {
+    background: #f9fafb;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  th:hover { background: #f3f4f6; }
+  th .sort-arrow { color: var(--muted); margin-left: 4px; font-size: 12px; }
+  tbody tr {
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  tbody tr:hover { background: #f9fafb; }
+  tbody tr.row-paid { border-left: 4px solid var(--green); }
+  tbody tr.row-partial { border-left: 4px solid var(--yellow); }
+  tbody tr.row-unpaid { border-left: 4px solid var(--red); }
+  tbody tr.row-overpaid { border-left: 4px solid var(--primary); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-paid { background: var(--green-bg); color: var(--green); }
+  .badge-partial { background: var(--yellow-bg); color: var(--yellow); }
+  .badge-unpaid { background: var(--red-bg); color: var(--red); }
+  .badge-overpaid { background: var(--blue-bg); color: var(--primary); }
+  .progress {
+    background: var(--border);
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+    min-width: 80px;
+  }
+  .progress-bar {
+    height: 100%;
+    transition: width 0.3s;
+  }
+  .progress-bar.paid { background: var(--green); }
+  .progress-bar.partial { background: var(--yellow); }
+  .progress-bar.unpaid { background: var(--red); }
+  .progress-bar.overpaid { background: var(--primary); }
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty h2 { color: var(--text); margin-bottom: 8px; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .stat {
+    background: var(--surface);
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  .stat-label { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+  .stat-value { font-size: 24px; font-weight: 700; margin-top: 4px; }
+
+  /* Detail view */
+  .detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .detail-header h2 { margin: 0; }
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .field-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .installments-table th, .installments-table td { padding: 8px; }
+  .installments-table input, .installments-table select { width: 100%; min-width: 80px; }
+  .installments-table tr.inst-paid { background: var(--green-bg); }
+  .installments-table tr.inst-partial { background: var(--yellow-bg); }
+  .installments-table .iban-input {
+    margin-top: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+  .installments-table .iban-input.invalid {
+    border-color: var(--red);
+    background: var(--red-bg);
+  }
+  .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+  .summary-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    background: #f9fafb;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+  }
+  .summary-box .stat-value { font-size: 20px; }
+  .hidden { display: none !important; }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #1f2937;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { background: var(--red); }
+  .toast.success { background: var(--green); }
+  .table-wrap { overflow-x: auto; }
+  @media (max-width: 640px) {
+    main { padding: 12px; }
+    th, td { padding: 8px 6px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>📋 Rateizzazione Camp 2026</h1>
+  <div class="toolbar">
+    <button id="btn-back" class="ghost hidden">← Indietro</button>
+    <button id="btn-toggle-amounts" class="icon-only active" title="Mostra/Nascondi importi">
+      <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    </button>
+    <input type="file" id="file-input" accept=".xlsx,.xls" class="hidden" />
+    <button id="btn-import" class="secondary">📥 Importa Excel</button>
+    <button id="btn-export">📤 Esporta Excel</button>
+    <button id="btn-add" class="ghost">➕ Nuova persona</button>
+    <button id="btn-clear" class="danger" title="Cancella tutti i dati">🗑️ Reset</button>
+  </div>
+</header>
+
+<main>
+  <!-- LIST VIEW -->
+  <section id="view-list">
+    <div class="stats" id="stats"></div>
+    <div class="card">
+      <div class="filters">
+        <input type="text" id="search" class="search" placeholder="🔍 Cerca per nome o telefono..." />
+        <select id="filter-status">
+          <option value="">Tutti gli stati</option>
+          <option value="paid">✅ Pagato</option>
+          <option value="partial">⚠️ Parziale</option>
+          <option value="unpaid">❌ Non pagato</option>
+          <option value="overpaid">💙 Sovrappagato</option>
+          <option value="assistenza">🤝 Assistenza</option>
+        </select>
+      </div>
+      <div class="table-wrap">
+        <table id="people-table">
+          <thead>
+            <tr>
+              <th data-sort="nome">Nome <span class="sort-arrow"></span></th>
+              <th data-sort="telefono">Telefono <span class="sort-arrow"></span></th>
+              <th data-sort="totale" class="num">Totale dovuto <span class="sort-arrow"></span></th>
+              <th data-sort="paid" class="num">Pagato <span class="sort-arrow"></span></th>
+              <th data-sort="residuo" class="num">Residuo <span class="sort-arrow"></span></th>
+              <th>Avanzamento</th>
+              <th data-sort="status">Stato <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="people-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty hidden">
+        <h2>Nessun dato</h2>
+        <p>Importa un file Excel o aggiungi una nuova persona per iniziare.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAIL VIEW -->
+  <section id="view-detail" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2 id="detail-title">Dettaglio</h2>
+        <div class="row-actions">
+          <button id="btn-delete-person" class="danger">🗑️ Elimina persona</button>
+        </div>
+      </div>
+      <div class="field-grid">
+        <label>Nome
+          <input type="text" id="d-nome" />
+        </label>
+        <label>Telefono
+          <input type="text" id="d-telefono" />
+        </label>
+        <label>Totale dovuto (€)
+          <input type="number" id="d-totale" step="0.01" min="0" />
+        </label>
+        <label>Data iscrizione
+          <input type="date" id="d-dataIscrizione" />
+        </label>
+        <label>Assistenza
+          <select id="d-assistenza">
+            <option value="No">No</option>
+            <option value="Si">Sì</option>
+          </select>
+        </label>
+      </div>
+
+      <h3 style="margin-bottom: 8px;">Rate</h3>
+      <div class="table-wrap">
+        <table class="installments-table">
+          <thead>
+            <tr>
+              <th>Rata</th>
+              <th class="num">Ipotesi (€)</th>
+              <th class="num">Pagato reale (€)</th>
+              <th>Data pagamento</th>
+              <th>Metodo di pagamento</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="installments-tbody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top: 12px;">
+        <button id="btn-add-installment" class="ghost">➕ Aggiungi rata</button>
+      </div>
+
+      <div class="summary-box">
+        <div class="stat">
+          <div class="stat-label">Totale dovuto</div>
+          <div class="stat-value" id="sum-totale">€ 0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Totale pagato</div>
+          <div class="stat-value" id="sum-paid" style="color: var(--green);">€ 0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Residuo</div>
+          <div class="stat-value" id="sum-residuo" style="color: var(--red);">€ 0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Stato</div>
+          <div class="stat-value" id="sum-status">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+/* ============================================================
+ * Rateizzazione Camp 2026 — vanilla JS standalone app
+ * Persistence: IndexedDB
+ * Excel I/O: SheetJS
+ * ============================================================ */
+
+// ----- Constants -----
+const DB_NAME = 'rateizzazione-camp';
+const DB_VERSION = 1;
+const STORE = 'people';
+
+const DEFAULT_INSTALLMENTS = [
+  { key: 'acconto',    label: 'Acconto' },
+  { key: 'maggio',     label: 'Rata Maggio' },
+  { key: 'giugno',     label: 'Rata Giugno' },
+  { key: 'luglio',     label: 'Rata Luglio' },
+  { key: 'agosto',     label: 'Rata Agosto' },
+  { key: 'settembre',  label: 'Rata Settembre' }
+];
+
+// Map of Excel column groups (planned, actual, date) per default installment
+const EXCEL_COL_MAP = {
+  acconto:   { ipotesi: 'IPOTESI ACCONTO',         reale: 'ACCONTO REALE',          data: 'DATA ACCONTO' },
+  maggio:    { ipotesi: 'IPOTESI RATA MAGGIO',     reale: 'RATA MAGGIO REALE',      data: 'DATA MAGGIO' },
+  giugno:    { ipotesi: 'IPOTESI RATA GIUGNO',     reale: 'RATA GIUGNO REALE',      data: 'DATA GIUGNO' },
+  luglio:    { ipotesi: 'IPOTESI RATA LUGLIO',     reale: 'RATA LUGLIO REALE',      data: 'DATA LUGLIO' },
+  agosto:    { ipotesi: 'IPOTESI RATA AGOSTO',     reale: 'RATA AGOSTO REALE',      data: 'DATA AGOSTO' },
+  settembre: { ipotesi: 'IPOTESI RATA SETTEMBRE',  reale: 'RATA SETTEMBRE REALE',   data: 'DATA SETTEMBRE' }
+};
+
+// ----- App state -----
+const state = {
+  people: [],
+  filtered: [],
+  search: '',
+  statusFilter: '',
+  sortKey: 'nome',
+  sortDir: 'asc',
+  currentId: null,
+  amountsVisible: true
+};
+
+// ============================================================
+// IndexedDB helpers
+// ============================================================
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE)) {
+        db.createObjectStore(STORE, { keyPath: 'id' });
+      }
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbGetAll() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readonly');
+    const req = tx.objectStore(STORE).getAll();
+    req.onsuccess = () => resolve(req.result || []);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function dbPut(person) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).put(person);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbDelete(id) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).delete(id);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbClear() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).clear();
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+async function dbBulkPut(items) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    const store = tx.objectStore(STORE);
+    items.forEach(it => store.put(it));
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+// ============================================================
+// Utilities
+// ============================================================
+function uid() {
+  return 'p_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 9);
+}
+
+function normalizeAssistenza(v) {
+  if (v == null) return 'No';
+  const s = String(v).trim().toLowerCase();
+  if (!s) return 'No';
+  if (['Si','Sì', 'si', 'sì', 'yes', 'y', 's', 'true', '1', 'x'].includes(s)) return 'Si';
+  return 'No';
+}
+
+function num(v) {
+  if (v === null || v === undefined || v === '') return 0;
+  const n = Number(String(v).replace(',', '.'));
+  return isNaN(n) ? 0 : n;
+}
+
+function fmtMoney(v) {
+  return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR' }).format(num(v));
+}
+
+function fmtDateInput(v) {
+  if (!v) return '';
+  if (v instanceof Date) return v.toISOString().slice(0, 10);
+  // String dates from Excel — try to parse
+  const d = new Date(v);
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  return '';
+}
+
+function fmtDateDisplay(v) {
+  if (!v) return '';
+  const d = v instanceof Date ? v : new Date(v);
+  if (isNaN(d.getTime())) return String(v);
+  return d.toLocaleDateString('it-IT');
+}
+
+function escapeHtml(s) {
+  const div = document.createElement('div');
+  div.textContent = s == null ? '' : String(s);
+  return div.innerHTML;
+}
+
+function totalPaid(person) {
+  return person.installments.reduce((s, i) => s + num(i.reale), 0);
+}
+
+function statusOf(person) {
+  const due = num(person.totale);
+  const paid = totalPaid(person);
+  if (due <= 0 && paid <= 0) return 'unpaid';
+  if (paid <= 0) return 'unpaid';
+  if (paid >= due - 0.01 && paid <= due + 0.01) return 'paid';
+  if (paid > due) return 'overpaid';
+  return 'partial';
+}
+
+const STATUS_LABEL = {
+  paid: 'Pagato',
+  partial: 'Parziale',
+  unpaid: 'Non pagato',
+  overpaid: 'Sovrappagato'
+};
+
+function toast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  setTimeout(() => { t.className = 'toast ' + type; }, 2500);
+}
+
+// ============================================================
+// Excel parsing date helper
+// SheetJS returns dates as serial numbers when cellDates:false,
+// or Date objects when cellDates:true.
+// ============================================================
+function excelDateToISO(v) {
+  if (v == null || v === '') return null;
+  if (v instanceof Date) {
+    if (isNaN(v.getTime())) return null;
+    return v.toISOString().slice(0, 10);
+  }
+  if (typeof v === 'number') {
+    // Excel serial number
+    const ms = Math.round((v - 25569) * 86400 * 1000);
+    const d = new Date(ms);
+    if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  }
+  // Try string parsing — handle formats like "23/04/2025" or "23/04//2025"
+  const s = String(v).replace(/\/+/g, '/').trim();
+  const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+  if (m) {
+    let [, dd, mm, yy] = m;
+    if (yy.length === 2) yy = '20' + yy;
+    const d = new Date(`${yy}-${mm.padStart(2,'0')}-${dd.padStart(2,'0')}`);
+    if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  }
+  const d = new Date(s);
+  if (!isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+  return null;
+}
+
+// Normalize header for fuzzy matching
+function normHeader(h) {
+  return String(h || '').toUpperCase().replace(/\s+/g, ' ').trim();
+}
+
+// ============================================================
+// Excel IMPORT
+// Strategy: parse first sheet with header row 1 then map by
+// position because headers have ambiguous "DATA" labels.
+// Column layout (0-based):
+// 0 NOME, 1 TELEFONO, 2 TOTALE, 3 DATA ISCRIZIONE,
+// 4 IPOTESI ACCONTO, 5 ACCONTO REALE, 6 DATA,
+// 7 IPOTESI MAGGIO, 8 MAGGIO REALE, 9 DATA,
+// 10 IPOTESI GIUGNO, 11 GIUGNO REALE, 12 DATA,
+// 13 IPOTESI LUGLIO, 14 LUGLIO REALE, 15 DATA,
+// 16 IPOTESI AGOSTO, 17 AGOSTO REALE, 18 DATA,
+// 19 IPOTESI SETTEMBRE, 20 SETTEMBRE REALE, 21 DATA,
+// 22 RESIDUO REALE, 23 ASSISTENZA
+// ============================================================
+async function importExcel(file) {
+  const buf = await file.arrayBuffer();
+  const wb = XLSX.read(buf, { cellDates: true });
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
+  if (!rows.length) throw new Error('Foglio vuoto');
+
+  const people = [];
+  // Skip header row (index 0)
+  for (let r = 1; r < rows.length; r++) {
+    const row = rows[r];
+    if (!row || row.every(c => c == null || c === '')) continue;
+    const nome = row[0];
+    if (!nome || String(nome).trim() === '') continue;
+
+    const installments = DEFAULT_INSTALLMENTS.map((tpl, idx) => {
+      // Each installment occupies 3 columns starting at col 4
+      const base = 4 + idx * 3;
+      return {
+        key: tpl.key,
+        label: tpl.label,
+        ipotesi: num(row[base]),
+        reale: num(row[base + 1]),
+        data: excelDateToISO(row[base + 2]),
+        metodo: '',
+        iban: ''
+      };
+    });
+
+    people.push({
+      id: uid(),
+      nome: String(nome).trim(),
+      telefono: row[1] != null ? String(row[1]).trim() : '',
+      totale: num(row[2]),
+      dataIscrizione: excelDateToISO(row[3]),
+      installments,
+      assistenza: normalizeAssistenza(row[23])
+    });
+  }
+
+  await dbClear();
+  await dbBulkPut(people);
+  state.people = people;
+  applyFilters();
+  toast(`Importate ${people.length} persone`, 'success');
+}
+
+// ============================================================
+// Excel EXPORT — preserves original layout
+// ============================================================
+function exportExcel() {
+  const headers = [
+    'NOME', 'TELEFONO', 'TOTALE', 'DATA ISCRIZIONE',
+    'IPOTESI ACCONTO', 'ACCONTO REALE', 'DATA',
+    'IPOTESI RATA MAGGIO', 'RATA MAGGIO REALE', 'DATA',
+    'IPOTESI RATA GIUGNO', 'RATA GIUGNO REALE', 'DATA',
+    'IPOTESI RATA LUGLIO', 'RATA LUGLIO REALE', 'DATA',
+    'IPOTESI RATA AGOSTO', 'RATA AGOSTO REALE', 'DATA',
+    'IPOTESI RATA SETTEMBRE', 'RATA SETTEMBRE REALE', 'DATA',
+    'RESIDUO REALE', 'ASSISTENZA',
+    'TOTALE PAGATO', 'STATO'
+  ];
+
+  const data = [headers];
+  for (const p of state.people) {
+    const row = [
+      p.nome,
+      p.telefono,
+      num(p.totale),
+      p.dataIscrizione ? new Date(p.dataIscrizione) : null
+    ];
+    // Map installments by key in default order; extra custom installments are skipped
+    for (const tpl of DEFAULT_INSTALLMENTS) {
+      const inst = p.installments.find(i => i.key === tpl.key) || {};
+      row.push(num(inst.ipotesi) || null);
+      row.push(num(inst.reale) || null);
+      row.push(inst.data ? new Date(inst.data) : null);
+    }
+    const paid = totalPaid(p);
+    row.push(num(p.totale) - paid); // residuo
+    row.push(p.assistenza || '');
+    row.push(paid);
+    row.push(STATUS_LABEL[statusOf(p)]);
+    data.push(row);
+  }
+
+  // Append custom (non-default) installments as extra rows? Better: include in a separate sheet.
+  const ws = XLSX.utils.aoa_to_sheet(data, { cellDates: true });
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Rateizzazione');
+
+  // Custom installments sheet (anything beyond the 6 defaults)
+  const customRows = [['NOME', 'RATA', 'IPOTESI', 'PAGATO REALE', 'DATA']];
+  for (const p of state.people) {
+    const defaults = new Set(DEFAULT_INSTALLMENTS.map(d => d.key));
+    for (const inst of p.installments) {
+      if (!defaults.has(inst.key)) {
+        customRows.push([
+          p.nome, inst.label,
+          num(inst.ipotesi) || null,
+          num(inst.reale) || null,
+          inst.data ? new Date(inst.data) : null
+        ]);
+      }
+    }
+  }
+  if (customRows.length > 1) {
+    const ws2 = XLSX.utils.aoa_to_sheet(customRows, { cellDates: true });
+    XLSX.utils.book_append_sheet(wb, ws2, 'Rate aggiuntive');
+  }
+
+  const fname = `rateizzazione_camp_${new Date().toISOString().slice(0,10)}.xlsx`;
+  XLSX.writeFile(wb, fname);
+  toast('Excel esportato', 'success');
+}
+
+// ============================================================
+// LIST view rendering
+// ============================================================
+function applyFilters() {
+  const q = state.search.trim().toLowerCase();
+  let arr = state.people.filter(p => {
+    if (q) {
+      const hay = (p.nome + ' ' + (p.telefono || '')).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    if (state.statusFilter) {
+      if (state.statusFilter === 'assistenza') {
+        if (p.assistenza !== 'Si') return false;
+      } else if (statusOf(p) !== state.statusFilter) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  // Sort
+  const dir = state.sortDir === 'asc' ? 1 : -1;
+  arr.sort((a, b) => {
+    let av, bv;
+    switch (state.sortKey) {
+      case 'paid':    av = totalPaid(a); bv = totalPaid(b); break;
+      case 'residuo': av = num(a.totale) - totalPaid(a); bv = num(b.totale) - totalPaid(b); break;
+      case 'status':  av = statusOf(a); bv = statusOf(b); break;
+      case 'totale':  av = num(a.totale); bv = num(b.totale); break;
+      case 'telefono':av = a.telefono || ''; bv = b.telefono || ''; break;
+      default:        av = (a.nome || '').toLowerCase(); bv = (b.nome || '').toLowerCase();
+    }
+    if (av < bv) return -1 * dir;
+    if (av > bv) return 1 * dir;
+    return 0;
+  });
+
+  state.filtered = arr;
+  renderList();
+  renderStats();
+}
+
+function renderList() {
+  const tbody = document.getElementById('people-tbody');
+  const empty = document.getElementById('empty-state');
+  const table = document.getElementById('people-table');
+
+  if (!state.people.length) {
+    table.classList.add('hidden');
+    empty.classList.remove('hidden');
+    tbody.innerHTML = '';
+    return;
+  }
+  table.classList.remove('hidden');
+  empty.classList.add('hidden');
+
+  const rowsHtml = state.filtered.map(p => {
+    const due = num(p.totale);
+    const paid = totalPaid(p);
+    const residuo = due - paid;
+    const status = statusOf(p);
+    const pct = due > 0 ? Math.min(100, (paid / due) * 100) : (paid > 0 ? 100 : 0);
+    return `
+      <tr class="row-${status}" data-id="${escapeHtml(p.id)}">
+        <td><strong>${escapeHtml(p.nome)}</strong></td>
+        <td>${escapeHtml(p.telefono || '')}</td>
+        <td class="num">${fmtMoney(due)}</td>
+        <td class="num" style="color: var(--green);">${fmtMoney(paid)}</td>
+        <td class="num" style="color: ${residuo > 0.01 ? 'var(--red)' : 'var(--muted)'};">${fmtMoney(residuo)}</td>
+        <td>
+          <div class="progress" title="${pct.toFixed(0)}%">
+            <div class="progress-bar ${status}" style="width: ${pct}%"></div>
+          </div>
+        </td>
+        <td><span class="badge badge-${status}">${STATUS_LABEL[status]}</span></td>
+      </tr>
+    `;
+  }).join('');
+  tbody.innerHTML = rowsHtml;
+
+  // Update sort arrows
+  document.querySelectorAll('th[data-sort] .sort-arrow').forEach(el => el.textContent = '');
+  const activeTh = document.querySelector(`th[data-sort="${state.sortKey}"] .sort-arrow`);
+  if (activeTh) activeTh.textContent = state.sortDir === 'asc' ? '▲' : '▼';
+}
+
+function renderStats() {
+  const total = state.people.length;
+  const totalDue = state.people.reduce((s, p) => s + num(p.totale), 0);
+  const totalPaidAll = state.people.reduce((s, p) => s + totalPaid(p), 0);
+  const totalResiduo = totalDue - totalPaidAll;
+  const counts = { paid: 0, partial: 0, unpaid: 0, overpaid: 0 };
+  state.people.forEach(p => counts[statusOf(p)]++);
+
+  const hiddenAmount = '€ •••••••';
+  const displayDue = state.amountsVisible ? fmtMoney(totalDue) : hiddenAmount;
+  const displayPaid = state.amountsVisible ? fmtMoney(totalPaidAll) : hiddenAmount;
+  const displayResiduo = state.amountsVisible ? fmtMoney(totalResiduo) : hiddenAmount;
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat">
+      <div class="stat-label">Persone</div>
+      <div class="stat-value">${total}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Totale dovuto</div>
+      <div class="stat-value">${displayDue}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Totale incassato</div>
+      <div class="stat-value" style="color: var(--green);">${displayPaid}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Residuo da incassare</div>
+      <div class="stat-value" style="color: var(--red);">${displayResiduo}</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Stato pagamenti</div>
+      <div class="stat-value" style="font-size: 14px; line-height: 1.6;">
+        <span class="badge badge-paid">${counts.paid} pagati</span>
+        <span class="badge badge-partial">${counts.partial} parziali</span>
+        <span class="badge badge-unpaid">${counts.unpaid} non pagati</span>
+        ${counts.overpaid ? `<span class="badge badge-overpaid">${counts.overpaid} sovrap.</span>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// DETAIL view
+// ============================================================
+function showDetail(id) {
+  state.currentId = id;
+  document.getElementById('view-list').classList.add('hidden');
+  document.getElementById('view-detail').classList.remove('hidden');
+  document.getElementById('btn-back').classList.remove('hidden');
+  renderDetail();
+}
+
+function showList() {
+  state.currentId = null;
+  document.getElementById('view-detail').classList.add('hidden');
+  document.getElementById('view-list').classList.remove('hidden');
+  document.getElementById('btn-back').classList.add('hidden');
+  applyFilters();
+}
+
+function getCurrent() {
+  return state.people.find(p => p.id === state.currentId);
+}
+
+function renderDetail() {
+  const p = getCurrent();
+  if (!p) { showList(); return; }
+
+  document.getElementById('detail-title').textContent = p.nome || 'Nuova persona';
+  document.getElementById('d-nome').value = p.nome || '';
+  document.getElementById('d-telefono').value = p.telefono || '';
+  document.getElementById('d-totale').value = p.totale || 0;
+  document.getElementById('d-dataIscrizione').value = p.dataIscrizione || '';
+  document.getElementById('d-assistenza').value = (p.assistenza === 'Si') ? 'Si' : 'No';
+
+  renderInstallments();
+  renderDetailSummary();
+}
+
+function renderInstallments() {
+  const p = getCurrent();
+  const tbody = document.getElementById('installments-tbody');
+  tbody.innerHTML = p.installments.map((inst, idx) => {
+    const ipotesi = num(inst.ipotesi);
+    const reale = num(inst.reale);
+    const metodo = inst.metodo || '';
+    const iban = inst.iban || '';
+    let cls = '';
+    if (ipotesi > 0 && reale >= ipotesi - 0.01) cls = 'inst-paid';
+    else if (reale > 0) cls = 'inst-partial';
+    const ibanValid = !iban || isValidIBAN(iban);
+    const ibanField = metodo === 'Bonifico'
+      ? `<input type="text" class="iban-input ${ibanValid ? '' : 'invalid'}" data-field="iban" value="${escapeHtml(iban)}" placeholder="IBAN (es. IT60X0542811101000000123456)" maxlength="34" />`
+      : '';
+    return `
+      <tr class="${cls}" data-idx="${idx}">
+        <td>
+          <input type="text" data-field="label" value="${escapeHtml(inst.label)}" />
+        </td>
+        <td><input type="number" step="0.01" min="0" data-field="ipotesi" value="${ipotesi || ''}" /></td>
+        <td><input type="number" step="0.01" min="0" data-field="reale" value="${reale || ''}" /></td>
+        <td><input type="date" data-field="data" value="${inst.data || ''}" /></td>
+        <td>
+          <select data-field="metodo">
+            <option value=""${metodo === '' ? ' selected' : ''}>—</option>
+            <option value="Contanti"${metodo === 'Contanti' ? ' selected' : ''}>Contanti</option>
+            <option value="Bonifico"${metodo === 'Bonifico' ? ' selected' : ''}>Bonifico</option>
+          </select>
+          ${ibanField}
+        </td>
+        <td><button class="danger" data-action="del-inst" title="Elimina rata">✕</button></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// Basic IBAN validation: 2 letters + 2 digits + up to 30 alphanumeric chars
+function isValidIBAN(iban) {
+  if (!iban) return true;
+  const cleaned = String(iban).replace(/\s+/g, '').toUpperCase();
+  return /^[A-Z]{2}\d{2}[A-Z0-9]{11,30}$/.test(cleaned);
+}
+
+function renderDetailSummary() {
+  const p = getCurrent();
+  const due = num(p.totale);
+  const paid = totalPaid(p);
+  const residuo = due - paid;
+  const status = statusOf(p);
+  document.getElementById('sum-totale').textContent = fmtMoney(due);
+  document.getElementById('sum-paid').textContent = fmtMoney(paid);
+  document.getElementById('sum-residuo').textContent = fmtMoney(residuo);
+  document.getElementById('sum-residuo').style.color = residuo > 0.01 ? 'var(--red)' : 'var(--muted)';
+  const sumStatus = document.getElementById('sum-status');
+  sumStatus.innerHTML = `<span class="badge badge-${status}">${STATUS_LABEL[status]}</span>`;
+}
+
+async function persistCurrent() {
+  const p = getCurrent();
+  if (!p) return;
+  await dbPut(p);
+}
+
+// Bind input events on detail view (event delegation)
+function bindDetailEvents() {
+  // Top-level fields
+  const map = {
+    'd-nome': 'nome',
+    'd-telefono': 'telefono',
+    'd-totale': 'totale',
+    'd-dataIscrizione': 'dataIscrizione',
+    'd-assistenza': 'assistenza'
+  };
+  Object.entries(map).forEach(([id, field]) => {
+    document.getElementById(id).addEventListener('input', async (e) => {
+      const p = getCurrent();
+      if (!p) return;
+      let v = e.target.value;
+      if (field === 'totale') v = num(v);
+      p[field] = v;
+      if (field === 'nome') document.getElementById('detail-title').textContent = v || 'Nuova persona';
+      renderDetailSummary();
+      await persistCurrent();
+    });
+  });
+
+  // Installments table — delegate
+  document.getElementById('installments-tbody').addEventListener('input', async (e) => {
+    const tr = e.target.closest('tr[data-idx]');
+    if (!tr) return;
+    const idx = +tr.dataset.idx;
+    const field = e.target.dataset.field;
+    const p = getCurrent();
+    if (!p || !p.installments[idx]) return;
+    let v = e.target.value;
+    if (field === 'ipotesi' || field === 'reale') v = num(v);
+    if (field === 'iban') v = String(v).toUpperCase();
+    p.installments[idx][field] = v;
+    // Live IBAN validation feedback
+    if (field === 'iban') {
+      e.target.classList.toggle('invalid', !isValidIBAN(v));
+    }
+    // Re-color row without full re-render to preserve focus
+    const ipotesi = num(p.installments[idx].ipotesi);
+    const reale = num(p.installments[idx].reale);
+    tr.className = '';
+    if (ipotesi > 0 && reale >= ipotesi - 0.01) tr.className = 'inst-paid';
+    else if (reale > 0) tr.className = 'inst-partial';
+    renderDetailSummary();
+    await persistCurrent();
+  });
+
+  // Handle metodo select change (needs change event for selects + re-render to show/hide IBAN)
+  document.getElementById('installments-tbody').addEventListener('change', async (e) => {
+    if (e.target.dataset.field !== 'metodo') return;
+    const tr = e.target.closest('tr[data-idx]');
+    if (!tr) return;
+    const idx = +tr.dataset.idx;
+    const p = getCurrent();
+    if (!p || !p.installments[idx]) return;
+    p.installments[idx].metodo = e.target.value;
+    if (e.target.value !== 'Bonifico') {
+      p.installments[idx].iban = '';
+    }
+    await persistCurrent();
+    renderInstallments();
+  });
+
+  document.getElementById('installments-tbody').addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="del-inst"]');
+    if (!btn) return;
+    const tr = btn.closest('tr[data-idx]');
+    const idx = +tr.dataset.idx;
+    const p = getCurrent();
+    if (!confirm(`Eliminare la rata "${p.installments[idx].label}"?`)) return;
+    p.installments.splice(idx, 1);
+    await persistCurrent();
+    renderInstallments();
+    renderDetailSummary();
+  });
+
+  document.getElementById('btn-add-installment').addEventListener('click', async () => {
+    const p = getCurrent();
+    const label = prompt('Nome della nuova rata:', 'Rata extra');
+    if (!label) return;
+    p.installments.push({
+      key: 'custom_' + Date.now().toString(36),
+      label: label.trim(),
+      ipotesi: 0,
+      reale: 0,
+      data: null,
+      metodo: '',
+      iban: ''
+    });
+    await persistCurrent();
+    renderInstallments();
+    renderDetailSummary();
+  });
+
+  document.getElementById('btn-delete-person').addEventListener('click', async () => {
+    const p = getCurrent();
+    if (!p) return;
+    if (!confirm(`Eliminare definitivamente "${p.nome}"?`)) return;
+    await dbDelete(p.id);
+    state.people = state.people.filter(x => x.id !== p.id);
+    toast('Persona eliminata', 'success');
+    showList();
+  });
+}
+
+// ============================================================
+// Event wiring
+// ============================================================
+function bindGlobalEvents() {
+  // Import
+  document.getElementById('btn-import').addEventListener('click', () => {
+    if (state.people.length && !confirm('Importare un nuovo file sostituirà tutti i dati esistenti. Continuare?')) return;
+    document.getElementById('file-input').click();
+  });
+  document.getElementById('file-input').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      await importExcel(file);
+    } catch (err) {
+      console.error(err);
+      toast('Errore importazione: ' + err.message, 'error');
+    }
+    e.target.value = '';
+  });
+
+  // Export
+  document.getElementById('btn-export').addEventListener('click', () => {
+    if (!state.people.length) { toast('Nessun dato da esportare', 'error'); return; }
+    try { exportExcel(); }
+    catch (err) { console.error(err); toast('Errore esportazione: ' + err.message, 'error'); }
+  });
+
+  // Add new person
+  document.getElementById('btn-add').addEventListener('click', async () => {
+    const newP = {
+      id: uid(),
+      nome: 'Nuova persona',
+      telefono: '',
+      totale: 0,
+      dataIscrizione: null,
+      installments: DEFAULT_INSTALLMENTS.map(t => ({
+        key: t.key, label: t.label, ipotesi: 0, reale: 0, data: null, metodo: '', iban: ''
+      })),
+      assistenza: 'No'
+    };
+    state.people.push(newP);
+    await dbPut(newP);
+    showDetail(newP.id);
+  });
+
+  // Reset
+  document.getElementById('btn-clear').addEventListener('click', async () => {
+    if (!confirm('Cancellare TUTTI i dati salvati? Operazione irreversibile.')) return;
+    await dbClear();
+    state.people = [];
+    applyFilters();
+    toast('Dati cancellati', 'success');
+  });
+
+  // Back button
+  document.getElementById('btn-back').addEventListener('click', showList);
+
+  // Toggle amounts visibility
+  document.getElementById('btn-toggle-amounts').addEventListener('click', () => {
+    state.amountsVisible = !state.amountsVisible;
+    const btn = document.getElementById('btn-toggle-amounts');
+    btn.classList.toggle('active', state.amountsVisible);
+    
+    // Toggle between eye-open and eye-off icons
+    if (state.amountsVisible) {
+      btn.innerHTML = `
+        <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      `;
+      btn.title = 'Nascondi importi';
+    } else {
+      btn.innerHTML = `
+        <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+          <line x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+      `;
+      btn.title = 'Mostra importi';
+    }
+    
+    renderStats();
+    // Persist preference
+    try {
+      localStorage.setItem('rateizzazione-amounts-visible', state.amountsVisible);
+    } catch (e) { /* ignore */ }
+  });
+
+  // Search & filter
+  document.getElementById('search').addEventListener('input', (e) => {
+    state.search = e.target.value;
+    applyFilters();
+  });
+  document.getElementById('filter-status').addEventListener('change', (e) => {
+    state.statusFilter = e.target.value;
+    applyFilters();
+  });
+
+  // Sort
+  document.querySelectorAll('th[data-sort]').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (state.sortKey === key) {
+        state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        state.sortKey = key;
+        state.sortDir = 'asc';
+      }
+      applyFilters();
+    });
+  });
+
+  // Row click → detail
+  document.getElementById('people-tbody').addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-id]');
+    if (!tr) return;
+    showDetail(tr.dataset.id);
+  });
+}
+
+// ============================================================
+// Init
+// ============================================================
+async function init() {
+  bindGlobalEvents();
+  bindDetailEvents();
+  try {
+    state.people = await dbGetAll();
+    // Normalize legacy assistenza values to 'Si'/'No'
+    state.people.forEach(p => { p.assistenza = normalizeAssistenza(p.assistenza); });
+  } catch (err) {
+    console.error('DB load error', err);
+    toast('Errore caricamento dati: ' + err.message, 'error');
+  }
+  // Restore visibility preference
+  try {
+    const saved = localStorage.getItem('rateizzazione-amounts-visible');
+    if (saved !== null) {
+      state.amountsVisible = saved === 'true';
+      const btn = document.getElementById('btn-toggle-amounts');
+      btn.classList.toggle('active', state.amountsVisible);
+      
+      // Set correct icon
+      if (state.amountsVisible) {
+        btn.innerHTML = `
+          <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        `;
+        btn.title = 'Nascondi importi';
+      } else {
+        btn.innerHTML = `
+          <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+        `;
+        btn.title = 'Mostra importi';
+      }
+    }
+  } catch (e) { /* ignore */ }
+  applyFilters();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
