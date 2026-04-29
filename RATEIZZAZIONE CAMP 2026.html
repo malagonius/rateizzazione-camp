@@ -286,6 +286,49 @@
   .toast.error { background: var(--red); }
   .toast.success { background: var(--green); }
   .table-wrap { overflow-x: auto; }
+
+  /* Password modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .modal-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    min-width: 320px;
+    max-width: 90vw;
+    transform: scale(0.95);
+    transition: transform 0.15s;
+  }
+  .modal-backdrop.show .modal { transform: scale(1); }
+  .modal h3 { margin: 0 0 12px 0; font-size: 16px; }
+  .modal p { margin: 0 0 12px 0; color: var(--muted); font-size: 14px; }
+  .modal input[type="password"] {
+    width: 100%;
+    margin-bottom: 16px;
+    font-size: 16px;
+    letter-spacing: 2px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
   @media (max-width: 640px) {
     main { padding: 12px; }
     th, td { padding: 8px 6px; font-size: 13px; }
@@ -429,6 +472,19 @@
 </main>
 
 <div id="toast" class="toast"></div>
+
+<!-- Password modal (masked input) -->
+<div id="password-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="password-modal-title">
+  <div class="modal">
+    <h3 id="password-modal-title">Password richiesta</h3>
+    <p id="password-modal-message">Inserisci la password:</p>
+    <input type="password" id="password-modal-input" autocomplete="current-password" />
+    <div class="modal-actions">
+      <button type="button" id="password-modal-cancel" class="secondary">Annulla</button>
+      <button type="button" id="password-modal-ok">Conferma</button>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ============================================================
@@ -616,6 +672,53 @@ function toast(msg, type = '') {
   t.textContent = msg;
   t.className = 'toast show ' + type;
   setTimeout(() => { t.className = 'toast ' + type; }, 2500);
+}
+
+// ============================================================
+// Custom password prompt with masked input
+// Replaces native prompt() so the typed password is hidden.
+// Returns the entered string, or null if cancelled.
+// ============================================================
+function promptPassword(message = 'Inserisci la password:', title = 'Password richiesta') {
+  return new Promise((resolve) => {
+    const backdrop = document.getElementById('password-modal');
+    const input = document.getElementById('password-modal-input');
+    const okBtn = document.getElementById('password-modal-ok');
+    const cancelBtn = document.getElementById('password-modal-cancel');
+    const msgEl = document.getElementById('password-modal-message');
+    const titleEl = document.getElementById('password-modal-title');
+
+    titleEl.textContent = title;
+    msgEl.textContent = message;
+    input.value = '';
+    backdrop.classList.add('show');
+    // Focus the input after the transition starts
+    setTimeout(() => input.focus(), 50);
+
+    function cleanup(result) {
+      backdrop.classList.remove('show');
+      okBtn.removeEventListener('click', onOk);
+      cancelBtn.removeEventListener('click', onCancel);
+      input.removeEventListener('keydown', onKey);
+      backdrop.removeEventListener('click', onBackdropClick);
+      input.value = '';
+      resolve(result);
+    }
+    function onOk() { cleanup(input.value); }
+    function onCancel() { cleanup(null); }
+    function onKey(e) {
+      if (e.key === 'Enter') { e.preventDefault(); onOk(); }
+      else if (e.key === 'Escape') { e.preventDefault(); onCancel(); }
+    }
+    function onBackdropClick(e) {
+      if (e.target === backdrop) onCancel();
+    }
+
+    okBtn.addEventListener('click', onOk);
+    cancelBtn.addEventListener('click', onCancel);
+    input.addEventListener('keydown', onKey);
+    backdrop.addEventListener('click', onBackdropClick);
+  });
 }
 
 // ============================================================
@@ -1196,15 +1299,14 @@ function bindGlobalEvents() {
 
   // Reset
   document.getElementById('btn-clear').addEventListener('click', async () => {
-  
-    
     // Require password to confirm reset
-    const password = prompt('Inserisci la password per confermare il reset:');
+    const password = await promptPassword('Inserisci la password per confermare il reset:');
+    if (password === null) return; // user cancelled
     if (password !== PASSWORD) {
       toast('Password errata', 'error');
       return;
     }
-    
+
     if (!confirm('Cancellare TUTTI i dati salvati? Operazione irreversibile.')) return;
 
     await dbClear();
@@ -1217,16 +1319,17 @@ function bindGlobalEvents() {
   document.getElementById('btn-back').addEventListener('click', showList);
 
   // Toggle amounts visibility
-  document.getElementById('btn-toggle-amounts').addEventListener('click', () => {
+  document.getElementById('btn-toggle-amounts').addEventListener('click', async () => {
     // If trying to show amounts, require password
     if (!state.amountsVisible) {
-      const password = prompt('Inserisci la password per visualizzare gli importi:');
+      const password = await promptPassword('Inserisci la password per visualizzare gli importi:');
+      if (password === null) return; // user cancelled
       if (password !== PASSWORD) {
         toast('Password errata', 'error');
         return;
       }
     }
-    
+
     state.amountsVisible = !state.amountsVisible;
     const btn = document.getElementById('btn-toggle-amounts');
     btn.classList.toggle('active', state.amountsVisible);
