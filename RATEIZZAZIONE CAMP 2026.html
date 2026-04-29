@@ -1196,7 +1196,7 @@ function bindGlobalEvents() {
 
   // Reset
   document.getElementById('btn-clear').addEventListener('click', async () => {
-    if (!confirm('Cancellare TUTTI i dati salvati? Operazione irreversibile.')) return;
+  
     
     // Require password to confirm reset
     const password = prompt('Inserisci la password per confermare il reset:');
@@ -1205,6 +1205,8 @@ function bindGlobalEvents() {
       return;
     }
     
+    if (!confirm('Cancellare TUTTI i dati salvati? Operazione irreversibile.')) return;
+
     await dbClear();
     state.people = [];
     applyFilters();
