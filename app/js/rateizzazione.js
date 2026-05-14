@@ -61,8 +61,43 @@ async function importExcel(file) {
   await dbClear();
   await dbBulkPut(people);
   state.people = people;
+
+  // Import events & presences if sheets exist
+  let importedEvents = [];
+  let importedPresences = [];
+
+  if (wb.SheetNames.includes('Eventi')) {
+    const wsEv = wb.Sheets['Eventi'];
+    const evRows = XLSX.utils.sheet_to_json(wsEv, { header: 1, raw: true, defval: null });
+    for (let i = 1; i < evRows.length; i++) {
+      const jsonStr = evRows[i]?.[0];
+      if (jsonStr) {
+        try { importedEvents.push(JSON.parse(jsonStr)); } catch (e) { /* skip invalid */ }
+      }
+    }
+  }
+
+  if (wb.SheetNames.includes('Presenze')) {
+    const wsPr = wb.Sheets['Presenze'];
+    const prRows = XLSX.utils.sheet_to_json(wsPr, { header: 1, raw: true, defval: null });
+    for (let i = 1; i < prRows.length; i++) {
+      const jsonStr = prRows[i]?.[0];
+      if (jsonStr) {
+        try { importedPresences.push(JSON.parse(jsonStr)); } catch (e) { /* skip invalid */ }
+      }
+    }
+  }
+
+  await dbClearStore(EVENTS_STORE);
+  await dbClearStore(PRESENCES_STORE);
+  if (importedEvents.length) await dbBulkPutTo(EVENTS_STORE, importedEvents);
+  if (importedPresences.length) await dbBulkPutTo(PRESENCES_STORE, importedPresences);
+  state.events = importedEvents;
+  state.presences = importedPresences;
+
   applyFilters();
-  toast(`Importate ${people.length} persone`, 'success');
+  const evMsg = importedEvents.length ? `, ${importedEvents.length} eventi` : '';
+  toast(`Importate ${people.length} persone${evMsg}`, 'success');
 }
 
 // ============================================================
@@ -128,6 +163,26 @@ function exportExcel() {
   if (customRows.length > 1) {
     const ws2 = XLSX.utils.aoa_to_sheet(customRows, { cellDates: true });
     XLSX.utils.book_append_sheet(wb, ws2, 'Rate aggiuntive');
+  }
+
+  // Events sheet — store as JSON rows since data is hierarchical
+  if (state.events.length) {
+    const evRows = [['JSON_DATA']];
+    for (const ev of state.events) {
+      evRows.push([JSON.stringify(ev)]);
+    }
+    const wsEv = XLSX.utils.aoa_to_sheet(evRows);
+    XLSX.utils.book_append_sheet(wb, wsEv, 'Eventi');
+  }
+
+  // Presences sheet — store as JSON rows
+  if (state.presences.length) {
+    const prRows = [['JSON_DATA']];
+    for (const pr of state.presences) {
+      prRows.push([JSON.stringify(pr)]);
+    }
+    const wsPr = XLSX.utils.aoa_to_sheet(prRows);
+    XLSX.utils.book_append_sheet(wb, wsPr, 'Presenze');
   }
 
   const fname = `rateizzazione_camp_${new Date().toISOString().slice(0,10)}.xlsx`;
