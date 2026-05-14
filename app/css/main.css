@@ -221,9 +221,15 @@
   .detail-header h2 { margin: 0; }
   .field-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
     gap: 12px;
     margin-bottom: 20px;
+  }
+  @media (min-width: 500px) {
+    .field-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 800px) {
+    .field-grid { grid-template-columns: repeat(3, 1fr); }
   }
   .field-grid label {
     display: flex;
