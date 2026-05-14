@@ -6,6 +6,35 @@ const DAY_NAMES = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 const DAY_COUNT = 6; // Monday to Saturday
 
 // ============================================================
+// Print helper — opens a new window with styled content
+// ============================================================
+function printContent(title, htmlContent) {
+  const win = window.open('', '_blank', 'width=900,height=700');
+  if (!win) { toast('Popup bloccato dal browser', 'error'); return; }
+  win.document.write(`<!DOCTYPE html>
+<html lang="it"><head><meta charset="UTF-8"><title>${escapeHtml(title)}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 20px; color: #1f2937; line-height: 1.5; }
+  h1 { font-size: 18px; margin: 0 0 4px; }
+  h2 { font-size: 15px; margin: 0 0 12px; color: #6b7280; font-weight: 400; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  th, td { padding: 5px 8px; border: 1px solid #d1d5db; text-align: left; }
+  th { background: #f3f4f6; font-weight: 600; }
+  td.center { text-align: center; }
+  .summary { font-weight: 600; margin-top: 8px; font-size: 13px; }
+  .muted { color: #6b7280; font-size: 11px; }
+  .print-date { font-size: 11px; color: #9ca3af; margin-bottom: 16px; }
+  @media print { body { margin: 10px; } }
+</style></head><body>
+<div class="print-date">Stampato il ${new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</div>
+${htmlContent}
+<script>window.onload = function() { window.print(); }<\/script>
+</body></html>`);
+  win.document.close();
+}
+
+// ============================================================
 // Tab navigation
 // ============================================================
 function switchTab(tab) {
@@ -710,7 +739,7 @@ function showPresencesOverview() {
   for (let w = 1; w <= event.numWeeks; w++) {
     html += `<th>S${w}</th>`;
   }
-  html += '<th>Totale</th></tr></thead><tbody>';
+  html += '<th>Totale</th><th class="no-print"></th></tr></thead><tbody>';
 
   for (const { id, groupName } of allMembers) {
     const person = getPersonById(id);
@@ -741,7 +770,9 @@ function showPresencesOverview() {
       html += `<td class="presence-cell-clickable" data-action="show-week-detail" data-person-id="${escapeHtml(id)}" data-week="${w}" data-event-id="${escapeHtml(event.id)}" title="${title}">${symbol}</td>`;
     }
 
-    html += `<td style="text-align:center;font-weight:600;">${totalDays}/${totalPossibleDays}</td></tr>`;
+    html += `<td style="text-align:center;font-weight:600;">${totalDays}/${totalPossibleDays}</td>`;
+    html += `<td class="no-print" style="text-align:center;"><button class="btn-print" data-action="print-person" data-person-id="${escapeHtml(id)}" data-event-id="${escapeHtml(event.id)}" title="Stampa dettaglio persona">🖨️</button></td>`;
+    html += '</tr>';
   }
 
   html += '</tbody></table>';
@@ -751,6 +782,15 @@ function showPresencesOverview() {
     cell.addEventListener('click', (e) => {
       const { personId, week, eventId } = e.currentTarget.dataset;
       showWeekDetailModal(eventId, parseInt(week), personId);
+    });
+  });
+
+  // Print person detail
+  container.querySelectorAll('[data-action="print-person"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const { personId, eventId } = e.currentTarget.dataset;
+      printPersonDetail(eventId, personId);
     });
   });
 }
@@ -794,6 +834,96 @@ function showWeekDetailModal(eventId, weekNum, personId) {
 
   content.innerHTML = html;
   modal.classList.add('show');
+}
+
+// ============================================================
+// Print functions
+// ============================================================
+
+/** Print the full Riepilogo Presenze overview */
+function printOverview() {
+  const event = getCurrentEvent();
+  if (!event) return;
+
+  const memberMap = new Map();
+  for (let w = 1; w <= event.numWeeks; w++) {
+    const groups = getWeekGroups(event, w);
+    for (const g of groups) {
+      for (const id of g.memberIds) {
+        if (!memberMap.has(id)) memberMap.set(id, g.name);
+      }
+    }
+  }
+  const allMembers = Array.from(memberMap.entries()).map(([id, groupName]) => ({ id, groupName }));
+
+  let html = `<h1>📊 Riepilogo Presenze — ${escapeHtml(event.name)}</h1>`;
+  html += `<h2>Dal ${fmtDateDisplay(event.startDate)} · ${event.numWeeks} settimane</h2>`;
+  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th>';
+  for (let w = 1; w <= event.numWeeks; w++) html += `<th>S${w}</th>`;
+  html += '<th>Totale</th></tr></thead><tbody>';
+
+  for (const { id, groupName } of allMembers) {
+    const person = getPersonById(id);
+    if (!person) continue;
+    let totalDays = 0;
+    const totalPossible = event.numWeeks * DAY_COUNT;
+    html += `<tr><td>${escapeHtml(person.nome)}</td><td class="muted">${escapeHtml(groupName)}</td>`;
+    for (let w = 1; w <= event.numWeeks; w++) {
+      const dp = countDaysPresent(event.id, w, id);
+      totalDays += dp;
+      const sym = dp === DAY_COUNT ? '✅' : dp > 0 ? `⚠️ ${dp}/${DAY_COUNT}` : '❌';
+      html += `<td class="center">${sym}</td>`;
+    }
+    html += `<td class="center">${totalDays}/${totalPossible}</td></tr>`;
+  }
+  html += '</tbody></table>';
+
+  printContent(`Riepilogo Presenze — ${event.name}`, html);
+}
+
+/** Print the day-level detail for a person in a specific week */
+function printWeekDetail() {
+  const modal = document.getElementById('week-detail-modal');
+  if (!modal.classList.contains('show')) return;
+  const titleText = document.getElementById('week-detail-modal-title').textContent;
+  const contentHtml = document.getElementById('week-detail-modal-content').innerHTML;
+  printContent(titleText, `<h1>${escapeHtml(titleText)}</h1>${contentHtml}`);
+}
+
+/** Print full detail for a single person across all weeks */
+function printPersonDetail(eventId, personId) {
+  const event = state.events.find(e => e.id === eventId);
+  const person = getPersonById(personId);
+  if (!event || !person) return;
+
+  let html = `<h1>Dettaglio Presenze — ${escapeHtml(person.nome)}</h1>`;
+  html += `<h2>${escapeHtml(event.name)} · ${event.numWeeks} settimane</h2>`;
+
+  let grandTotal = 0;
+  const grandPossible = event.numWeeks * DAY_COUNT;
+
+  for (let w = 1; w <= event.numWeeks; w++) {
+    const startDate = new Date(event.startDate);
+    startDate.setDate(startDate.getDate() + (w - 1) * 7);
+    const days = getPresenceDays(eventId, w, personId);
+    const dp = countDaysPresent(eventId, w, personId);
+    grandTotal += dp;
+
+    html += `<h3 style="margin:16px 0 4px;font-size:14px;">Settimana ${w} — ${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</h3>`;
+    html += '<table><thead><tr><th>Giorno</th><th>Data</th><th>Presente</th></tr></thead><tbody>';
+    for (let d = 1; d <= DAY_COUNT; d++) {
+      const dayDate = new Date(startDate);
+      dayDate.setDate(dayDate.getDate() + (d - 1));
+      const dateStr = dayDate.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'short' });
+      html += `<tr><td>${DAY_NAMES[d - 1]}</td><td class="muted">${dateStr}</td><td class="center">${days[d] ? '✅' : '❌'}</td></tr>`;
+    }
+    html += `</tbody></table>`;
+    html += `<div class="summary">Settimana ${w}: ${dp}/${DAY_COUNT} giorni</div>`;
+  }
+
+  html += `<div class="summary" style="margin-top:20px;font-size:15px;border-top:2px solid #d1d5db;padding-top:12px;">Totale complessivo: ${grandTotal}/${grandPossible} giorni</div>`;
+
+  printContent(`Presenze ${person.nome}`, html);
 }
 
 function hideWeekDetailModal() {

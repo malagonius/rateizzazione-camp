@@ -223,7 +223,10 @@
     <div class="card">
       <div class="detail-header">
         <h2>📊 Riepilogo Presenze</h2>
-        <button id="btn-back-from-overview" class="ghost">← Eventi</button>
+        <div class="toolbar">
+          <button id="btn-print-overview" class="btn-print" title="Stampa riepilogo">🖨️ Stampa</button>
+          <button id="btn-back-from-overview" class="ghost">← Eventi</button>
+        </div>
       </div>
       <div id="presences-overview-content"></div>
     </div>
@@ -270,6 +273,7 @@
     <h3 id="week-detail-modal-title">Dettaglio settimana</h3>
     <div id="week-detail-modal-content"></div>
     <div class="modal-actions">
+      <button type="button" id="btn-print-week-detail" class="btn-print">🖨️ Stampa</button>
       <button type="button" id="week-detail-modal-close" class="secondary">Chiudi</button>
     </div>
   </div>

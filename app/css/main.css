@@ -584,6 +584,41 @@
   .week-detail-table { margin: 0; }
   .week-detail-table th, .week-detail-table td { padding: 6px 10px; font-size: 13px; }
 
+  /* === Print button === */
+  .btn-print {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .btn-print:hover { background: var(--bg); color: var(--text); }
+
+  /* === Print styles === */
+  @media print {
+    body { background: white; }
+    header, .tab-nav, .toolbar, .btn-print, .ghost,
+    .event-sub-tabs, .week-tabs, .filters, .toast,
+    .modal-backdrop, #btn-back, #btn-add, #btn-import,
+    #btn-export, #btn-clear, #btn-toggle-amounts,
+    .no-print { display: none !important; }
+    main { padding: 0; max-width: 100%; }
+    .card { box-shadow: none; padding: 0; }
+    .hidden { display: none !important; }
+    table { font-size: 11px; page-break-inside: auto; }
+    tr { page-break-inside: avoid; }
+    th, td { padding: 4px 6px; }
+    .print-only { display: block !important; }
+    .print-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .print-subtitle { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  }
+  .print-only { display: none; }
+
   @media (max-width: 640px) {
     main { padding: 12px; }
     th, td { padding: 8px 6px; font-size: 13px; }

@@ -269,6 +269,10 @@ function bindGlobalEvents() {
     if (e.target === document.getElementById('week-detail-modal')) hideWeekDetailModal();
   });
 
+  // Print buttons
+  document.getElementById('btn-print-overview').addEventListener('click', printOverview);
+  document.getElementById('btn-print-week-detail').addEventListener('click', printWeekDetail);
+
   // Main table presence button
   document.getElementById('people-tbody').addEventListener('click', async (e) => {
     const btn = e.target.closest('[data-action="toggle-main-presence"]');
