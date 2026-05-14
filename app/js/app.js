@@ -278,11 +278,19 @@ function bindGlobalEvents() {
     const btn = e.target.closest('[data-action="toggle-main-presence"]');
     if (!btn) return;
     e.stopPropagation();
-    const { personId, eventId, week } = btn.dataset;
-    await togglePresence(eventId, parseInt(week), personId);
-    const present = isPresent(eventId, parseInt(week), personId);
-    btn.className = 'btn-present ' + (present ? 'marked' : '');
-    btn.innerHTML = present ? '✅ Presente' : '📋 Segna';
+    const { personId, eventId, week, day } = btn.dataset;
+    const weekNum = parseInt(week);
+    if (day) {
+      await toggleDayPresence(eventId, weekNum, personId, parseInt(day));
+      const present = isDayPresent(eventId, weekNum, personId, parseInt(day));
+      btn.className = 'btn-present ' + (present ? 'marked' : '');
+      btn.innerHTML = present ? '✅ Presente' : '📋 Segna';
+    } else {
+      await togglePresence(eventId, weekNum, personId);
+      const present = isPresent(eventId, weekNum, personId);
+      btn.className = 'btn-present ' + (present ? 'marked' : '');
+      btn.innerHTML = present ? '✅ Presente' : '📋 Segna';
+    }
   });
 }
 

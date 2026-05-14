@@ -142,11 +142,28 @@ function getCurrentEvent() {
   return state.events.find(e => e.id === state.currentEventId);
 }
 
+/** Return the Monday of the week containing event.startDate */
+function getEventMonday(event) {
+  const d = new Date(event.startDate);
+  const day = d.getDay(); // 0=Sun,1=Mon,...,6=Sat
+  const offset = day === 0 ? 6 : day - 1; // days since Monday
+  d.setDate(d.getDate() - offset);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+/** Return the Monday of week `weekNum` (1-based) for an event */
+function getWeekStartMonday(event, weekNum) {
+  const monday = getEventMonday(event);
+  monday.setDate(monday.getDate() + (weekNum - 1) * 7);
+  return monday;
+}
+
 function getCurrentWeekNumber(event) {
   if (!event) return 1;
-  const start = new Date(event.startDate);
+  const monday = getEventMonday(event);
   const now = new Date();
-  const diff = Math.floor((now - start) / (7 * 24 * 60 * 60 * 1000));
+  const diff = Math.floor((now - monday) / (7 * 24 * 60 * 60 * 1000));
   return Math.max(1, Math.min(event.numWeeks, diff + 1));
 }
 
@@ -179,6 +196,128 @@ function renderEventsList() {
   }).join('');
 }
 
+// ============================================================
+// Week Picker — calendar that selects entire weeks (Mon-Sun)
+// ============================================================
+let wpViewYear, wpViewMonth, wpSelectedMonday;
+
+function initWeekPicker() {
+  const now = new Date();
+  wpViewYear = now.getFullYear();
+  wpViewMonth = now.getMonth();
+  wpSelectedMonday = null;
+  renderWeekPicker();
+
+  document.getElementById('wp-prev-month').onclick = () => {
+    wpViewMonth--;
+    if (wpViewMonth < 0) { wpViewMonth = 11; wpViewYear--; }
+    renderWeekPicker();
+  };
+  document.getElementById('wp-next-month').onclick = () => {
+    wpViewMonth++;
+    if (wpViewMonth > 11) { wpViewMonth = 0; wpViewYear++; }
+    renderWeekPicker();
+  };
+}
+
+function getMondayOfWeek(date) {
+  const d = new Date(date);
+  const day = d.getDay(); // 0=Sun
+  const offset = day === 0 ? 6 : day - 1;
+  d.setDate(d.getDate() - offset);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function isSameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+}
+
+function isInWeek(date, monday) {
+  if (!monday) return false;
+  const d = new Date(date); d.setHours(0,0,0,0);
+  const m = new Date(monday); m.setHours(0,0,0,0);
+  const diff = d - m;
+  return diff >= 0 && diff < 7 * 24 * 60 * 60 * 1000;
+}
+
+function renderWeekPicker() {
+  const grid = document.getElementById('wp-grid');
+  const label = document.getElementById('wp-month-label');
+  const monthNames = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  label.textContent = `${monthNames[wpViewMonth]} ${wpViewYear}`;
+
+  let html = '';
+  const dayHeaders = ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+  dayHeaders.forEach(dh => { html += `<div class="wp-day-header">${dh}</div>`; });
+
+  // First day of month
+  const firstOfMonth = new Date(wpViewYear, wpViewMonth, 1);
+  let startDay = firstOfMonth.getDay(); // 0=Sun
+  startDay = startDay === 0 ? 6 : startDay - 1; // Convert to Mon=0
+
+  // Days in month
+  const daysInMonth = new Date(wpViewYear, wpViewMonth + 1, 0).getDate();
+
+  // Fill leading days from prev month
+  const prevMonthDays = new Date(wpViewYear, wpViewMonth, 0).getDate();
+  for (let i = startDay - 1; i >= 0; i--) {
+    const d = new Date(wpViewYear, wpViewMonth - 1, prevMonthDays - i);
+    const sel = wpSelectedMonday && isInWeek(d, wpSelectedMonday);
+    html += `<div class="wp-day other-month${sel ? ' selected' : ''}" data-date="${d.toISOString()}">${d.getDate()}</div>`;
+  }
+
+  // Current month days
+  for (let day = 1; day <= daysInMonth; day++) {
+    const d = new Date(wpViewYear, wpViewMonth, day);
+    const sel = wpSelectedMonday && isInWeek(d, wpSelectedMonday);
+    html += `<div class="wp-day${sel ? ' selected' : ''}" data-date="${d.toISOString()}">${day}</div>`;
+  }
+
+  // Fill trailing days
+  const totalCells = startDay + daysInMonth;
+  const remaining = (7 - (totalCells % 7)) % 7;
+  for (let i = 1; i <= remaining; i++) {
+    const d = new Date(wpViewYear, wpViewMonth + 1, i);
+    const sel = wpSelectedMonday && isInWeek(d, wpSelectedMonday);
+    html += `<div class="wp-day other-month${sel ? ' selected' : ''}" data-date="${d.toISOString()}">${i}</div>`;
+  }
+
+  grid.innerHTML = html;
+
+  // Click handler — select the whole week
+  grid.querySelectorAll('.wp-day').forEach(cell => {
+    cell.addEventListener('click', () => {
+      const clickedDate = new Date(cell.dataset.date);
+      wpSelectedMonday = getMondayOfWeek(clickedDate);
+      // Store as YYYY-MM-DD
+      const y = wpSelectedMonday.getFullYear();
+      const m = String(wpSelectedMonday.getMonth() + 1).padStart(2, '0');
+      const dd = String(wpSelectedMonday.getDate()).padStart(2, '0');
+      document.getElementById('ef-start').value = `${y}-${m}-${dd}`;
+      const sun = new Date(wpSelectedMonday);
+      sun.setDate(sun.getDate() + 6);
+      document.getElementById('wp-selection').textContent =
+        `Settimana: ${wpSelectedMonday.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })} — ${sun.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+      renderWeekPicker();
+    });
+
+    // Hover: highlight entire week
+    cell.addEventListener('mouseenter', () => {
+      const hoverDate = new Date(cell.dataset.date);
+      const hoverMonday = getMondayOfWeek(hoverDate);
+      grid.querySelectorAll('.wp-day').forEach(c => {
+        const d = new Date(c.dataset.date);
+        c.classList.toggle('week-hover', !wpSelectedMonday || !isInWeek(d, wpSelectedMonday) ? isInWeek(d, hoverMonday) : false);
+      });
+    });
+  });
+
+  grid.addEventListener('mouseleave', () => {
+    grid.querySelectorAll('.wp-day').forEach(c => c.classList.remove('week-hover'));
+  });
+}
+
 function showEventForm() {
   ['view-events', 'view-event-detail', 'view-presences-overview'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
@@ -187,6 +326,8 @@ function showEventForm() {
   document.getElementById('ef-name').value = '';
   document.getElementById('ef-start').value = '';
   document.getElementById('ef-weeks').value = '1';
+  document.getElementById('wp-selection').textContent = '';
+  initWeekPicker();
 }
 
 async function createEvent() {
@@ -195,7 +336,7 @@ async function createEvent() {
   const numWeeks = parseInt(document.getElementById('ef-weeks').value) || 1;
 
   if (!name) { toast('Inserisci un nome per l\'evento', 'error'); return; }
-  if (!startDate) { toast('Inserisci una data di inizio', 'error'); return; }
+  if (!startDate) { toast('Seleziona una settimana di inizio', 'error'); return; }
 
   const baseGroups = autoAssignGroups(state.people);
   const weekGroups = {};
@@ -244,8 +385,7 @@ function renderWeekTabs() {
   const container = document.getElementById('week-tabs');
   container.innerHTML = '';
   for (let w = 1; w <= event.numWeeks; w++) {
-    const startDate = new Date(event.startDate);
-    startDate.setDate(startDate.getDate() + (w - 1) * 7);
+    const startDate = getWeekStartMonday(event, w);
     const label = `Sett. ${w} (${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })})`;
     const btn = document.createElement('button');
     btn.textContent = label;
@@ -802,8 +942,7 @@ function showWeekDetailModal(eventId, weekNum, personId) {
   const event = state.events.find(e => e.id === eventId);
   if (!event) return;
 
-  const startDate = new Date(event.startDate);
-  startDate.setDate(startDate.getDate() + (weekNum - 1) * 7);
+  const startDate = getWeekStartMonday(event, weekNum);
 
   const modal = document.getElementById('week-detail-modal');
   const title = document.getElementById('week-detail-modal-title');
@@ -903,8 +1042,7 @@ function printPersonDetail(eventId, personId) {
   const grandPossible = event.numWeeks * DAY_COUNT;
 
   for (let w = 1; w <= event.numWeeks; w++) {
-    const startDate = new Date(event.startDate);
-    startDate.setDate(startDate.getDate() + (w - 1) * 7);
+    const startDate = getWeekStartMonday(event, w);
     const days = getPresenceDays(eventId, w, personId);
     const dp = countDaysPresent(eventId, w, personId);
     grandTotal += dp;
@@ -938,13 +1076,24 @@ function getActiveEvent() {
   return state.events[state.events.length - 1];
 }
 
+function getCurrentDayOfWeek(event) {
+  if (!event) return null;
+  const now = new Date();
+  const jsDay = now.getDay(); // 0=Sun,1=Mon,...,6=Sat
+  if (jsDay === 0) return null; // Sunday — no camp day
+  const dayNum = jsDay; // 1=Mon,...,6=Sat — matches DAY_COUNT (1-6)
+  if (dayNum > DAY_COUNT) return null;
+  return dayNum;
+}
+
 function renderPresenceColumn(personId) {
   const event = getActiveEvent();
   if (!event) return '';
   const week = getCurrentWeekNumber(event);
-  const present = isPresent(event.id, week, personId);
+  const day = getCurrentDayOfWeek(event);
+  const present = day ? isDayPresent(event.id, week, personId, day) : isPresent(event.id, week, personId);
   return `<td style="text-align:center;">
-    <button class="btn-present ${present ? 'marked' : ''}" data-action="toggle-main-presence" data-person-id="${escapeHtml(personId)}" data-event-id="${escapeHtml(event.id)}" data-week="${week}">
+    <button class="btn-present ${present ? 'marked' : ''}" data-action="toggle-main-presence" data-person-id="${escapeHtml(personId)}" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-day="${day || ''}">
       ${present ? '✅ Presente' : '📋 Segna'}
     </button>
   </td>`;

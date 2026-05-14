@@ -624,3 +624,56 @@
     th, td { padding: 8px 6px; font-size: 13px; }
     .groups-container { grid-template-columns: 1fr; }
   }
+
+  /* === Week Picker === */
+  .week-picker {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--surface);
+    max-width: 340px;
+    margin-top: 6px;
+  }
+  .week-picker-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .week-picker-header button { padding: 4px 10px; min-width: auto; }
+  .week-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .week-picker-grid .wp-day-header {
+    font-weight: 600;
+    color: var(--muted);
+    padding: 4px 0;
+    font-size: 11px;
+  }
+  .week-picker-grid .wp-day {
+    padding: 6px 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .week-picker-grid .wp-day:hover { background: var(--bg); }
+  .week-picker-grid .wp-day.other-month { color: var(--muted); opacity: 0.4; }
+  .week-picker-grid .wp-day.selected { background: var(--primary); color: white; }
+  .week-picker-grid .wp-day.week-hover { background: var(--blue-bg); }
+  .wp-selection-label {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 500;
+  }
+  .field-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 14px;
+  }

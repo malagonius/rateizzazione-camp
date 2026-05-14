@@ -178,12 +178,22 @@
         <label>Nome evento
           <input type="text" id="ef-name" placeholder="Camp estivo 2026" />
         </label>
-        <label>Data inizio
-          <input type="date" id="ef-start" />
-        </label>
         <label>Numero settimane
           <input type="number" id="ef-weeks" min="1" max="52" value="1" />
         </label>
+        <div>
+          <span class="field-label">Settimana di inizio</span>
+          <div id="wp-selection" class="wp-selection-label"></div>
+          <div class="week-picker" id="ef-week-picker">
+            <div class="week-picker-header">
+              <button type="button" class="ghost" id="wp-prev-month">◀</button>
+              <span id="wp-month-label"></span>
+              <button type="button" class="ghost" id="wp-next-month">▶</button>
+            </div>
+            <div class="week-picker-grid" id="wp-grid"></div>
+          </div>
+          <input type="hidden" id="ef-start" />
+        </div>
       </div>
       <button id="btn-create-event">✅ Crea evento e genera gruppi</button>
     </div>
