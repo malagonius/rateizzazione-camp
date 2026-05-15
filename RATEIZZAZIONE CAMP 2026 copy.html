@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rateizzazione Camp 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="app/css/main.css" />
+</head>
+<body>
+<header>
+  <h1>📋 Rateizzazione Camp 2026</h1>
+  <div class="toolbar">
+    <button id="btn-back" class="ghost hidden">← Indietro</button>
+    <button id="btn-toggle-amounts" class="icon-only active" title="Mostra/Nascondi importi">
+      <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      </svg>
+    </button>
+    <input type="file" id="file-input" accept=".xlsx,.xls" class="hidden" />
+    <button id="btn-import" class="secondary">📥 Importa Excel</button>
+    <button id="btn-export" class="danger">📤 Esporta Excel</button>
+    <button id="btn-add" class="ghost">➕ Nuova persona</button>
+    <button id="btn-clear" class="danger" title="Cancella tutti i dati">🗑️ Reset</button>
+  </div>
+</header>
+
+<nav class="tab-nav" id="tab-nav">
+  <button class="active" data-tab="rateizzazione">📋 Rateizzazione</button>
+  <button data-tab="presenze">📅 Presenze</button>
+</nav>
+
+<!-- Page sections (JS/CSS logic lives in app/js/ and app/css/) -->
+<main>
+  <!-- ========== RATEIZZAZIONE: LIST VIEW ========== -->
+  <section id="view-list">
+    <div class="stats" id="stats"></div>
+    <div class="card">
+      <div class="filters">
+        <input type="text" id="search" class="search" placeholder="🔍 Cerca per nome o telefono..." />
+        <select id="filter-status">
+          <option value="">Tutti gli stati</option>
+          <option value="paid">✅ Pagato</option>
+          <option value="partial">⚠️ Parziale</option>
+          <option value="unpaid">❌ Non pagato</option>
+          <option value="overpaid">💙 Sovrappagato</option>
+          <option value="assistenza">🤝 Assistenza</option>
+        </select>
+        <button id="btn-toggle-table-visibility" class="icon-only" title="Nascondi/Mostra tutti gli importi">
+          <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <div class="table-wrap">
+        <table id="people-table">
+          <thead>
+            <tr>
+              <th data-sort="nome">Nome <span class="sort-arrow"></span></th>
+              <th data-sort="telefono">Telefono <span class="sort-arrow"></span></th>
+              <th data-sort="totale" class="num">Totale dovuto <span class="sort-arrow"></span></th>
+              <th data-sort="paid" class="num">Pagato <span class="sort-arrow"></span></th>
+              <th data-sort="residuo" class="num">Residuo <span class="sort-arrow"></span></th>
+              <th>Avanzamento</th>
+              <th data-sort="status">Stato <span class="sort-arrow"></span></th>
+              <th id="th-presenza" class="hidden">Presenza</th>
+            </tr>
+          </thead>
+          <tbody id="people-tbody"></tbody>
+        </table>
+      </div>
+      <div id="empty-state" class="empty hidden">
+        <h2>Nessun dato</h2>
+        <p>Importa un file Excel o aggiungi una nuova persona per iniziare.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== RATEIZZAZIONE: DETAIL VIEW ========== -->
+  <section id="view-detail" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2 id="detail-title">Dettaglio</h2>
+        <div class="row-actions">
+          <button id="btn-delete-person" class="danger">🗑️ Elimina persona</button>
+        </div>
+      </div>
+      <div class="field-grid">
+        <label>Nome
+          <input type="text" id="d-nome" />
+        </label>
+        <label>Telefono
+          <input type="text" id="d-telefono" />
+        </label>
+        <label>Totale dovuto (€)
+          <input type="number" id="d-totale" step="0.01" min="0" />
+        </label>
+        <label>Data iscrizione
+          <input type="date" id="d-dataIscrizione" />
+        </label>
+        <label>Età
+          <input type="number" id="d-eta" min="0" max="99" />
+        </label>
+        <label>Assistenza
+          <select id="d-assistenza">
+            <option value="No">No</option>
+            <option value="Si">Sì</option>
+          </select>
+        </label>
+      </div>
+
+      <h3 style="margin-bottom: 8px;">Rate</h3>
+      <div class="table-wrap">
+        <table class="installments-table">
+          <thead>
+            <tr>
+              <th>Rata</th>
+              <th class="num">Ipotesi (€)</th>
+              <th class="num">Pagato reale (€)</th>
+              <th>Data pagamento</th>
+              <th>Metodo di pagamento</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="installments-tbody"></tbody>
+        </table>
+      </div>
+      <div style="margin-top: 12px;">
+        <button id="btn-add-installment" class="ghost">➕ Aggiungi rata</button>
+      </div>
+
+      <div class="summary-box">
+        <div class="stat">
+          <div class="stat-label">Totale dovuto</div>
+          <div class="stat-value" id="sum-totale">€ 0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Totale pagato</div>
+          <div class="stat-value" id="sum-paid" style="color: var(--green);">€ 0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Residuo</div>
+          <div class="stat-value" id="sum-residuo" style="color: var(--red);">€ 0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Stato</div>
+          <div class="stat-value" id="sum-status">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRESENZE: EVENTS LIST VIEW ========== -->
+  <section id="view-events" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2>📅 Eventi</h2>
+        <button id="btn-new-event" class="ghost">➕ Nuovo evento</button>
+      </div>
+      <div id="events-list" class="events-grid"></div>
+      <div id="events-empty" class="empty">
+        <h2>Nessun evento</h2>
+        <p>Crea un nuovo evento per gestire presenze e gruppi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRESENZE: EVENT CREATION FORM ========== -->
+  <section id="view-event-form" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2>Nuovo Evento</h2>
+        <button id="btn-cancel-event-form" class="ghost">← Annulla</button>
+      </div>
+      <div class="event-form-grid">
+        <label>Nome evento
+          <input type="text" id="ef-name" placeholder="Camp estivo 2026" />
+        </label>
+        <label>Numero settimane
+          <input type="number" id="ef-weeks" min="1" max="52" value="1" />
+        </label>
+        <div>
+          <span class="field-label">Settimana di inizio</span>
+          <div id="wp-selection" class="wp-selection-label"></div>
+          <div class="week-picker" id="ef-week-picker">
+            <div class="week-picker-header">
+              <button type="button" class="ghost" id="wp-prev-month">◀</button>
+              <span id="wp-month-label"></span>
+              <button type="button" class="ghost" id="wp-next-month">▶</button>
+            </div>
+            <div class="week-picker-grid" id="wp-grid"></div>
+          </div>
+          <input type="hidden" id="ef-start" />
+        </div>
+      </div>
+      <button id="btn-create-event">✅ Crea evento e genera gruppi</button>
+    </div>
+  </section>
+
+  <!-- ========== PRESENZE: EVENT DETAIL VIEW ========== -->
+  <section id="view-event-detail" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2 id="event-detail-title">Evento</h2>
+        <div class="toolbar">
+          <button id="btn-back-events" class="ghost">← Eventi</button>
+          <button id="btn-add-person-to-group" class="ghost">➕ Aggiungi persona</button>
+          <button id="btn-delete-event" class="danger">🗑️ Elimina evento</button>
+        </div>
+      </div>
+
+      <div class="week-tabs" id="week-tabs"></div>
+
+      <div class="event-sub-tabs">
+        <button id="btn-show-groups" class="active" data-subview="groups">👥 Gruppi</button>
+        <button id="btn-show-presences" data-subview="presences">✅ Presenze</button>
+      </div>
+
+      <div id="event-groups-view">
+        <div id="groups-container" class="groups-container"></div>
+      </div>
+
+      <div id="event-presences-view" class="hidden">
+        <div class="presence-grid" id="presence-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRESENZE: OVERVIEW ========== -->
+  <section id="view-presences-overview" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2>📊 Riepilogo Presenze</h2>
+        <div class="toolbar">
+          <button id="btn-print-overview" class="btn-print" title="Stampa riepilogo">🖨️ Stampa</button>
+          <button id="btn-back-from-overview" class="ghost">← Eventi</button>
+        </div>
+      </div>
+      <div id="presences-overview-content"></div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<!-- Add person to group modal -->
+<div id="add-to-group-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3>Aggiungi persona al gruppo</h3>
+    <div class="modal-form-grid">
+      <label>Persona
+        <select id="atg-person"></select>
+      </label>
+      <label>Gruppo
+        <select id="atg-group"></select>
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button id="atg-cancel" class="secondary">Annulla</button>
+      <button id="atg-ok">Aggiungi</button>
+    </div>
+  </div>
+</div>
+
+<!-- Password modal (masked input) -->
+<div id="password-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="password-modal-title">
+  <div class="modal">
+    <h3 id="password-modal-title">Password richiesta</h3>
+    <p id="password-modal-message">Inserisci la password:</p>
+    <input type="password" id="password-modal-input" autocomplete="current-password" />
+    <div class="modal-actions">
+      <button type="button" id="password-modal-cancel" class="secondary">Annulla</button>
+      <button type="button" id="password-modal-ok">Conferma</button>
+    </div>
+  </div>
+</div>
+
+<!-- Week detail modal -->
+<div id="week-detail-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal" style="min-width:400px;max-width:600px;">
+    <h3 id="week-detail-modal-title">Dettaglio settimana</h3>
+    <div id="week-detail-modal-content"></div>
+    <div class="modal-actions">
+      <button type="button" id="btn-print-week-detail" class="btn-print">🖨️ Stampa</button>
+      <button type="button" id="week-detail-modal-close" class="secondary">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<!-- JS: load order matters -->
+<script src="app/js/db.js"></script>
+<script src="app/js/utils.js"></script>
+<script src="app/js/rateizzazione_detail.js"></script>
+<script src="app/js/presenze.js"></script>
+<script src="app/js/rateizzazione.js"></script>
+<script src="app/js/app.js"></script>
+</body>
+</html>
