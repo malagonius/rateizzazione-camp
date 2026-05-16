@@ -138,6 +138,34 @@ function getPersonById(id) {
   return state.people.find(p => p.id === id);
 }
 
+// ============================================================
+// Form groups for current week based on person event assignments
+// ============================================================
+async function formGroupsForWeek() {
+  const event = getCurrentEvent();
+  if (!event) return;
+  const weekNum = state.currentWeek;
+
+  // Get people assigned to this event AND this specific week
+  const eligiblePeople = state.people.filter(p =>
+    p.eventId === event.id && Array.isArray(p.eventWeeks) && p.eventWeeks.includes(weekNum)
+  );
+
+  if (eligiblePeople.length === 0) {
+    toast('Nessuna persona assegnata a questa settimana. Assegna le persone dall\'anagrafica.', 'error');
+    return;
+  }
+
+  if (!confirm(`Formare i gruppi per la settimana ${weekNum} con ${eligiblePeople.length} persone assegnate?\nI gruppi attuali di questa settimana verranno sostituiti.`)) return;
+
+  const newGroups = autoAssignGroups(eligiblePeople);
+  event.weekGroups[weekNum] = newGroups;
+
+  await dbPutTo(EVENTS_STORE, event);
+  toast(`Gruppi formati per settimana ${weekNum}: ${eligiblePeople.length} persone in ${newGroups.length} gruppi`, 'success');
+  renderGroups();
+}
+
 function getCurrentEvent() {
   return state.events.find(e => e.id === state.currentEventId);
 }
@@ -384,21 +412,66 @@ function renderWeekTabs() {
   if (!event) return;
   const container = document.getElementById('week-tabs');
   container.innerHTML = '';
+
+  // Group weeks by month
+  const monthNames = ['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+  const monthGroups = {};
+
   for (let w = 1; w <= event.numWeeks; w++) {
-    const startDate = getWeekStartMonday(event, w);
-    const label = `Sett. ${w} (${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })})`;
-    const btn = document.createElement('button');
-    btn.textContent = label;
-    btn.dataset.week = w;
-    if (w === state.currentWeek) btn.classList.add('active');
-    btn.addEventListener('click', () => {
+    const monday = getWeekStartMonday(event, w);
+    const saturday = new Date(monday);
+    saturday.setDate(saturday.getDate() + 5);
+    const monthKey = monday.getMonth();
+    if (!monthGroups[monthKey]) {
+      monthGroups[monthKey] = { name: monthNames[monthKey], weeks: [] };
+    }
+    const startDay = monday.getDate();
+    const endDay = saturday.getDate();
+    const startMonth = monthNames[monday.getMonth()].substring(0, 3).toLowerCase();
+    const endMonth = monthNames[saturday.getMonth()].substring(0, 3).toLowerCase();
+    const rangeLabel = monday.getMonth() === saturday.getMonth()
+      ? `${startDay} - ${endDay} ${startMonth}`
+      : `${startDay} ${startMonth} - ${endDay} ${endMonth}`;
+    monthGroups[monthKey].weeks.push({ weekNum: w, label: rangeLabel, monday });
+  }
+
+  // Build table-like structure: months as columns, weeks as rows
+  const months = Object.values(monthGroups);
+  const maxRows = Math.max(...months.map(m => m.weeks.length));
+
+  let html = '<div class="week-tabs-table"><div class="week-tabs-header">';
+  months.forEach(m => {
+    html += `<div class="week-tabs-month-header">${m.name.toUpperCase()}</div>`;
+  });
+  html += '</div>';
+
+  for (let row = 0; row < maxRows; row++) {
+    html += '<div class="week-tabs-row">';
+    months.forEach(m => {
+      const week = m.weeks[row];
+      if (week) {
+        const active = week.weekNum === state.currentWeek ? ' active' : '';
+        html += `<div class="week-tabs-cell${active}" data-week="${week.weekNum}">${week.label}</div>`;
+      } else {
+        html += '<div class="week-tabs-cell empty"></div>';
+      }
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+
+  container.innerHTML = html;
+
+  // Bind click events
+  container.querySelectorAll('.week-tabs-cell[data-week]').forEach(cell => {
+    cell.addEventListener('click', () => {
+      const w = parseInt(cell.dataset.week);
       state.currentWeek = w;
-      container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      container.querySelectorAll('.week-tabs-cell').forEach(c => c.classList.remove('active'));
+      cell.classList.add('active');
       renderEventSubView();
     });
-    container.appendChild(btn);
-  }
+  });
 }
 
 function renderEventSubView() {
@@ -425,7 +498,9 @@ function renderGroups() {
   const assignedIds = getAllMemberIdsForWeek(event, state.currentWeek);
   const unassigned = state.people.filter(p => !assignedIds.has(p.id));
 
-  container.innerHTML = groups.map((group, gIdx) => {
+  let html = '';
+
+  html += groups.map((group, gIdx) => {
     const members = group.memberIds.map(id => getPersonById(id)).filter(Boolean);
     const descriptionsHtml = group.descriptions.map((desc, dIdx) => {
       const removeBtn = dIdx > 0
@@ -472,7 +547,7 @@ function renderGroups() {
         </div>
       `;
     }).join('');
-    container.innerHTML += `
+    html += `
       <div class="unassigned-list">
         <h4>Non assegnati (${unassigned.length})</h4>
         <div class="group-members-list" data-group-idx="-1">
@@ -481,6 +556,8 @@ function renderGroups() {
       </div>
     `;
   }
+
+  container.innerHTML = html;
 
   setupDragAndDrop();
 }

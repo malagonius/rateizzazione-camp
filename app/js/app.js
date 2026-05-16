@@ -40,7 +40,9 @@ function bindGlobalEvents() {
         key: t.key, label: t.label, ipotesi: 0, reale: 0, data: null, metodo: '', iban: ''
       })),
       assistenza: 'No',
-      visibilityHidden: false
+      visibilityHidden: false,
+      eventId: null,
+      eventWeeks: []
     };
     state.people.push(newP);
     await dbPut(newP);
@@ -240,10 +242,15 @@ function bindGlobalEvents() {
   document.querySelectorAll('.event-sub-tabs button[data-subview]').forEach(btn => {
     btn.addEventListener('click', () => {
       state.eventSubView = btn.dataset.subview;
-      document.querySelectorAll('.event-sub-tabs button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.event-sub-tabs button[data-subview]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       renderEventSubView();
     });
+  });
+
+  // Forma gruppi button
+  document.getElementById('btn-form-groups-week').addEventListener('click', async () => {
+    await formGroupsForWeek();
   });
 
   // Add to group modal
@@ -307,6 +314,8 @@ async function init() {
       p.assistenza = normalizeAssistenza(p.assistenza);
       if (p.visibilityHidden === undefined) p.visibilityHidden = false;
       if (p.eta === undefined) p.eta = null;
+      if (p.eventId === undefined) p.eventId = null;
+      if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
     });
     // Load events and presences
     state.events = await dbGetAllFrom(EVENTS_STORE);

@@ -1,0 +1,12 @@
+La gestione degli eventi deve esesere differente;
+    Quando sono nella scheda dettagli di un bambino, devo potergli assegnare 
+    un evento esistente
+    Assegnato quindi all'evento, deve comparire una casellina, per ogni settimana di durata dell'evento, che serve a indicare
+    a quali settimane il bambino si prenota per partecipare.
+
+    La divisione dei gruppi dunque deve essere automatizzata a seconda delle partecipazioni
+    settimanali dei singoli bambini, non deve esser una divisione per evento, ma una divisione settimanale
+    mantenendo comunque la divisione per fascia di età e la possibiltà di spostarli a mano
+
+
+    La visualizzazione delle settimane deve essere tabellare coi mesi in orizzontale e le settimane incolonnate in verticale

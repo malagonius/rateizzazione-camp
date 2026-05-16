@@ -111,6 +111,16 @@
         </label>
       </div>
 
+      <h3 style="margin-bottom: 8px;">Assegnazione Evento</h3>
+      <div class="field-grid" style="margin-bottom: 16px;">
+        <label>Evento
+          <select id="d-evento">
+            <option value="">— Nessun evento —</option>
+          </select>
+        </label>
+      </div>
+      <div id="d-event-weeks" class="event-weeks-checkboxes" style="margin-bottom: 16px;"></div>
+
       <h3 style="margin-bottom: 8px;">Rate</h3>
       <div class="table-wrap">
         <table class="installments-table">
@@ -216,6 +226,7 @@
       <div class="event-sub-tabs">
         <button id="btn-show-groups" class="active" data-subview="groups">👥 Gruppi</button>
         <button id="btn-show-presences" data-subview="presences">✅ Presenze</button>
+        <button id="btn-form-groups-week" class="ghost" style="margin-left:auto;">🔀 Forma gruppi per questa settimana</button>
       </div>
 
       <div id="event-groups-view">

@@ -34,6 +34,7 @@ function renderDetail() {
   document.getElementById('d-assistenza').value = (p.assistenza === 'Si') ? 'Si' : 'No';
   document.getElementById('d-eta').value = p.eta != null ? p.eta : '';
 
+  renderEventAssignment();
   renderInstallments();
   renderDetailSummary();
 }
@@ -100,6 +101,49 @@ async function persistCurrent() {
   const p = getCurrent();
   if (!p) return;
   await dbPut(p);
+}
+
+// ============================================================
+// Event assignment — select + week checkboxes
+// ============================================================
+function renderEventAssignment() {
+  const p = getCurrent();
+  if (!p) return;
+
+  const select = document.getElementById('d-evento');
+  select.innerHTML = '<option value="">— Nessun evento —</option>' +
+    state.events.map(ev => `<option value="${escapeHtml(ev.id)}"${p.eventId === ev.id ? ' selected' : ''}>${escapeHtml(ev.name)}</option>`).join('');
+
+  renderEventWeeks();
+}
+
+function renderEventWeeks() {
+  const p = getCurrent();
+  const container = document.getElementById('d-event-weeks');
+  if (!p || !p.eventId) {
+    container.innerHTML = '';
+    return;
+  }
+
+  const event = state.events.find(ev => ev.id === p.eventId);
+  if (!event) {
+    container.innerHTML = '';
+    return;
+  }
+
+  const weeks = p.eventWeeks || [];
+
+  let html = '<div class="event-weeks-label">Settimane di partecipazione:</div>';
+  html += '<div class="event-weeks-grid">';
+  for (let w = 1; w <= event.numWeeks; w++) {
+    const startDate = getWeekStartMonday(event, w);
+    const label = `Sett. ${w} (${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })})`;
+    const checked = weeks.includes(w) ? ' checked' : '';
+    html += `<label class="event-week-checkbox"><input type="checkbox" data-week="${w}"${checked} /> ${escapeHtml(label)}</label>`;
+  }
+  html += '</div>';
+  html += '<div style="margin-top:6px;"><button type="button" id="btn-select-all-weeks" class="ghost" style="font-size:12px;">Seleziona tutte</button> <button type="button" id="btn-deselect-all-weeks" class="ghost" style="font-size:12px;">Deseleziona tutte</button></div>';
+  container.innerHTML = html;
 }
 
 // Bind input events on detail view (event delegation)
@@ -208,5 +252,52 @@ function bindDetailEvents() {
     state.people = state.people.filter(x => x.id !== p.id);
     toast('Persona eliminata', 'success');
     showList();
+  });
+
+  // Event assignment select
+  document.getElementById('d-evento').addEventListener('change', async (e) => {
+    const p = getCurrent();
+    if (!p) return;
+    p.eventId = e.target.value || null;
+    if (!p.eventId) {
+      p.eventWeeks = [];
+    }
+    await persistCurrent();
+    renderEventWeeks();
+  });
+
+  // Week checkboxes (event delegation)
+  document.getElementById('d-event-weeks').addEventListener('change', async (e) => {
+    if (!e.target.matches('input[data-week]')) return;
+    const p = getCurrent();
+    if (!p) return;
+    const weekNum = parseInt(e.target.dataset.week);
+    if (!p.eventWeeks) p.eventWeeks = [];
+    if (e.target.checked) {
+      if (!p.eventWeeks.includes(weekNum)) p.eventWeeks.push(weekNum);
+    } else {
+      p.eventWeeks = p.eventWeeks.filter(w => w !== weekNum);
+    }
+    p.eventWeeks.sort((a, b) => a - b);
+    await persistCurrent();
+  });
+
+  // Select/deselect all weeks
+  document.getElementById('d-event-weeks').addEventListener('click', async (e) => {
+    const btn = e.target.closest('#btn-select-all-weeks, #btn-deselect-all-weeks');
+    if (!btn) return;
+    const p = getCurrent();
+    if (!p || !p.eventId) return;
+    const event = state.events.find(ev => ev.id === p.eventId);
+    if (!event) return;
+
+    if (btn.id === 'btn-select-all-weeks') {
+      p.eventWeeks = [];
+      for (let w = 1; w <= event.numWeeks; w++) p.eventWeeks.push(w);
+    } else {
+      p.eventWeeks = [];
+    }
+    await persistCurrent();
+    renderEventWeeks();
   });
 }

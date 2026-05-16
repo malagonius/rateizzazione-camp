@@ -467,26 +467,67 @@
   .member-remove:hover { color: var(--red); background:none }
   .group-member.dragging { opacity: 0.4; }
 
-  /* === Week Tabs === */
+  /* === Week Tabs — Month-grouped table layout === */
   .week-tabs {
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
     margin-bottom: 16px;
+    overflow-x: auto;
   }
-  .week-tabs button {
-    padding: 6px 14px;
-    border-radius: 20px;
+  .week-tabs-table {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: fit-content;
+  }
+  .week-tabs-header {
+    display: flex;
+  }
+  .week-tabs-month-header {
+    flex: 1;
+    min-width: 160px;
+    padding: 10px 12px;
+    font-weight: 700;
     font-size: 13px;
-    background: var(--bg);
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .week-tabs button:hover { background: var(--border); }
-  .week-tabs button.active {
+    text-align: center;
     background: var(--primary);
     color: white;
-    border-color: var(--primary);
+    border-right: 1px solid rgba(255,255,255,0.2);
+    letter-spacing: 0.5px;
+  }
+  .week-tabs-month-header:last-child {
+    border-right: none;
+  }
+  .week-tabs-row {
+    display: flex;
+    border-top: 1px solid var(--border);
+  }
+  .week-tabs-cell {
+    flex: 1;
+    min-width: 160px;
+    padding: 8px 12px;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .week-tabs-cell:last-child {
+    border-right: none;
+  }
+  .week-tabs-cell:hover:not(.empty) {
+    background: var(--blue-bg);
+  }
+  .week-tabs-cell.active {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+  }
+  .week-tabs-cell.empty {
+    cursor: default;
+    background: var(--bg);
   }
 
   /* === Presence === */
@@ -531,6 +572,7 @@
     display: flex;
     gap: 4px;
     margin-bottom: 16px;
+    align-items: center;
   }
   .event-sub-tabs button {
     padding: 8px 16px;
@@ -682,4 +724,30 @@
     font-weight: 500;
     margin-bottom: 4px;
     font-size: 14px;
+  }
+
+  /* Event weeks checkboxes in detail view */
+  .event-weeks-label {
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+  .event-weeks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 6px 16px;
+  }
+  .event-week-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+  .event-week-checkbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
   }
