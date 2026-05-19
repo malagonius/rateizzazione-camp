@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Rateizzazione Camp 2026</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<link rel="stylesheet" href="app/css/main.css" />
+<link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 <header>
@@ -283,6 +283,19 @@
   </div>
 </div>
 
+<!-- Backup restore modal -->
+<div id="backup-restore-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h3>💾 Ripristino dati</h3>
+    <p>Non sono stati trovati dati. Vuoi caricare i dati dall'ultimo backup disponibile?</p>
+    <p id="backup-restore-info" style="font-size:.85em;color:var(--muted);"></p>
+    <div class="modal-actions">
+      <button type="button" id="backup-restore-cancel" class="secondary">No, continua vuoto</button>
+      <button type="button" id="backup-restore-ok">Sì, ripristina</button>
+    </div>
+  </div>
+</div>
+
 <!-- Week detail modal -->
 <div id="week-detail-modal" class="modal-backdrop" role="dialog" aria-modal="true">
   <div class="modal" style="min-width:400px;max-width:600px;">
@@ -296,11 +309,12 @@
 </div>
 
 <!-- JS: load order matters -->
-<script src="app/js/db.js"></script>
-<script src="app/js/utils.js"></script>
-<script src="app/js/rateizzazione_detail.js"></script>
-<script src="app/js/presenze.js"></script>
-<script src="app/js/rateizzazione.js"></script>
-<script src="app/js/app.js"></script>
+<script src="js/db.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/rateizzazione_detail.js"></script>
+<script src="js/presenze.js"></script>
+<script src="js/rateizzazione.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

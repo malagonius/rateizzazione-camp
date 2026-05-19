@@ -3,10 +3,11 @@
  * ============================================================ */
 
 const DB_NAME = 'rateizzazione-camp';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const STORE = 'people';
 const EVENTS_STORE = 'events';
 const PRESENCES_STORE = 'presences';
+const BACKUPS_STORE = 'backups';
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -21,6 +22,9 @@ function openDB() {
       }
       if (!db.objectStoreNames.contains(PRESENCES_STORE)) {
         db.createObjectStore(PRESENCES_STORE, { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains(BACKUPS_STORE)) {
+        db.createObjectStore(BACKUPS_STORE, { keyPath: 'id' });
       }
     };
     req.onsuccess = () => resolve(req.result);

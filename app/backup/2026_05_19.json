@@ -1,0 +1,4424 @@
+{
+  "id": "2026_05_19",
+  "createdAt": "2026-05-19T10:33:22.988Z",
+  "data": {
+    "people": [
+      {
+        "id": "p_moadzije_04v31f1",
+        "nome": "SECK NDEYE ANNA",
+        "telefono": "3883733947",
+        "totale": 160,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 160,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": false,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_07u6yzp",
+        "nome": "TARANTINO ROBERTO IGNAZIO",
+        "telefono": "3332087425",
+        "totale": 358,
+        "dataIscrizione": "2025-05-06",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 58,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 5,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          4
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_0ieyhra",
+        "nome": "PROIETTI DYLAN",
+        "telefono": "3298224170",
+        "totale": 180,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 180,
+            "reale": 180,
+            "data": "2025-05-29"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_249sb6m",
+        "nome": "LIGAMMARI CHLOE",
+        "telefono": "3296042352",
+        "totale": 730,
+        "dataIscrizione": "2025-04-15",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 130,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 0,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          7,
+          8
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_3hqxrsp",
+        "nome": "GENOVESE LUCREZIA",
+        "telefono": "3207087658",
+        "totale": 700,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 175,
+            "reale": 175,
+            "data": "2025-05-29"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          8,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_3iswazu",
+        "nome": "SCIRE' JASMINE",
+        "telefono": "3802077474",
+        "totale": 650,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_3xgee6y",
+        "nome": "CHIARAMONTE ALESSANDRO",
+        "telefono": "3296778998",
+        "totale": 830,
+        "dataIscrizione": "2025-05-27",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 300,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 270,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 260,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 13,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          5,
+          6,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_4ym5e8b",
+        "nome": "MARTORANA GINEVRA",
+        "telefono": "3349443706",
+        "totale": 500,
+        "dataIscrizione": "2025-05-28",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 0,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_53qe1wa",
+        "nome": "DE STEFANO MAJORANA ALESSIA",
+        "telefono": "3276964732",
+        "totale": 700,
+        "dataIscrizione": "2025-04-27",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 525,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          4,
+          8,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_5r9e265",
+        "nome": "FERRO NICOLO'",
+        "telefono": "3286280421",
+        "totale": 730,
+        "dataIscrizione": "2025-05-01",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 330,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 400,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_5sidwol",
+        "nome": "SCHILLACI GIULIO",
+        "telefono": "3288135459",
+        "totale": 750,
+        "dataIscrizione": "2025-05-13",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 13,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          6
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_625bmud",
+        "nome": "PAVONE GIOVANNI",
+        "telefono": "3420781203",
+        "totale": 730,
+        "dataIscrizione": "2025-04-28",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 180,
+            "reale": 180,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 3,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_6ribqan",
+        "nome": "RUGGERI THOMAS",
+        "telefono": "3291843129",
+        "totale": 660,
+        "dataIscrizione": "2025-05-08",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 160,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 165,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 165,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 12,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_91ugcep",
+        "nome": "GENOVESE PIETRO",
+        "telefono": "3207087658",
+        "totale": 700,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 175,
+            "reale": 175,
+            "data": "2025-05-29"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 13,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_94779yn",
+        "nome": "CRIVELLO GIOVANNI",
+        "telefono": "3808986033",
+        "totale": 650,
+        "dataIscrizione": "2025-05-06",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 2,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          5,
+          7,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_9iixkvr",
+        "nome": "SCIMONELLI GIOVANNI",
+        "telefono": "3277182868",
+        "totale": 500,
+        "dataIscrizione": "2025-05-29",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_ajw0pp2",
+        "nome": "PAVONE LORENZO",
+        "telefono": "3420781203",
+        "totale": 500,
+        "dataIscrizione": "2025-04-28",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 100,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          11,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_al0tx2a",
+        "nome": "MODICA ELENA",
+        "telefono": "3897994787",
+        "totale": 130,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 130,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 13,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          5,
+          6,
+          7,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_b7uu0jq",
+        "nome": "RANZINO ANDREA",
+        "telefono": "3209608109",
+        "totale": 480,
+        "dataIscrizione": "2025-05-08",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 60,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 140,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 140,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 140,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 0,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_bftds71",
+        "nome": "RISPETTA LIONEL",
+        "telefono": "3313258335",
+        "totale": 830,
+        "dataIscrizione": "2025-05-04",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 230,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          6
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_bs4ba6k",
+        "nome": "TARANTINO FILIPPO",
+        "telefono": "3295869253",
+        "totale": 660,
+        "dataIscrizione": "2025-05-08",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": "2025-05-14"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": "2025-06-02"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          5
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_c5cb9rb",
+        "nome": "SCORDATO GINEVRA",
+        "telefono": "3280583595",
+        "totale": 240,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 160,
+            "reale": 160,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 13,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          7
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_cc925dy",
+        "nome": "NICOTRA ANTONIO",
+        "telefono": "3245882948",
+        "totale": 710,
+        "dataIscrizione": "2025-05-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          7,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_ckujyn4",
+        "nome": "MIRINO ANDREA",
+        "telefono": "3200669087",
+        "totale": 650,
+        "dataIscrizione": "2025-04-23",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 200,
+            "reale": 200,
+            "data": "2025-05-26"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 225,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 12,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          4,
+          7,
+          10,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_ct0z59m",
+        "nome": "COMPAGNO LEONARDO",
+        "telefono": "3296775687",
+        "totale": 260,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 130,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 130,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          9,
+          11,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_d0ryzf7",
+        "nome": "D'AGOSTINO FEDERICA",
+        "telefono": "3425664556",
+        "totale": 730,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 175,
+            "reale": 175,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 205,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          4,
+          6,
+          10
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_dqd6qgz",
+        "nome": "IMBURGIA GIUSEPPE",
+        "telefono": "3294645515",
+        "totale": 310,
+        "dataIscrizione": "2025-05-26",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 140,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 4,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_dwmxly0",
+        "nome": "PIERNO PAOLA VALERIA",
+        "telefono": "3312322047",
+        "totale": 350,
+        "dataIscrizione": "2025-05-01",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 0,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_e9lu3d3",
+        "nome": "TOTALI",
+        "telefono": "",
+        "totale": 27878,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 5788,
+            "reale": 100,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 1060,
+            "reale": 650,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 6510,
+            "reale": 2015,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 7135,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 5380,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 850,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 0,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          2,
+          3,
+          7,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_ej6iuck",
+        "nome": "SAVOCA ELEONORA",
+        "telefono": "3245419013",
+        "totale": 500,
+        "dataIscrizione": "2025-05-27",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 160,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          4,
+          6,
+          8,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_f5qkjcz",
+        "nome": "CRIVELLO CARLOTTA MARIA",
+        "telefono": "3808986033",
+        "totale": 195,
+        "dataIscrizione": "2025-05-06",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 50,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 145,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          8,
+          10
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_fu23l7h",
+        "nome": "MAGGIORE GABRIELE",
+        "telefono": "3494619722",
+        "totale": 180,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 4,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_grs4qo3",
+        "nome": "GRECO AURORA SOPHIE",
+        "telefono": "3791131743",
+        "totale": 830,
+        "dataIscrizione": "2025-05-07",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 830,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          4,
+          7,
+          10
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_kr5o1hh",
+        "nome": "GENOVESE FRANCESCO",
+        "telefono": "3931743172",
+        "totale": 560,
+        "dataIscrizione": "2025-04-22",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 177.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 127.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 127.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 127.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 5,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          6,
+          7,
+          8,
+          10,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_lrh13d9",
+        "nome": "MARTORANA LUDOVICA",
+        "telefono": "3349443706",
+        "totale": 500,
+        "dataIscrizione": "2025-05-28",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          5,
+          6,
+          7,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_m4m9n6m",
+        "nome": "GIULIANO FRANCESCO",
+        "telefono": "3391869377",
+        "totale": 415,
+        "dataIscrizione": "2025-05-09",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 110,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": "2025-06-02"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 9,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          7
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_mpbugm0",
+        "nome": "D'AGOSTINO DARIO",
+        "telefono": "3425664556",
+        "totale": 730,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 175,
+            "reale": 175,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 205,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 5,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_p94meys",
+        "nome": "COSTANZO SARA",
+        "telefono": "3913567483",
+        "totale": 150,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 10,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_p98mez8",
+        "nome": "TERRANELLA CHANEL",
+        "telefono": "3758227917",
+        "totale": 800,
+        "dataIscrizione": "2025-05-12",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 9,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          8,
+          10,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_pmike1s",
+        "nome": "SCIRE' HILARY",
+        "telefono": "3802077474",
+        "totale": 650,
+        "dataIscrizione": "2025-05-27",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 240,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_psevi9e",
+        "nome": "GAGLIARDO AMBRA",
+        "telefono": "3206383086",
+        "totale": 660,
+        "dataIscrizione": "2025-05-11",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 13,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          7
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_qc4h120",
+        "nome": "CASCINO ELISA",
+        "telefono": "3278290983",
+        "totale": 750,
+        "dataIscrizione": "2025-05-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 110,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 130,
+            "reale": 0,
+            "data": "2025-05-22"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 170,
+            "reale": 170,
+            "data": "2025-05-26"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 9,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          9,
+          10,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_r07mvuz",
+        "nome": "PIERNO LUKAS",
+        "telefono": "3312322047",
+        "totale": 350,
+        "dataIscrizione": "2025-05-01",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          4,
+          8
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_r4f2yk4",
+        "nome": "CAPITANO SARA",
+        "telefono": "3804962373",
+        "totale": 400,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 400,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 0,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          8
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_re6pwas",
+        "nome": "NICOTRA ANDREA",
+        "telefono": "3245882948",
+        "totale": 710,
+        "dataIscrizione": "2025-05-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 2,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          4,
+          5,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_sg9plwh",
+        "nome": "DI MARCO GIOELE",
+        "telefono": "3201571059",
+        "totale": 180,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 180,
+            "reale": 180,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          7,
+          8,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_sjqoiy7",
+        "nome": "GENOVESE ALESSANDRA",
+        "telefono": "3931743172",
+        "totale": 560,
+        "dataIscrizione": "2025-04-23",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 177.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 127.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 127.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 127.5,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_ue4ywab",
+        "nome": "ONERI MATTEO",
+        "telefono": "",
+        "totale": 430,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 115,
+            "reale": 115,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 5,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_uq2vuio",
+        "nome": "AIELLO SOFIA",
+        "telefono": "3270393174",
+        "totale": 1680,
+        "dataIscrizione": "2025-04-14",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 230,
+            "reale": 0,
+            "data": null,
+            "metodo": "Bonifico"
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 150,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 150,
+            "reale": 150,
+            "data": "2025-06-02"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 150,
+            "reale": 1000,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 12,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          9,
+          10,
+          12,
+          13
+        ],
+        "eventIdManual": true
+      },
+      {
+        "id": "p_moadzije_uqrjczj",
+        "nome": "MIRINO ALICE",
+        "telefono": "3200669087",
+        "totale": 200,
+        "dataIscrizione": "2025-05-01",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          7
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_wkx9xgh",
+        "nome": "MACCHIARELLA SOFIA",
+        "telefono": "",
+        "totale": 180,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 160,
+            "reale": 160,
+            "data": "2025-06-03"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 3,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_xmodfk2",
+        "nome": "SCIMONELLI GIOIA",
+        "telefono": "3277182868",
+        "totale": 500,
+        "dataIscrizione": "2025-05-29",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_ye1t8wr",
+        "nome": "SAVOCA EMANUELE",
+        "telefono": "3245419013",
+        "totale": 360,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_z3wzpar",
+        "nome": "CASCINO FRANCESCO",
+        "telefono": "3278290983",
+        "totale": 750,
+        "dataIscrizione": "2025-05-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 110,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 130,
+            "reale": 0,
+            "data": "2025-05-22"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 170,
+            "reale": 170,
+            "data": "2025-05-26"
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          3,
+          9,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_zpifzka",
+        "nome": "NICOTRA GIOELE",
+        "telefono": "3245882948",
+        "totale": 670,
+        "dataIscrizione": "2025-05-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_moadzije_zsn9as7",
+        "nome": "SECK MAMADOU GIACOMO",
+        "telefono": "3883733947",
+        "totale": 110,
+        "dataIscrizione": null,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 110,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 1,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          9
+        ],
+        "eventIdManual": false
+      }
+    ],
+    "events": [
+      {
+        "id": "bunny_camp",
+        "name": "BUNNY CAMP 2026",
+        "startDate": "2026-05-04",
+        "numWeeks": 13,
+        "ageMin": 0,
+        "ageMax": 3,
+        "emoji": "🐰",
+        "weekGroups": {
+          "1": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_04v31f1",
+                "p_moadzije_249sb6m",
+                "p_moadzije_4ym5e8b",
+                "p_moadzije_625bmud",
+                "p_moadzije_9iixkvr",
+                "p_moadzije_b7uu0jq",
+                "p_moadzije_dwmxly0",
+                "p_moadzije_r4f2yk4",
+                "p_moadzije_re6pwas",
+                "p_moadzije_uq2vuio",
+                "p_moadzije_wkx9xgh",
+                "p_moadzije_xmodfk2",
+                "p_moadzije_zsn9as7"
+              ],
+              "isDefault": true
+            },
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "2": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "3": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_249sb6m",
+                "p_moadzije_4ym5e8b",
+                "p_moadzije_625bmud",
+                "p_moadzije_9iixkvr",
+                "p_moadzije_b7uu0jq",
+                "p_moadzije_dwmxly0",
+                "p_moadzije_e9lu3d3",
+                "p_moadzije_uq2vuio",
+                "p_moadzije_wkx9xgh",
+                "p_moadzije_zsn9as7"
+              ],
+              "isDefault": true
+            },
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "4": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "5": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "6": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "7": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "8": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "9": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "10": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "11": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "12": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "13": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ]
+        }
+      },
+      {
+        "id": "vivi_camp",
+        "name": "VIVI CAMP 2026",
+        "startDate": "2026-05-11",
+        "numWeeks": 13,
+        "ageMin": 4,
+        "ageMax": 13,
+        "emoji": "🌟",
+        "weekGroups": {
+          "1": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "2": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_dqd6qgz",
+                "p_moadzije_kr5o1hh",
+                "p_moadzije_mpbugm0"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_ajw0pp2",
+                "p_moadzije_pmike1s",
+                "p_moadzije_zpifzka"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_3iswazu",
+                "p_moadzije_p94meys",
+                "p_moadzije_p98mez8",
+                "p_moadzije_qc4h120",
+                "p_moadzije_sg9plwh"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_3xgee6y",
+                "p_moadzije_6ribqan",
+                "p_moadzije_ckujyn4",
+                "p_moadzije_sjqoiy7",
+                "p_moadzije_ye1t8wr"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            },
+            {
+              "id": "vivi_camp_custom_1779184384498",
+              "name": "Nuovo gruppo",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": false
+            }
+          ],
+          "3": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "4": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "5": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_fu23l7h",
+                "p_moadzije_mpbugm0",
+                "p_moadzije_ue4ywab"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_5r9e265",
+                "p_moadzije_ajw0pp2",
+                "p_moadzije_pmike1s",
+                "p_moadzije_zpifzka"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_3iswazu",
+                "p_moadzije_qc4h120"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_moadzije_3xgee6y",
+                "p_moadzije_6ribqan",
+                "p_moadzije_91ugcep",
+                "p_moadzije_al0tx2a",
+                "p_moadzije_bs4ba6k",
+                "p_moadzije_sjqoiy7",
+                "p_moadzije_ye1t8wr"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "6": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "7": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "8": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            }
+          ],
+          "9": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "10": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "11": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "12": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "13": [
+            {
+              "id": "vivi_camp_group",
+              "name": "VIVI CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": []
+            },
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ]
+        }
+      }
+    ],
+    "presences": []
+  }
+}

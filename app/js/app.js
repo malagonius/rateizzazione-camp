@@ -342,6 +342,10 @@ async function init() {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');
   }
+  // Daily automatic backup
+  runDailyBackup();
+  // Schedule backup restore check (shows modal after 10s if DB is empty)
+  scheduleBackupRestoreCheck();
   // Always start with amounts hidden (security requirement)
   // Set the eye-off icon to match the hidden state
   try {
