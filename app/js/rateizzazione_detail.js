@@ -104,17 +104,64 @@ async function persistCurrent() {
 }
 
 // ============================================================
-// Event assignment — select + week checkboxes
+// Event assignment — auto-assigned by age, with manual override
 // ============================================================
 function renderEventAssignment() {
   const p = getCurrent();
   if (!p) return;
 
-  const select = document.getElementById('d-evento');
-  select.innerHTML = '<option value="">— Nessun evento —</option>' +
-    state.events.map(ev => `<option value="${escapeHtml(ev.id)}"${p.eventId === ev.id ? ' selected' : ''}>${escapeHtml(ev.name)}</option>`).join('');
+  // Auto-assign only if not manually overridden
+  if (!p.eventIdManual) {
+    const targetEventId = getEventForAge(p.eta);
+    if (p.eventId !== targetEventId) {
+      p.eventId = targetEventId;
+      if (!targetEventId) p.eventWeeks = [];
+      persistCurrent();
+    }
+  }
 
-  renderEventWeeks();
+  const container = document.getElementById('d-event-assignment');
+
+  // Build the event options for the override dropdown
+  const evOptions = STATIC_EVENTS.map(tpl => {
+    const ev = state.events.find(e => e.id === tpl.id);
+    if (!ev) return '';
+    const selected = p.eventId === ev.id ? ' selected' : '';
+    return `<option value="${escapeHtml(ev.id)}"${selected}>${tpl.emoji} ${escapeHtml(ev.name)}</option>`;
+  }).join('');
+  const noneSelected = !p.eventId ? ' selected' : '';
+
+  const isManual = !!p.eventIdManual;
+  const autoLabel = !p.eventId
+    ? `<span style="font-size:12px;color:var(--muted);">Nessuna assegnazione automatica (età: ${p.eta != null ? p.eta : 'non inserita'})</span>`
+    : (() => {
+        const ev = state.events.find(e => e.id === getEventForAge(p.eta));
+        const tpl = ev ? STATIC_EVENTS.find(s => s.id === ev.id) : null;
+        return `<span style="font-size:12px;color:var(--muted);">Auto: ${tpl ? tpl.emoji + ' ' + ev.name : '—'} (età: ${p.eta})</span>`;
+      })();
+
+  container.innerHTML = `
+    <div class="event-assignment-info" style="flex-direction:column;align-items:flex-start;gap:6px;">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <select id="d-event-override" style="font-size:14px;padding:6px 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);">
+          <option value=""${noneSelected}>— Nessun evento —</option>
+          ${evOptions}
+        </select>
+        ${isManual
+          ? `<button type="button" id="btn-reset-event-auto" class="ghost" style="font-size:12px;" title="Ripristina assegnazione automatica per età">↺ Automatico</button>
+             <span class="badge" style="background:#fef3c7;color:#92400e;font-size:11px;">Manuale</span>`
+          : `<span class="badge" style="background:#dcfce7;color:#166534;font-size:11px;">Automatico</span>`
+        }
+      </div>
+      ${!isManual ? autoLabel : ''}
+    </div>
+  `;
+
+  if (!p.eventId) {
+    document.getElementById('d-event-weeks').innerHTML = '';
+  } else {
+    renderEventWeeks();
+  }
 }
 
 function renderEventWeeks() {
@@ -166,6 +213,7 @@ function bindDetailEvents() {
       if (field === 'eta') v = v === '' ? null : num(v);
       p[field] = v;
       if (field === 'nome') document.getElementById('detail-title').textContent = v || 'Nuova persona';
+      if (field === 'eta') renderEventAssignment();
       renderDetailSummary();
       await persistCurrent();
     });
@@ -254,21 +302,33 @@ function bindDetailEvents() {
     showList();
   });
 
-  // Event assignment select
-  document.getElementById('d-evento').addEventListener('change', async (e) => {
+  // Manual event override dropdown
+  document.getElementById('view-detail').addEventListener('change', async (e) => {
+    if (e.target.id !== 'd-event-override') return;
     const p = getCurrent();
     if (!p) return;
-    p.eventId = e.target.value || null;
-    if (!p.eventId) {
-      p.eventWeeks = [];
-    }
+    const newEventId = e.target.value || null;
+    p.eventId = newEventId;
+    p.eventIdManual = true;
+    if (!newEventId) p.eventWeeks = [];
     await persistCurrent();
-    renderEventWeeks();
+    renderEventAssignment();
+  });
+
+  // Reset to automatic assignment
+  document.getElementById('view-detail').addEventListener('click', async (e) => {
+    const btn = e.target.closest('#btn-reset-event-auto');
+    if (!btn) return;
+    const p = getCurrent();
+    if (!p) return;
+    p.eventIdManual = false;
+    p.eventWeeks = [];
+    await persistCurrent();
+    renderEventAssignment();
   });
 
   // Week checkboxes (event delegation)
   document.getElementById('d-event-weeks').addEventListener('change', async (e) => {
-    if (!e.target.matches('input[data-week]')) return;
     const p = getCurrent();
     if (!p) return;
     const weekNum = parseInt(e.target.dataset.week);

@@ -200,17 +200,25 @@ function bindGlobalEvents() {
   });
 
   // --- Events view bindings ---
-  document.getElementById('btn-new-event').addEventListener('click', showEventForm);
-  document.getElementById('btn-cancel-event-form').addEventListener('click', () => {
-    document.getElementById('view-event-form').classList.add('hidden');
-    document.getElementById('view-events').classList.remove('hidden');
-  });
-  document.getElementById('btn-create-event').addEventListener('click', createEvent);
-
-  // Event card click → detail
+  // Event card click → detail (but not cogwheel)
   document.getElementById('events-list').addEventListener('click', (e) => {
+    // Check if clicked cogwheel
+    const cogwheel = e.target.closest('[data-action="event-settings"]');
+    if (cogwheel) {
+      e.stopPropagation();
+      showEventSettings(cogwheel.dataset.eventId);
+      return;
+    }
     const card = e.target.closest('[data-event-id]');
     if (card) showEventDetail(card.dataset.eventId);
+  });
+
+  // Event settings modal
+  document.getElementById('es-save').addEventListener('click', saveEventSettings);
+  document.getElementById('es-cancel').addEventListener('click', hideEventSettings);
+  document.getElementById('es-reset').addEventListener('click', resetEvent);
+  document.getElementById('event-settings-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('event-settings-modal')) hideEventSettings();
   });
 
   // Event detail toolbar
@@ -224,6 +232,11 @@ function bindGlobalEvents() {
   document.getElementById('btn-delete-event').addEventListener('click', async () => {
     const event = getCurrentEvent();
     if (!event) return;
+    // Static events cannot be deleted
+    if (STATIC_EVENTS.find(s => s.id === event.id)) {
+      toast('Gli eventi statici non possono essere eliminati. Usa il reset dalle impostazioni ⚙️', 'error');
+      return;
+    }
     if (!confirm(`Eliminare l'evento "${event.name}"?`)) return;
     await dbDeleteFrom(EVENTS_STORE, event.id);
     state.events = state.events.filter(e => e.id !== event.id);
@@ -316,10 +329,15 @@ async function init() {
       if (p.eta === undefined) p.eta = null;
       if (p.eventId === undefined) p.eventId = null;
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
+      if (p.eventIdManual === undefined) p.eventIdManual = false;
     });
     // Load events and presences
     state.events = await dbGetAllFrom(EVENTS_STORE);
     state.presences = await dbGetAllFrom(PRESENCES_STORE);
+
+    // Ensure static events exist and auto-assign people
+    await ensureStaticEvents();
+    await autoAssignAllPeopleToEvents();
   } catch (err) {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');

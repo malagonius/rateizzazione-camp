@@ -101,37 +101,80 @@ function getAllMemberIdsInEvent(event) {
 // ============================================================
 // Events CRUD
 // ============================================================
-function autoAssignGroups(people) {
-  const groups = AGE_GROUPS.map(ag => ({
-    id: ag.id + '_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 5),
-    name: ag.name,
-    descriptions: [''],
-    memberIds: []
-  }));
-
-  const withAge = people.filter(p => p.eta != null && p.eta !== '' && !isNaN(Number(p.eta)));
-  const withoutAge = people.filter(p => p.eta == null || p.eta === '' || isNaN(Number(p.eta)));
-
-  for (const p of withAge) {
-    const age = Number(p.eta);
-    let assigned = false;
-    for (let i = 0; i < AGE_GROUPS.length; i++) {
-      if (age >= AGE_GROUPS[i].min && age <= AGE_GROUPS[i].max) {
-        groups[i].memberIds.push(p.id);
-        assigned = true;
-        break;
+// ============================================================
+// Static event initialization — ensures BUNNY CAMP and VIVI CAMP exist
+// ============================================================
+async function ensureStaticEvents() {
+  for (const tpl of STATIC_EVENTS) {
+    let existing = state.events.find(e => e.id === tpl.id);
+    if (!existing) {
+      let defaultGroups;
+      if (tpl.id === 'vivi_camp') {
+        defaultGroups = VIVI_CAMP_AGE_GROUPS.map(cat => ({
+          id: tpl.id + '_' + cat.id,
+          name: cat.label,
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true,
+          ageGroupId: cat.id
+        }));
+      } else {
+        defaultGroups = [{
+          id: tpl.id + '_group',
+          name: tpl.name,
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true
+        }];
       }
-    }
-    if (!assigned) {
-      groups[groups.length - 1].memberIds.push(p.id);
+      existing = {
+        id: tpl.id,
+        name: tpl.name,
+        startDate: null,
+        numWeeks: 1,
+        ageMin: tpl.ageMin,
+        ageMax: tpl.ageMax,
+        emoji: tpl.emoji,
+        weekGroups: {
+          1: defaultGroups
+        }
+      };
+      state.events.push(existing);
+      await dbPutTo(EVENTS_STORE, existing);
+    } else {
+      // Update name/age range in case year changed
+      let changed = false;
+      if (existing.name !== tpl.name) { existing.name = tpl.name; changed = true; }
+      if (existing.ageMin !== tpl.ageMin) { existing.ageMin = tpl.ageMin; changed = true; }
+      if (existing.ageMax !== tpl.ageMax) { existing.ageMax = tpl.ageMax; changed = true; }
+      if (existing.emoji !== tpl.emoji) { existing.emoji = tpl.emoji; changed = true; }
+      if (changed) await dbPutTo(EVENTS_STORE, existing);
     }
   }
+}
 
-  for (let i = 0; i < withoutAge.length; i++) {
-    groups[i % groups.length].memberIds.push(withoutAge[i].id);
+// Auto-assign all people to events based on age (skips manually pinned)
+async function autoAssignAllPeopleToEvents() {
+  let changed = false;
+  for (const p of state.people) {
+    if (p.eventIdManual) continue; // respect manual override
+    const targetEventId = getEventForAge(p.eta);
+    if (p.eventId !== targetEventId) {
+      p.eventId = targetEventId;
+      if (!targetEventId) p.eventWeeks = [];
+      changed = true;
+      await dbPut(p);
+    }
   }
+  return changed;
+}
 
-  return groups;
+// Build group members for a week based on people's event assignment
+function buildGroupMembersForEvent(event, weekNum) {
+  const eligible = state.people.filter(p =>
+    p.eventId === event.id && Array.isArray(p.eventWeeks) && p.eventWeeks.includes(weekNum)
+  );
+  return eligible.map(p => p.id);
 }
 
 function getPersonById(id) {
@@ -141,6 +184,52 @@ function getPersonById(id) {
 // ============================================================
 // Form groups for current week based on person event assignments
 // ============================================================
+
+/** Get the Vivi Camp age category id for a given age */
+function getViviAgeGroupId(age) {
+  if (age == null || isNaN(Number(age))) return null;
+  const a = Number(age);
+  for (const cat of VIVI_CAMP_AGE_GROUPS) {
+    if (a >= cat.ageMin && a <= cat.ageMax) return cat.id;
+  }
+  return null;
+}
+
+/** Ensure default groups exist for the current week of an event */
+function ensureDefaultGroups(event, weekNum) {
+  const groups = getWeekGroups(event, weekNum);
+
+  if (event.id === 'bunny_camp') {
+    // Bunny Camp: one big default group
+    const hasDefault = groups.some(g => g.isDefault);
+    if (!hasDefault) {
+      groups.unshift({
+        id: event.id + '_group',
+        name: event.name,
+        descriptions: [''],
+        memberIds: [],
+        isDefault: true
+      });
+    }
+  } else if (event.id === 'vivi_camp') {
+    // Vivi Camp: one default group per age category
+    for (const cat of VIVI_CAMP_AGE_GROUPS) {
+      const exists = groups.some(g => g.isDefault && g.ageGroupId === cat.id);
+      if (!exists) {
+        groups.push({
+          id: event.id + '_' + cat.id,
+          name: cat.label,
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true,
+          ageGroupId: cat.id
+        });
+      }
+    }
+  }
+  return groups;
+}
+
 async function formGroupsForWeek() {
   const event = getCurrentEvent();
   if (!event) return;
@@ -152,17 +241,99 @@ async function formGroupsForWeek() {
   );
 
   if (eligiblePeople.length === 0) {
-    toast('Nessuna persona assegnata a questa settimana. Assegna le persone dall\'anagrafica.', 'error');
+    toast('Nessuna persona assegnata a questa settimana.', 'error');
     return;
   }
 
-  if (!confirm(`Formare i gruppi per la settimana ${weekNum} con ${eligiblePeople.length} persone assegnate?\nI gruppi attuali di questa settimana verranno sostituiti.`)) return;
+  if (!confirm(`Aggiornare i gruppi per la settimana ${weekNum} con ${eligiblePeople.length} persone?`)) return;
 
-  const newGroups = autoAssignGroups(eligiblePeople);
-  event.weekGroups[weekNum] = newGroups;
+  const groups = ensureDefaultGroups(event, weekNum);
+
+  if (event.id === 'bunny_camp') {
+    // Bunny Camp: all kids into the single default group
+    const defaultGroup = groups.find(g => g.isDefault);
+    if (defaultGroup) {
+      defaultGroup.memberIds = eligiblePeople.map(p => p.id);
+    }
+  } else if (event.id === 'vivi_camp') {
+    // Vivi Camp: sort kids by age into their respective age groups
+    // First, clear all default group members
+    groups.filter(g => g.isDefault).forEach(g => { g.memberIds = []; });
+    // Remove any previous overflow groups (non-default groups with ageGroupId)
+    for (let i = groups.length - 1; i >= 0; i--) {
+      if (!groups[i].isDefault && groups[i].ageGroupId) {
+        groups.splice(i, 1);
+      }
+    }
+
+    // Bucket people by age category
+    const buckets = {};
+    for (const cat of VIVI_CAMP_AGE_GROUPS) {
+      buckets[cat.id] = [];
+    }
+    const unmatched = [];
+    for (const p of eligiblePeople) {
+      const catId = getViviAgeGroupId(p.eta);
+      if (catId && buckets[catId]) {
+        buckets[catId].push(p);
+      } else {
+        unmatched.push(p);
+      }
+    }
+
+    // For each age category, assign to default group; if > 15, create overflow groups
+    for (const cat of VIVI_CAMP_AGE_GROUPS) {
+      const kids = buckets[cat.id];
+      const defaultGroup = groups.find(g => g.isDefault && g.ageGroupId === cat.id);
+      if (!defaultGroup) continue;
+
+      if (kids.length <= VIVI_CAMP_MAX_GROUP_SIZE) {
+        defaultGroup.memberIds = kids.map(p => p.id);
+      } else {
+        // Calculate how many groups we need total (including the default one)
+        const numGroups = Math.ceil(kids.length / VIVI_CAMP_MAX_GROUP_SIZE);
+        // Distribute evenly across all groups
+        const groupSize = Math.ceil(kids.length / numGroups);
+
+        // Create overflow groups first (so we can distribute evenly)
+        const allGroupsForCat = [defaultGroup];
+        for (let g = 1; g < numGroups; g++) {
+          const overflow = {
+            id: event.id + '_' + cat.id + '_overflow_' + g,
+            name: cat.label + ' (Gruppo ' + (g + 1) + ')',
+            descriptions: [''],
+            memberIds: [],
+            isDefault: false,
+            ageGroupId: cat.id
+          };
+          // Insert after the default group for this category
+          const defaultIdx = groups.indexOf(defaultGroup);
+          groups.splice(defaultIdx + g, 0, overflow);
+          allGroupsForCat.push(overflow);
+        }
+
+        // Rename default to indicate it's group 1
+        defaultGroup.name = cat.label + ' (Gruppo 1)';
+
+        // Distribute kids evenly
+        for (let i = 0; i < kids.length; i++) {
+          const targetIdx = i % numGroups;
+          allGroupsForCat[targetIdx].memberIds.push(kids[i].id);
+        }
+      }
+    }
+
+    // Put unmatched people (no age set) into first default group
+    if (unmatched.length > 0) {
+      const firstDefault = groups.find(g => g.isDefault);
+      if (firstDefault) {
+        unmatched.forEach(p => firstDefault.memberIds.push(p.id));
+      }
+    }
+  }
 
   await dbPutTo(EVENTS_STORE, event);
-  toast(`Gruppi formati per settimana ${weekNum}: ${eligiblePeople.length} persone in ${newGroups.length} gruppi`, 'success');
+  toast(`Gruppi aggiornati per settimana ${weekNum}: ${eligiblePeople.length} persone`, 'success');
   renderGroups();
 }
 
@@ -209,15 +380,27 @@ function renderEventsList() {
   list.classList.remove('hidden');
 
   list.innerHTML = state.events.map(ev => {
-    const start = fmtDateDisplay(ev.startDate);
-    const week1Groups = getWeekGroups(ev, 1);
-    const totalMembers = week1Groups.reduce((s, g) => s + g.memberIds.length, 0);
+    const tpl = STATIC_EVENTS.find(s => s.id === ev.id);
+    const emoji = tpl ? tpl.emoji : '📅';
+    const ageRange = (ev.ageMin != null && ev.ageMax != null) ? `👶 ${ev.ageMin}-${ev.ageMax} anni` : '';
+    const start = ev.startDate ? fmtDateDisplay(ev.startDate) : '<em>Data non impostata</em>';
+    const assignedCount = state.people.filter(p => p.eventId === ev.id).length;
+    const weekLabel = ev.numWeeks === 1 ? '1 settimana' : `${ev.numWeeks} settimane`;
     return `
       <div class="event-card-item" data-event-id="${escapeHtml(ev.id)}">
-        <h3>${escapeHtml(ev.name)}</h3>
+        <div class="event-card-top">
+          <h3>${emoji} ${escapeHtml(ev.name)}</h3>
+          <button class="btn-cogwheel" data-action="event-settings" data-event-id="${escapeHtml(ev.id)}" title="Impostazioni evento">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+        </div>
         <div class="event-meta">
+          ${ageRange}<br>
           📅 Inizio: ${start}<br>
-          📊 ${ev.numWeeks} settimane · ${week1Groups.length} gruppi · ${totalMembers} persone (sett. 1)
+          📊 ${weekLabel} · ${assignedCount} persone assegnate
         </div>
       </div>
     `;
@@ -322,7 +505,7 @@ function renderWeekPicker() {
       const y = wpSelectedMonday.getFullYear();
       const m = String(wpSelectedMonday.getMonth() + 1).padStart(2, '0');
       const dd = String(wpSelectedMonday.getDate()).padStart(2, '0');
-      document.getElementById('ef-start').value = `${y}-${m}-${dd}`;
+      document.getElementById('es-start').value = `${y}-${m}-${dd}`;
       const sun = new Date(wpSelectedMonday);
       sun.setDate(sun.getDate() + 6);
       document.getElementById('wp-selection').textContent =
@@ -346,52 +529,149 @@ function renderWeekPicker() {
   });
 }
 
-function showEventForm() {
-  ['view-events', 'view-event-detail', 'view-presences-overview'].forEach(id => {
-    document.getElementById(id).classList.add('hidden');
-  });
-  document.getElementById('view-event-form').classList.remove('hidden');
-  document.getElementById('ef-name').value = '';
-  document.getElementById('ef-start').value = '';
-  document.getElementById('ef-weeks').value = '1';
-  document.getElementById('wp-selection').textContent = '';
+// ============================================================
+// Event settings — cogwheel modal
+// ============================================================
+let settingsEventId = null;
+
+function showEventSettings(eventId) {
+  settingsEventId = eventId;
+  const event = state.events.find(e => e.id === eventId);
+  if (!event) return;
+
+  document.getElementById('es-event-title').textContent = (event.emoji || '📅') + ' ' + event.name;
+  document.getElementById('es-weeks').value = event.numWeeks || 1;
+  document.getElementById('es-start').value = event.startDate || '';
+
+  // Init week picker first (resets wpSelectedMonday)
   initWeekPicker();
-}
 
-async function createEvent() {
-  const name = document.getElementById('ef-name').value.trim();
-  const startDate = document.getElementById('ef-start').value;
-  const numWeeks = parseInt(document.getElementById('ef-weeks').value) || 1;
-
-  if (!name) { toast('Inserisci un nome per l\'evento', 'error'); return; }
-  if (!startDate) { toast('Seleziona una settimana di inizio', 'error'); return; }
-
-  const baseGroups = autoAssignGroups(state.people);
-  const weekGroups = {};
-  for (let w = 1; w <= numWeeks; w++) {
-    weekGroups[w] = JSON.parse(JSON.stringify(baseGroups));
+  // Then restore selection if event has a start date
+  if (event.startDate) {
+    wpSelectedMonday = getMondayOfWeek(new Date(event.startDate));
+    const sun = new Date(wpSelectedMonday);
+    sun.setDate(sun.getDate() + 6);
+    document.getElementById('wp-selection').textContent =
+      `Settimana: ${wpSelectedMonday.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })} — ${sun.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+    wpViewYear = wpSelectedMonday.getFullYear();
+    wpViewMonth = wpSelectedMonday.getMonth();
+    renderWeekPicker();
   }
 
-  const event = {
-    id: 'ev_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7),
-    name,
-    startDate,
-    numWeeks,
-    weekGroups
-  };
+  const modal = document.getElementById('event-settings-modal');
+  modal.classList.add('show');
+}
 
-  state.events.push(event);
+function hideEventSettings() {
+  document.getElementById('event-settings-modal').classList.remove('show');
+  settingsEventId = null;
+}
+
+async function saveEventSettings() {
+  const event = state.events.find(e => e.id === settingsEventId);
+  if (!event) return;
+
+  const startDate = document.getElementById('es-start').value;
+  const numWeeks = parseInt(document.getElementById('es-weeks').value) || 1;
+
+  if (!startDate) { toast('Seleziona una settimana di inizio', 'error'); return; }
+
+  event.startDate = startDate;
+  const oldWeeks = event.numWeeks || 1;
+  event.numWeeks = numWeeks;
+
+  // Ensure weekGroups exist for all weeks
+  if (!event.weekGroups) event.weekGroups = {};
+  for (let w = 1; w <= numWeeks; w++) {
+    if (!event.weekGroups[w]) {
+      if (event.id === 'vivi_camp') {
+        event.weekGroups[w] = VIVI_CAMP_AGE_GROUPS.map(cat => ({
+          id: event.id + '_' + cat.id,
+          name: cat.label,
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true,
+          ageGroupId: cat.id
+        }));
+      } else {
+        event.weekGroups[w] = [{
+          id: event.id + '_group',
+          name: event.name,
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true
+        }];
+      }
+    }
+  }
+
   await dbPutTo(EVENTS_STORE, event);
-  toast(`Evento "${name}" creato con ${baseGroups.length} gruppi`, 'success');
+  hideEventSettings();
+  renderEventsList();
+  toast('Impostazioni salvate', 'success');
+}
 
-  document.getElementById('view-event-form').classList.add('hidden');
-  showEventDetail(event.id);
+async function resetEvent() {
+  const event = state.events.find(e => e.id === settingsEventId);
+  if (!event) return;
+
+  const password = await promptPassword('Inserisci la password per resettare l\'evento:');
+  if (password === null) return;
+  if (password !== PASSWORD) { toast('Password errata', 'error'); return; }
+
+  if (!confirm(`Resettare "${event.name}"? Tutti i gruppi e le presenze verranno cancellati. Le persone manterranno l'assegnazione.`)) return;
+
+  // Clear week groups
+  event.weekGroups = {};
+  for (let w = 1; w <= event.numWeeks; w++) {
+    if (event.id === 'vivi_camp') {
+      event.weekGroups[w] = VIVI_CAMP_AGE_GROUPS.map(cat => ({
+        id: event.id + '_' + cat.id,
+        name: cat.label,
+        descriptions: [''],
+        memberIds: [],
+        isDefault: true,
+        ageGroupId: cat.id
+      }));
+    } else {
+      event.weekGroups[w] = [{
+        id: event.id + '_group',
+        name: event.name,
+        descriptions: [''],
+        memberIds: [],
+        isDefault: true
+      }];
+    }
+  }
+
+  // Clear people's week selections for this event
+  for (const p of state.people) {
+    if (p.eventId === event.id) {
+      p.eventWeeks = [];
+      await dbPut(p);
+    }
+  }
+
+  // Remove presences for this event
+  const toRemove = state.presences.filter(pr => pr.eventId === event.id);
+  for (const pr of toRemove) await dbDeleteFrom(PRESENCES_STORE, pr.id);
+  state.presences = state.presences.filter(pr => pr.eventId !== event.id);
+
+  await dbPutTo(EVENTS_STORE, event);
+  hideEventSettings();
+  renderEventsList();
+  toast(`"${event.name}" resettato`, 'success');
 }
 
 function showEventDetail(eventId) {
   state.currentEventId = eventId;
   const event = getCurrentEvent();
   if (!event) return;
+
+  if (!event.startDate) {
+    toast('Imposta la data di inizio dall\'icona ⚙️', 'error');
+    return;
+  }
 
   getWeekGroups(event, 1);
 
@@ -401,7 +681,10 @@ function showEventDetail(eventId) {
     document.getElementById(id).classList.add('hidden');
   });
   document.getElementById('view-event-detail').classList.remove('hidden');
-  document.getElementById('event-detail-title').textContent = event.name;
+
+  const tpl = STATIC_EVENTS.find(s => s.id === event.id);
+  const emoji = tpl ? tpl.emoji : '📅';
+  document.getElementById('event-detail-title').textContent = emoji + ' ' + event.name;
 
   renderWeekTabs();
   renderEventSubView();
@@ -495,8 +778,16 @@ function renderGroups() {
   const container = document.getElementById('groups-container');
   const groups = getWeekGroups(event, state.currentWeek);
 
+  // Ensure default groups exist
+  ensureDefaultGroups(event, state.currentWeek);
+
   const assignedIds = getAllMemberIdsForWeek(event, state.currentWeek);
-  const unassigned = state.people.filter(p => !assignedIds.has(p.id));
+  // Only show people eligible for this week (assigned to this event AND this week) who aren't in a group yet
+  const unassigned = state.people.filter(p =>
+    p.eventId === event.id &&
+    Array.isArray(p.eventWeeks) && p.eventWeeks.includes(state.currentWeek) &&
+    !assignedIds.has(p.id)
+  );
 
   let html = '';
 
@@ -520,10 +811,16 @@ function renderGroups() {
       `;
     }).join('');
 
+    // Only non-default groups can be removed
+    const removeBtn = !group.isDefault
+      ? `<button class="member-remove" data-action="remove-group" data-group-idx="${gIdx}" title="Rimuovi gruppo">🗑️</button>`
+      : '';
+
     return `
       <div class="group-card" data-group-idx="${gIdx}">
         <div class="group-card-header">
           <input type="text" class="group-name-input" data-group-idx="${gIdx}" value="${escapeHtml(group.name)}" />
+          ${removeBtn}
         </div>
         <div class="group-member-count">${members.length} persone</div>
         <div class="group-descriptions">
@@ -536,6 +833,14 @@ function renderGroups() {
       </div>
     `;
   }).join('');
+
+  // Add group button
+  html += `
+    <div class="add-group-card" data-action="add-group">
+      <span style="font-size:24px;">➕</span>
+      <span>Aggiungi gruppo</span>
+    </div>
+  `;
 
   if (unassigned.length > 0) {
     const unassignedHtml = unassigned.map(p => {
@@ -694,6 +999,43 @@ function setupDragAndDrop() {
       renderGroups();
     }
   });
+
+  // Add group button
+  container.addEventListener('click', async (e) => {
+    const addBtn = e.target.closest('[data-action="add-group"]');
+    if (!addBtn) return;
+    const event = getCurrentEvent();
+    if (!event) return;
+    const groups = getWeekGroups(event, state.currentWeek);
+    const newGroup = {
+      id: event.id + '_custom_' + Date.now(),
+      name: 'Nuovo gruppo',
+      descriptions: [''],
+      memberIds: [],
+      isDefault: false
+    };
+    groups.push(newGroup);
+    await dbPutTo(EVENTS_STORE, event);
+    renderGroups();
+    toast('Gruppo aggiunto', 'success');
+  });
+
+  // Remove group button
+  container.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="remove-group"]');
+    if (!btn) return;
+    e.stopPropagation();
+    const gIdx = parseInt(btn.dataset.groupIdx);
+    const event = getCurrentEvent();
+    if (!event) return;
+    const groups = getWeekGroups(event, state.currentWeek);
+    if (!groups[gIdx] || groups[gIdx].isDefault) return;
+    if (!confirm(`Rimuovere il gruppo "${groups[gIdx].name}"? I membri verranno spostati tra i non assegnati.`)) return;
+    groups.splice(gIdx, 1);
+    await dbPutTo(EVENTS_STORE, event);
+    renderGroups();
+    toast('Gruppo rimosso', 'success');
+  });
 }
 
 // ============================================================
@@ -705,7 +1047,12 @@ function showAddToGroupModal() {
 
   const groups = getWeekGroups(event, state.currentWeek);
   const assignedIds = getAllMemberIdsForWeek(event, state.currentWeek);
-  const unassigned = state.people.filter(p => !assignedIds.has(p.id));
+  // Only show people eligible for this week
+  const unassigned = state.people.filter(p =>
+    p.eventId === event.id &&
+    Array.isArray(p.eventWeeks) && p.eventWeeks.includes(state.currentWeek) &&
+    !assignedIds.has(p.id)
+  );
 
   const personSelect = document.getElementById('atg-person');
   const groupSelect = document.getElementById('atg-group');
@@ -1150,7 +1497,9 @@ function hideWeekDetailModal() {
 // ============================================================
 function getActiveEvent() {
   if (state.events.length === 0) return null;
-  return state.events[state.events.length - 1];
+  // Return the first event with a start date set
+  const withDate = state.events.find(e => e.startDate);
+  return withDate || null;
 }
 
 function getCurrentDayOfWeek(event) {
@@ -1164,8 +1513,10 @@ function getCurrentDayOfWeek(event) {
 }
 
 function renderPresenceColumn(personId) {
-  const event = getActiveEvent();
-  if (!event) return '';
+  const person = getPersonById(personId);
+  if (!person || !person.eventId) return '';
+  const event = state.events.find(e => e.id === person.eventId);
+  if (!event || !event.startDate) return '';
   const week = getCurrentWeekNumber(event);
   const day = getCurrentDayOfWeek(event);
   const present = day ? isDayPresent(event.id, week, personId, day) : isPresent(event.id, week, personId);

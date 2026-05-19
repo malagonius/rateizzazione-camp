@@ -365,6 +365,34 @@
   .event-card-item:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
   .event-card-item h3 { margin: 0 0 8px; }
   .event-card-item .event-meta { font-size: 13px; color: var(--muted); }
+  .event-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .event-card-top h3 { margin: 0 0 8px; }
+  .btn-cogwheel {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 6px 8px;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s, background 0.15s;
+  }
+  .btn-cogwheel:hover {
+    color: var(--text);
+    background: var(--bg);
+  }
+  .event-assignment-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
   .event-form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -399,6 +427,11 @@
     border-color: var(--primary);
     background: var(--blue-bg);
   }
+  .group-card-header {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
   .group-card-header input {
     font-size: 16px;
     font-weight: 600;
@@ -406,7 +439,29 @@
     background: transparent;
     padding: 4px 8px;
     border-radius: 4px;
-    width: 100%;
+    flex: 1;
+  }
+  .group-card-header .member-remove {
+    flex-shrink: 0;
+  }
+  .add-group-card {
+    border: 2px dashed var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--muted);
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+    min-height: 120px;
+  }
+  .add-group-card:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--blue-bg);
   }
   .group-card-header input:hover,
   .group-card-header input:focus {

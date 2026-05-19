@@ -112,13 +112,7 @@
       </div>
 
       <h3 style="margin-bottom: 8px;">Assegnazione Evento</h3>
-      <div class="field-grid" style="margin-bottom: 16px;">
-        <label>Evento
-          <select id="d-evento">
-            <option value="">— Nessun evento —</option>
-          </select>
-        </label>
-      </div>
+      <div id="d-event-assignment" style="margin-bottom: 12px;"></div>
       <div id="d-event-weeks" class="event-weeks-checkboxes" style="margin-bottom: 16px;"></div>
 
       <h3 style="margin-bottom: 8px;">Rate</h3>
@@ -167,47 +161,18 @@
     <div class="card">
       <div class="detail-header">
         <h2>📅 Eventi</h2>
-        <button id="btn-new-event" class="ghost">➕ Nuovo evento</button>
       </div>
       <div id="events-list" class="events-grid"></div>
-      <div id="events-empty" class="empty">
+      <div id="events-empty" class="empty hidden">
         <h2>Nessun evento</h2>
-        <p>Crea un nuovo evento per gestire presenze e gruppi.</p>
+        <p>Gli eventi verranno creati automaticamente.</p>
       </div>
     </div>
   </section>
 
-  <!-- ========== PRESENZE: EVENT CREATION FORM ========== -->
-  <section id="view-event-form" class="hidden">
-    <div class="card">
-      <div class="detail-header">
-        <h2>Nuovo Evento</h2>
-        <button id="btn-cancel-event-form" class="ghost">← Annulla</button>
-      </div>
-      <div class="event-form-grid">
-        <label>Nome evento
-          <input type="text" id="ef-name" placeholder="Camp estivo 2026" />
-        </label>
-        <label>Numero settimane
-          <input type="number" id="ef-weeks" min="1" max="52" value="1" />
-        </label>
-        <div>
-          <span class="field-label">Settimana di inizio</span>
-          <div id="wp-selection" class="wp-selection-label"></div>
-          <div class="week-picker" id="ef-week-picker">
-            <div class="week-picker-header">
-              <button type="button" class="ghost" id="wp-prev-month">◀</button>
-              <span id="wp-month-label"></span>
-              <button type="button" class="ghost" id="wp-next-month">▶</button>
-            </div>
-            <div class="week-picker-grid" id="wp-grid"></div>
-          </div>
-          <input type="hidden" id="ef-start" />
-        </div>
-      </div>
-      <button id="btn-create-event">✅ Crea evento e genera gruppi</button>
-    </div>
-  </section>
+  <!-- ========== PRESENZE: EVENT SETTINGS MODAL ========== -->
+  <!-- (replaces the old event creation form) -->
+  <section id="view-event-form" class="hidden"></section>
 
   <!-- ========== PRESENZE: EVENT DETAIL VIEW ========== -->
   <section id="view-event-detail" class="hidden">
@@ -271,6 +236,36 @@
     <div class="modal-actions">
       <button id="atg-cancel" class="secondary">Annulla</button>
       <button id="atg-ok">Aggiungi</button>
+    </div>
+  </div>
+</div>
+
+<!-- Event settings modal -->
+<div id="event-settings-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+  <div class="modal" style="min-width:420px;max-width:560px;">
+    <h3 id="es-event-title">⚙️ Impostazioni Evento</h3>
+    <div class="event-form-grid">
+      <label>Numero settimane
+        <input type="number" id="es-weeks" min="1" max="52" value="1" />
+      </label>
+      <div>
+        <span class="field-label">Settimana di inizio</span>
+        <div id="wp-selection" class="wp-selection-label"></div>
+        <div class="week-picker" id="ef-week-picker">
+          <div class="week-picker-header">
+            <button type="button" class="ghost" id="wp-prev-month">◀</button>
+            <span id="wp-month-label"></span>
+            <button type="button" class="ghost" id="wp-next-month">▶</button>
+          </div>
+          <div class="week-picker-grid" id="wp-grid"></div>
+        </div>
+        <input type="hidden" id="es-start" />
+      </div>
+    </div>
+    <div class="modal-actions" style="margin-top:16px;">
+      <button type="button" id="es-reset" class="danger">🔄 Reset evento</button>
+      <button type="button" id="es-cancel" class="secondary">Annulla</button>
+      <button type="button" id="es-save">💾 Salva</button>
     </div>
   </div>
 </div>

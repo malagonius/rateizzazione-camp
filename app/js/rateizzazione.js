@@ -95,6 +95,10 @@ async function importExcel(file) {
   state.events = importedEvents;
   state.presences = importedPresences;
 
+  // Ensure static events and auto-assign after import
+  await ensureStaticEvents();
+  await autoAssignAllPeopleToEvents();
+
   applyFilters();
   const evMsg = importedEvents.length ? `, ${importedEvents.length} eventi` : '';
   toast(`Importate ${people.length} persone${evMsg}`, 'success');
@@ -304,7 +308,7 @@ function renderList() {
   // Show/hide presence column header
   const thPresenza = document.getElementById('th-presenza');
   if (thPresenza) {
-    const hasEvent = getActiveEvent() !== null;
+    const hasEvent = state.events.some(e => e.startDate);
     thPresenza.classList.toggle('hidden', !hasEvent);
   }
 }

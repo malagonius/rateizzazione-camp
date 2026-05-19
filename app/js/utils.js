@@ -13,13 +13,31 @@ const DEFAULT_INSTALLMENTS = [
   { key: 'settembre',  label: 'Rata Settembre' }
 ];
 
-const AGE_GROUPS = [
-  { id: 'age_0_3',   name: 'Gruppo 0-3 anni',   min: 0, max: 3 },
-  { id: 'age_3_5',   name: 'Gruppo 3-5 anni',   min: 3, max: 5 },
-  { id: 'age_6_7',   name: 'Gruppo 6-7 anni',   min: 6, max: 7 },
-  { id: 'age_8_10',  name: 'Gruppo 8-10 anni',  min: 8, max: 10 },
-  { id: 'age_11_13', name: 'Gruppo 11-13 anni', min: 11, max: 13 }
+const CURRENT_YEAR = new Date().getFullYear();
+
+const STATIC_EVENTS = [
+  { id: 'bunny_camp',  name: `BUNNY CAMP ${CURRENT_YEAR}`, ageMin: 0, ageMax: 3, emoji: '🐰' },
+  { id: 'vivi_camp',   name: `VIVI CAMP ${CURRENT_YEAR}`,  ageMin: 4, ageMax: 13, emoji: '🌟' }
 ];
+
+// Age-based sub-groups for Vivi Camp
+const VIVI_CAMP_AGE_GROUPS = [
+  { id: 'vivi_3_5',  label: '3-5 anni',  ageMin: 3,  ageMax: 5 },
+  { id: 'vivi_6_7',  label: '6-7 anni',  ageMin: 6,  ageMax: 7 },
+  { id: 'vivi_8_10', label: '8-10 anni', ageMin: 8,  ageMax: 10 },
+  { id: 'vivi_11_13',label: '11-13 anni',ageMin: 11, ageMax: 13 }
+];
+
+const VIVI_CAMP_MAX_GROUP_SIZE = 15;
+
+function getEventForAge(age) {
+  if (age == null || age === '' || isNaN(Number(age))) return null;
+  const a = Number(age);
+  for (const ev of STATIC_EVENTS) {
+    if (a >= ev.ageMin && a <= ev.ageMax) return ev.id;
+  }
+  return null;
+}
 
 // Map of Excel column groups (planned, actual, date) per default installment
 const EXCEL_COL_MAP = {
