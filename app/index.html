@@ -46,6 +46,7 @@
           <option value="unpaid">❌ Non pagato</option>
           <option value="overpaid">💙 Sovrappagato</option>
           <option value="assistenza">🤝 Assistenza</option>
+          <option value="in_ritardo">🏃‍♂️‍➡️ In ritardo</option>
         </select>
         <button id="btn-toggle-table-visibility" class="icon-only" title="Nascondi/Mostra tutti gli importi">
           <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -63,7 +64,7 @@
               <th data-sort="totale" class="num">Totale dovuto <span class="sort-arrow"></span></th>
               <th data-sort="paid" class="num">Pagato <span class="sort-arrow"></span></th>
               <th data-sort="residuo" class="num">Residuo <span class="sort-arrow"></span></th>
-              <th>Avanzamento</th>
+              <th data-sort="prossima_rata">Prossima rata <span class="sort-arrow"></span></th>
               <th data-sort="status">Stato <span class="sort-arrow"></span></th>
               <th id="th-presenza" class="hidden">Presenza</th>
             </tr>

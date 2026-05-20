@@ -207,6 +207,16 @@ function applyFilters() {
     if (state.statusFilter) {
       if (state.statusFilter === 'assistenza') {
         if (p.assistenza !== 'Si') return false;
+      } else if (state.statusFilter === 'in_ritardo') {
+        // Show people who have any unpaid installment with a past or missing date
+        const next = nextUnpaidInstallment(p);
+        if (!next) return false; // fully paid, not late
+        if (!next.data) return true; // no date set but unpaid → considered late
+        const now = new Date();
+        const dueDate = new Date(next.data);
+        // Late if due date is today or earlier
+        if (dueDate <= now) return true;
+        return false;
       } else if (statusOf(p) !== state.statusFilter) {
         return false;
       }
@@ -222,6 +232,13 @@ function applyFilters() {
       case 'paid':    av = totalPaid(a); bv = totalPaid(b); break;
       case 'residuo': av = num(a.totale) - totalPaid(a); bv = num(b.totale) - totalPaid(b); break;
       case 'status':  av = statusOf(a); bv = statusOf(b); break;
+      case 'prossima_rata': {
+        const na = nextUnpaidInstallment(a);
+        const nb = nextUnpaidInstallment(b);
+        av = na && na.data ? na.data : 'zzzz';
+        bv = nb && nb.data ? nb.data : 'zzzz';
+        break;
+      }
       case 'totale':  av = num(a.totale); bv = num(b.totale); break;
       case 'telefono':av = a.telefono || ''; bv = b.telefono || ''; break;
       default:        av = (a.nome || '').toLowerCase(); bv = (b.nome || '').toLowerCase();
@@ -255,7 +272,6 @@ function renderList() {
     const paid = totalPaid(p);
     const residuo = due - paid;
     const status = statusOf(p);
-    const pct = due > 0 ? Math.min(100, (paid / due) * 100) : (paid > 0 ? 100 : 0);
     
     // Row visibility is determined solely by its own state
     const isCensored = !!p.visibilityHidden;
@@ -274,7 +290,6 @@ function renderList() {
     const displayDue = isCensored ? '<span class="censored-amount">************</span>' : fmtMoney(due);
     const displayPaid = isCensored ? '<span class="censored-amount">************</span>' : fmtMoney(paid);
     const displayResiduo = isCensored ? '<span class="censored-amount">************</span>' : fmtMoney(residuo);
-    const displayPct = isCensored ? 0 : pct;
     const displayStatus = isCensored
       ? '<span class="badge" style="background: #e5e7eb; color: #9ca3af;">Nascosto</span>'
       : `<span class="badge badge-${status}">${STATUS_LABEL[status]}</span>`;
@@ -288,11 +303,11 @@ function renderList() {
         </td>
         <td class="num" style="color: var(--green);">${displayPaid}</td>
         <td class="num" style="color: ${residuo > 0.01 ? 'var(--red)' : 'var(--muted)'};">${displayResiduo}</td>
-        <td>
-          <div class="progress" title="${displayPct.toFixed(0)}%">
-            <div class="progress-bar ${status}" style="width: ${displayPct}%"></div>
-          </div>
-        </td>
+        <td>${(() => {
+          const next = nextUnpaidInstallment(p);
+          if (!next) return '<span style="color:var(--muted);">—</span>';
+          return next.data ? fmtDateDisplay(next.data) : `<span style="color:var(--orange, #e67e22);">${escapeHtml(next.label)}</span>`;
+        })()}</td>
         <td>${displayStatus}</td>
         ${renderPresenceColumn(p.id)}
       </tr>

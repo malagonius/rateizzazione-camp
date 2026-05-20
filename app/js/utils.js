@@ -128,6 +128,10 @@ function statusOf(person) {
   return 'partial';
 }
 
+function nextUnpaidInstallment(person) {
+  return person.installments.find(i => !num(i.reale));
+}
+
 const STATUS_LABEL = {
   paid: 'Pagato',
   partial: 'Parziale',
