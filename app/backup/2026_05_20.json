@@ -1,0 +1,4317 @@
+{
+  "id": "2026_05_20",
+  "createdAt": "2026-05-20T06:33:22.425Z",
+  "data": {
+    "people": [
+      {
+        "id": "p_mob746qy_ir1x7za",
+        "nome": "GRECO AURORA SOPHIE",
+        "telefono": "3791131743",
+        "totale": 1170,
+        "dataIscrizione": "2026-05-05",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 1170,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          7,
+          8,
+          9,
+          10,
+          11,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob7dc59_6rmdwwn",
+        "nome": "COTTONE ANTONINO",
+        "telefono": "3280124154",
+        "totale": 630,
+        "dataIscrizione": "2026-03-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 630,
+            "reale": 630,
+            "data": "2026-03-21",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob7js75_3gqoe2d",
+        "nome": "COTTONE BENEDETTO",
+        "telefono": "3280124154",
+        "totale": 630,
+        "dataIscrizione": "2026-03-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 30,
+            "reale": 30,
+            "data": "2026-03-21",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 600,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 4,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob7si0l_qzwt7o6",
+        "nome": "FERRANTE ANTONINO",
+        "telefono": "3277387263",
+        "totale": 580,
+        "dataIscrizione": "2026-03-18",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 180,
+            "reale": 180,
+            "data": "2026-03-18",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob83wvi_ivd3o67",
+        "nome": "CORRENTI PIETRO",
+        "telefono": "396610476",
+        "totale": 600,
+        "dataIscrizione": "2026-03-06",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 50,
+            "reale": 50,
+            "data": "2026-03-06",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 260,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 260,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          9,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob87ktx_wrfps1j",
+        "nome": "CRIVELLO CARLOTTA MARIA ",
+        "telefono": "3808986033",
+        "totale": 0.01,
+        "dataIscrizione": "2026-03-05",
+        "installments": [
+          {
+            "key": "custom_mp11f41c",
+            "label": "VEDI CRIVELLO GIOVANNI",
+            "ipotesi": 0.01,
+            "reale": 0.01,
+            "data": "2026-03-05",
+            "metodo": "Contanti",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 3,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob8a7bf_97x38lp",
+        "nome": "CRIVELLO GIOVANNI",
+        "telefono": "3808986033",
+        "totale": 1130,
+        "dataIscrizione": "2026-03-05",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Marzo",
+            "ipotesi": 190,
+            "reale": 190,
+            "data": "2026-03-09",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Aprile",
+            "ipotesi": 190,
+            "reale": 190,
+            "data": "2026-04-15",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Maggio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-05-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Giugno",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Luglio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "custom_mob8iduf",
+            "label": "Rata Agosto",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob8liu5_50rtvt9",
+        "nome": "GRECO VINCENZO MARIA",
+        "telefono": "3202169255",
+        "totale": 1700,
+        "dataIscrizione": "2026-04-01",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 50,
+            "reale": 50,
+            "data": "2026-04-01",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 425,
+            "reale": 0,
+            "data": "2026-05-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 425,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 425,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 425,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob8qggj_5v1brs7",
+        "nome": "GRECO VITTORIA MARIA ",
+        "telefono": "3202169259",
+        "totale": 50,
+        "dataIscrizione": "2026-04-01",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 50,
+            "reale": 50,
+            "data": "2026-04-01",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob8ux7c_y7yfex9",
+        "nome": "PESCA ANDREA",
+        "telefono": "3463744131",
+        "totale": 2590,
+        "dataIscrizione": "2026-03-25",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 150,
+            "reale": 150,
+            "data": "2026-03-25",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Aprile",
+            "ipotesi": 488,
+            "reale": 488,
+            "data": "2026-04-30",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Maggio",
+            "ipotesi": 488,
+            "reale": 0,
+            "data": "2026-05-25",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Giugno",
+            "ipotesi": 488,
+            "reale": 0,
+            "data": "2026-06-25",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Luglio",
+            "ipotesi": 488,
+            "reale": 0,
+            "data": "2026-07-25",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Agosto",
+            "ipotesi": 488,
+            "reale": 0,
+            "data": "2026-08-25",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 5,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob964n6_tflwfds",
+        "nome": "PESCA CHIARA",
+        "telefono": "3463744131",
+        "totale": 0,
+        "dataIscrizione": "2026-03-25",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob98h2w_7kqwv3v",
+        "nome": "PESCA ZOE ",
+        "telefono": "3463744131",
+        "totale": 0,
+        "dataIscrizione": "2026-03-25",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob9bc73_3bbr6pe",
+        "nome": "MIRINO ANDREA",
+        "telefono": "3200669087",
+        "totale": 850,
+        "dataIscrizione": "2026-03-05",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 190,
+            "reale": 190,
+            "data": "2026-03-26",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Aprile",
+            "ipotesi": 190,
+            "reale": 190,
+            "data": "2026-04-27",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Maggio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-05-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Giugno",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Luglio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Agosto",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mob9j4mz_3o634zn",
+        "nome": "MIRINO ALICE",
+        "telefono": "3200669087",
+        "totale": 0,
+        "dataIscrizione": "2026-03-05",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eta": 2,
+        "eventId": "bunny_camp",
+        "eventWeeks": [],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mobjujpr_2kee4rk",
+        "nome": "SINAGRA NICOLE MARIA",
+        "telefono": "3881132809",
+        "totale": 550,
+        "dataIscrizione": "2026-04-15",
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 170,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 11,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mobjymmd_han1zir",
+        "nome": "TERRANELLA CHANEL FRANCESCA",
+        "telefono": "3758227917",
+        "totale": 930,
+        "dataIscrizione": "2026-03-25",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 230,
+            "reale": 230,
+            "data": "2026-03-25",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 200,
+            "reale": 200,
+            "data": "2026-04-27",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 4,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mobk1o2x_vrtb8n7",
+        "nome": "TRIOLO FRANCESCO",
+        "telefono": "3283926242",
+        "totale": 550,
+        "dataIscrizione": "2026-03-24",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 90,
+            "reale": 90,
+            "data": "2026-03-24",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Giugno",
+            "ipotesi": 230,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Luglio",
+            "ipotesi": 230,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mobkad2b_6yln9my",
+        "nome": "VITALE GIUSEPPE",
+        "telefono": "3317358037",
+        "totale": 530,
+        "dataIscrizione": "2026-03-17",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 130,
+            "reale": 130,
+            "data": "2026-03-17",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mobknsez_euvjdgq",
+        "nome": "SCHILLACI GIULIO ",
+        "telefono": "3288135459",
+        "totale": 850,
+        "dataIscrizione": "2026-03-16",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": "2026-03-16",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 8,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mobkvw91_02iq1iw",
+        "nome": "SCHILLACI ANDREA ",
+        "telefono": "3288135459",
+        "totale": 0,
+        "dataIscrizione": "2026-03-16",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eta": 3,
+        "eventId": "bunny_camp",
+        "eventWeeks": [],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mojufcoi_40siaxj",
+        "nome": "AIELLO SOFIA",
+        "telefono": "3270393174",
+        "totale": 750,
+        "dataIscrizione": "2026-04-21",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 190,
+            "reale": 190,
+            "data": "2026-04-28",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 190,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 180,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 4,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_motsavn2_xep8k7b",
+        "nome": "SAVONA SIMONA",
+        "telefono": "3284586119",
+        "totale": 420,
+        "dataIscrizione": "2026-04-30",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "ACCONTO",
+            "ipotesi": 120,
+            "reale": 120,
+            "data": "2026-05-05",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 150,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 9,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          4,
+          7,
+          8,
+          9,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_motsg61n_qu5ou3f",
+        "nome": "PAVONE GIOVANNI",
+        "telefono": "3420781203",
+        "totale": 450,
+        "dataIscrizione": "2026-04-30",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "175",
+            "ipotesi": 175,
+            "reale": 175,
+            "data": "2026-05-04",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 9,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_motskcyp_xkzqwan",
+        "nome": "PAVONE LORENZO",
+        "telefono": "3420781203",
+        "totale": 450,
+        "dataIscrizione": "2026-04-30",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "175",
+            "ipotesi": 175,
+            "reale": 175,
+            "data": "2026-05-04",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 175,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 100,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 4,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp118ml0_rdrxtwu",
+        "nome": "LIGAMMARI CHLOE",
+        "telefono": "3296042352",
+        "totale": 900,
+        "dataIscrizione": "2026-05-11",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": "2026-05-11",
+            "metodo": "Bonifico",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 280,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 260,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 260,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 10,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp2azwrj_dcjzmvh",
+        "nome": "CASCINO ELISA",
+        "telefono": "3278290983",
+        "totale": 1900,
+        "dataIscrizione": "2026-05-12",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 40,
+            "reale": 40,
+            "data": "2026-05-12",
+            "metodo": "Contanti",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 80,
+            "reale": 80,
+            "data": "2026-05-12",
+            "metodo": "Bonifico",
+            "iban": "81/2026"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Maggio",
+            "ipotesi": 435,
+            "reale": 0,
+            "data": "2026-05-13",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Giugno",
+            "ipotesi": 380,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Luglio",
+            "ipotesi": 380,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "custom_mp2bf3jo",
+            "label": "Rata Agosto",
+            "ipotesi": 380,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "custom_mp2chiyv",
+            "label": "Rata Extra",
+            "ipotesi": 205,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp2blyie_qtzjsgk",
+        "nome": "CASCINO FRANCESCO",
+        "telefono": "3278290983",
+        "totale": 0.01,
+        "dataIscrizione": "2026-05-12",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "VEDI CASCINO ELISA",
+            "ipotesi": 0.01,
+            "reale": 0.01,
+            "data": "2026-05-12",
+            "metodo": "Contanti",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp2dzhyb_mx0dzm4",
+        "nome": "DE STEFANO MAJORANA ALESSIA",
+        "telefono": "3276964732",
+        "totale": 930,
+        "dataIscrizione": "2026-05-12",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 255,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 225,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 225,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 225,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": true,
+        "eta": 5,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp2r7lty_iuo5qsm",
+        "nome": "D'AGOSTINO DARIO",
+        "telefono": "3425664556",
+        "totale": 1460,
+        "dataIscrizione": "2026-05-10",
+        "installments": [
+          {
+            "key": "maggio",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 365,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 365,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 365,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 365,
+            "reale": 0,
+            "data": "2026-09-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 12,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          10,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp2rm2ar_d7341k2",
+        "nome": "D'AGOSTINO FEDERICA",
+        "telefono": "3425664556",
+        "totale": 0.01,
+        "dataIscrizione": "2026-05-12",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "VEDI D'AGOSTINO DARIO",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 9,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp47rm37_6xlpt2m",
+        "nome": "GENOVESE FRANCESCO",
+        "telefono": "3931743172",
+        "totale": 1380,
+        "dataIscrizione": "2026-05-13",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 280,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 280,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 280,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 280,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 260,
+            "reale": 0,
+            "data": "2026-09-01",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 6,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp486mqz_uikyyxk",
+        "nome": "GENOVESE ALESSANDRA",
+        "telefono": "3931743172",
+        "totale": 0.01,
+        "dataIscrizione": "2026-05-13",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "VEDI GENOVESE FRANCESCO",
+            "ipotesi": 0.01,
+            "reale": 0.01,
+            "data": "2026-05-13",
+            "metodo": "Contanti",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 7,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp4b6oyq_c8wjb49",
+        "nome": "MASCARI ELIANA",
+        "telefono": "3205598656",
+        "totale": 1000,
+        "dataIscrizione": "2026-05-13",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 250,
+            "reale": 250,
+            "data": "2026-05-15",
+            "metodo": "Bonifico",
+            "iban": "84/2026"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 250,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eta": 10,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mp4bc4zr_wzc5jmd",
+        "nome": "MASCARI GLORIA",
+        "telefono": "3205598656",
+        "totale": 0.01,
+        "dataIscrizione": "2026-05-13",
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "VEDI ELIANA",
+            "ipotesi": 0.01,
+            "reale": 0.01,
+            "data": "2026-05-13",
+            "metodo": "Contanti",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": false,
+        "eta": null,
+        "eventId": null,
+        "eventWeeks": []
+      },
+      {
+        "id": "p_mpb0vi3y_tcly3n3",
+        "nome": "SCIRE' HILARY",
+        "telefono": "3802077474",
+        "totale": 1100,
+        "dataIscrizione": null,
+        "eta": 10,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 300,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 300,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 300,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpb10le2_2aa5fp8",
+        "nome": "SCIRE' JASMINE",
+        "telefono": "3802077474",
+        "totale": 0.01,
+        "dataIscrizione": "2026-05-15",
+        "eta": 10,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "VEDI HILARY",
+            "ipotesi": 0.01,
+            "reale": 0.01,
+            "data": "2026-05-15",
+            "metodo": "Contanti",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpb13gvb_ot88smb",
+        "nome": "MARTORANA GINEVRA",
+        "telefono": "3349443706",
+        "totale": 0.01,
+        "dataIscrizione": "2026-05-18",
+        "eta": 11,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "VEDI LDOVICA",
+            "ipotesi": 0.01,
+            "reale": 0.01,
+            "data": "2026-05-18",
+            "metodo": "Contanti",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpb167fy_k3ab18k",
+        "nome": "MARTORANA LUDOVICA",
+        "telefono": "3349443706",
+        "totale": 900,
+        "dataIscrizione": "2026-05-18",
+        "eta": 8,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpb1mwtv_kfmmru3",
+        "nome": "TRAPANI MELISSA",
+        "telefono": "3341778590",
+        "totale": 1090,
+        "dataIscrizione": "2026-05-16",
+        "eta": 6,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 100,
+            "reale": 100,
+            "data": "2026-05-16",
+            "metodo": "Bonifico",
+            "iban": "85/2026"
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 330,
+            "reale": 0,
+            "data": "2026-06-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 330,
+            "reale": 0,
+            "data": "2026-07-10",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 330,
+            "reale": 0,
+            "data": "2026-08-10",
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "No",
+        "visibilityHidden": true,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpciyyne_p1rc174",
+        "nome": "MARTORANA ANDREA",
+        "telefono": "3404024607",
+        "totale": 225,
+        "dataIscrizione": "2026-06-01",
+        "eta": 5,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 225,
+            "reale": 0,
+            "data": "2026-06-15",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "eventIdManual": true
+      },
+      {
+        "id": "p_mpcjbvuo_uv4d8jp",
+        "nome": "MARTORANA ALESSANDRO",
+        "telefono": "3404024607",
+        "totale": 225,
+        "dataIscrizione": "2026-06-01",
+        "eta": 3,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 225,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "p_mpcje73s_vtvder6",
+        "nome": "CORONA BRYAN",
+        "telefono": "3246317713",
+        "totale": 200,
+        "dataIscrizione": "2026-06-01",
+        "eta": 2,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 200,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "p_mpcjl333_nq6wf18",
+        "nome": "RISPETTA LIONEL",
+        "telefono": "3312299056",
+        "totale": 220,
+        "dataIscrizione": "2026-06-01",
+        "eta": 6,
+        "installments": [
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": "2026-06-15",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "eventIdManual": true
+      },
+      {
+        "id": "p_mpckaxv8_d0j9lax",
+        "nome": "COSTANZO SARA",
+        "telefono": "3913567483",
+        "totale": 220,
+        "dataIscrizione": "2026-06-01",
+        "eta": 3,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "p_mpckdcdn_n8zvvgo",
+        "nome": "MACCHIARELLA SOFIA",
+        "telefono": "3791578734",
+        "totale": 220,
+        "dataIscrizione": "2026-06-01",
+        "eta": 2,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "p_mpckemy3_vvgygpa",
+        "nome": "SECK NDEJE ANNA",
+        "telefono": "3883733947",
+        "totale": 142,
+        "dataIscrizione": "2026-06-01",
+        "eta": 3,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 142,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpckggy3_6htp6bc",
+        "nome": "SECK MAMADOU GIACOMO",
+        "telefono": "3883733947",
+        "totale": 198,
+        "dataIscrizione": "2026-06-01",
+        "eta": 2,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 198,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "eventIdManual": false
+      },
+      {
+        "id": "p_mpckjg4j_zq6kluy",
+        "nome": "MODICA EMMA",
+        "telefono": "3897994787",
+        "totale": 220,
+        "dataIscrizione": "2026-06-01",
+        "eta": 3,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 220,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "p_mpckl1lu_vyucsz5",
+        "nome": "DIANA INNOCENZO ANDREA",
+        "telefono": "3739037573",
+        "totale": 240,
+        "dataIscrizione": "2026-06-01",
+        "eta": 2,
+        "installments": [
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 240,
+            "reale": 0,
+            "data": "2026-06-01",
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "bunny_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "p_mpco3wfv_i8qflnh",
+        "nome": "vincenzo belmonte",
+        "telefono": "33518464635",
+        "totale": 100,
+        "dataIscrizione": "2026-05-19",
+        "eta": 12,
+        "installments": [
+          {
+            "key": "acconto",
+            "label": "Acconto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "maggio",
+            "label": "Rata Maggio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "giugno",
+            "label": "Rata Giugno",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "luglio",
+            "label": "Rata Luglio",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "agosto",
+            "label": "Rata Agosto",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          },
+          {
+            "key": "settembre",
+            "label": "Rata Settembre",
+            "ipotesi": 0,
+            "reale": 0,
+            "data": null,
+            "metodo": "",
+            "iban": ""
+          }
+        ],
+        "assistenza": "Si",
+        "visibilityHidden": false,
+        "eventId": "vivi_camp",
+        "eventWeeks": [
+          1,
+          2,
+          3
+        ],
+        "eventIdManual": true
+      }
+    ],
+    "events": [
+      {
+        "id": "bunny_camp",
+        "name": "BUNNY CAMP 2026",
+        "startDate": "2026-06-08",
+        "numWeeks": 12,
+        "ageMin": 0,
+        "ageMax": 3,
+        "emoji": "🐰",
+        "weekGroups": {
+          "1": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mpciyyne_p1rc174",
+                "p_mpcjbvuo_uv4d8jp",
+                "p_mpcje73s_vtvder6",
+                "p_mpcjl333_nq6wf18",
+                "p_mpckaxv8_d0j9lax",
+                "p_mpckdcdn_n8zvvgo",
+                "p_mpckemy3_vvgygpa",
+                "p_mpckggy3_6htp6bc",
+                "p_mpckjg4j_zq6kluy",
+                "p_mpckl1lu_vyucsz5"
+              ],
+              "isDefault": true
+            }
+          ],
+          "2": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "3": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "4": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "5": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "6": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "7": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "8": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "9": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "10": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "11": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ],
+          "12": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "vivi_camp",
+        "name": "VIVI CAMP 2026",
+        "startDate": "2026-06-08",
+        "numWeeks": 13,
+        "ageMin": 4,
+        "ageMax": 13,
+        "emoji": "🌟",
+        "weekGroups": {
+          "1": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_motskcyp_xkzqwan"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni ",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb",
+                "p_mpco3wfv_i8qflnh"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "2": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_motskcyp_xkzqwan",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "3": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsavn2_xep8k7b",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "4": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_motskcyp_xkzqwan",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsavn2_xep8k7b",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "5": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_motskcyp_xkzqwan",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "6": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "7": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_motskcyp_xkzqwan",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsavn2_xep8k7b",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "8": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_motskcyp_xkzqwan",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mobk1o2x_vrtb8n7",
+                "p_mobkad2b_6yln9my",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsavn2_xep8k7b",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "9": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7js75_3gqoe2d",
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_motskcyp_xkzqwan",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob7dc59_6rmdwwn",
+                "p_mob7si0l_qzwt7o6",
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsavn2_xep8k7b",
+                "p_motsg61n_qu5ou3f",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "10": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mp47rm37_6xlpt2m",
+                "p_mp486mqz_uikyyxk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "11": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob83wvi_ivd3o67",
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_motsavn2_xep8k7b",
+                "p_mp118ml0_rdrxtwu",
+                "p_mp2rm2ar_d7341k2",
+                "p_mp4b6oyq_c8wjb49",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mp2r7lty_iuo5qsm",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "12": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8ux7c_y7yfex9",
+                "p_mobjymmd_han1zir",
+                "p_mojufcoi_40siaxj",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8liu5_50rtvt9",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_mp118ml0_rdrxtwu",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8qggj_5v1brs7",
+                "p_mobjujpr_2kee4rk",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ],
+          "13": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "GUFETTI 3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8ux7c_y7yfex9",
+                "p_mojufcoi_40siaxj",
+                "p_mp2dzhyb_mx0dzm4"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5"
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "RICCI 6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob8a7bf_97x38lp",
+                "p_mob98h2w_7kqwv3v",
+                "p_mob9bc73_3bbr6pe",
+                "p_mp2azwrj_dcjzmvh",
+                "p_mp2blyie_qtzjsgk",
+                "p_mpb1mwtv_kfmmru3"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7"
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "MARMOTTE 8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mob746qy_ir1x7za",
+                "p_mob964n6_tflwfds",
+                "p_mobknsez_euvjdgq",
+                "p_mp118ml0_rdrxtwu",
+                "p_mpb0vi3y_tcly3n3",
+                "p_mpb10le2_2aa5fp8",
+                "p_mpb167fy_k3ab18k"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10"
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "TARTARUGHE 11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [
+                "p_mobjujpr_2kee4rk",
+                "p_mpb13gvb_ot88smb"
+              ],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13"
+            }
+          ]
+        }
+      }
+    ],
+    "presences": []
+  }
+}
