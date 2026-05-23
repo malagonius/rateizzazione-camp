@@ -1,6 +1,8 @@
 @echo off
 cd /d "%~dp0"
 
+git checkout main
+
 REM ── Move any previous backup files from Downloads to app\backup ──
 for %%f in ("%USERPROFILE%\Downloads\20??_??_??.json") do (
     move "%%f" "app\backup\" >nul 2>&1
