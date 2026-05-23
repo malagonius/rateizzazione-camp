@@ -19,4 +19,4 @@ for %%f in ("%USERPROFILE%\Downloads\20??_??_??.json") do (
 )
 
 REM ── Spawn backup push in a separate window ──
-start "Backup Push" cmd /c "%~dp0push_backup.bat"
+start "Backup Push" cmd /c "%~dp0app\push_backup.bat"
