@@ -27,13 +27,14 @@ for /f "tokens=1-3 delims=/" %%a in ("%date:~-10%") do (
     set "YYYY=%%c"
 )
 
+git stash --include-untracked >nul 2>&1
 git checkout backup
+git stash pop >nul 2>&1
 git add app\backup\*.json
 git commit -m "Backup giornaliero %DD%/%MM%/%YYYY%" >nul 2>&1
 git push >nul 2>&1
-if errorlevel 1 (
-    echo Push failed — commit stays local, will retry next run
-)
 
 REM Always switch back to main, no matter what happened above
+git stash --include-untracked >nul 2>&1
 git checkout main
+git stash pop >nul 2>&1
