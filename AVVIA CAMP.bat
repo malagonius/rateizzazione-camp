@@ -18,5 +18,5 @@ for %%f in ("%USERPROFILE%\Downloads\20??_??_??.json") do (
     move "%%f" "app\backup\" >nul 2>&1
 )
 
-REM ── Spawn backup push in a separate window ──
+REM ── Spawn backup push in a separate window ───
 start "Backup Push" cmd /c "%~dp0app\push_backup.bat"
