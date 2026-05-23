@@ -30,13 +30,10 @@ for /f "tokens=1-3 delims=/" %%a in ("%date:~-10%") do (
 git checkout backup
 git add app\backup\*.json
 git commit -m "Backup giornaliero %DD%/%MM%/%YYYY%" >nul 2>&1
-git push && goto :push_ok
-goto :push_fail
+git push >nul 2>&1
+if errorlevel 1 (
+    echo Push failed — commit stays local, will retry next run
+)
 
-:push_ok
-git checkout main
-goto :eof
-
-:push_fail
-REM Push failed (no internet?) — commit stays local, will retry next run
+REM Always switch back to main, no matter what happened above
 git checkout main
