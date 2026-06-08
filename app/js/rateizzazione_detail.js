@@ -35,6 +35,7 @@ function renderDetail() {
   document.getElementById('d-eta').value = p.eta != null ? p.eta : '';
 
   renderEventAssignment();
+  renderDetailPurchases(p);
   renderInstallments();
   renderDetailSummary();
 }
@@ -180,16 +181,9 @@ function renderEventWeeks() {
 
   const weeks = p.eventWeeks || [];
 
+  const weekText = weeks.length ? weeks.map(w => `S${w}`).join(', ') : 'Nessuna settimana acquistata';
   let html = '<div class="event-weeks-label">Settimane di partecipazione:</div>';
-  html += '<div class="event-weeks-grid">';
-  for (let w = 1; w <= event.numWeeks; w++) {
-    const startDate = getWeekStartMonday(event, w);
-    const label = `Sett. ${w} (${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' })})`;
-    const checked = weeks.includes(w) ? ' checked' : '';
-    html += `<label class="event-week-checkbox"><input type="checkbox" data-week="${w}"${checked} /> ${escapeHtml(label)}</label>`;
-  }
-  html += '</div>';
-  html += '<div style="margin-top:6px;"><button type="button" id="btn-select-all-weeks" class="ghost" style="font-size:12px;">Seleziona tutte</button> <button type="button" id="btn-deselect-all-weeks" class="ghost" style="font-size:12px;">Deseleziona tutte</button></div>';
+  html += `<div class="empty-inline">${escapeHtml(weekText)} · gestite dalla scheda Acquisti.</div>`;
   container.innerHTML = html;
 }
 
@@ -300,6 +294,29 @@ function bindDetailEvents() {
     state.people = state.people.filter(x => x.id !== p.id);
     toast('Persona eliminata', 'success');
     showList();
+  });
+
+  document.getElementById('btn-detail-purchases').addEventListener('click', () => {
+    const p = getCurrent();
+    if (p) showAcquisti(p.id);
+  });
+
+  document.getElementById('d-purchases-summary').addEventListener('click', async (e) => {
+    const p = getCurrent();
+    if (!p) return;
+    const removeBtn = e.target.closest('[data-action="remove-detail-purchase"]');
+    if (removeBtn) {
+      await removePersonPurchase(p.id, removeBtn.dataset.purchaseId);
+      return;
+    }
+    const ticketBtn = e.target.closest('[data-action="use-detail-ticket"]');
+    if (!ticketBtn) return;
+    const event = getPersonEventForPurchases(p);
+    const result = await useTicketForPerson(p, event, event ? getCurrentWeekNumber(event) : null, event ? getCurrentDayOfWeek(event) : null, ticketBtn.dataset.purchaseId);
+    if (!result.ok) { toast(result.message, 'error'); return; }
+    toast(`Ticket usato. Rimasti: ${getTicketRemainingForPerson(p)}`, 'success');
+    renderDetail();
+    applyFilters();
   });
 
   // Manual event override dropdown

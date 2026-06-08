@@ -42,7 +42,8 @@ function bindGlobalEvents() {
       assistenza: 'No',
       visibilityHidden: false,
       eventId: null,
-      eventWeeks: []
+      eventWeeks: [],
+      purchases: []
     };
     state.people.push(newP);
     await dbPut(newP);
@@ -139,7 +140,7 @@ function bindGlobalEvents() {
   // Row click → detail (but not if clicking eye button)
   document.getElementById('people-tbody').addEventListener('click', (e) => {
     // Don't navigate to detail if clicking the eye button or presence button
-    if (e.target.closest('[data-action="toggle-row-visibility"]') || e.target.closest('[data-action="toggle-main-presence"]')) {
+    if (e.target.closest('[data-action="toggle-row-visibility"]') || e.target.closest('[data-action="toggle-main-presence"]') || e.target.closest('[data-action="open-purchases"]')) {
       return;
     }
     const tr = e.target.closest('tr[data-id]');
@@ -295,6 +296,21 @@ function bindGlobalEvents() {
 
   // Main table presence button
   document.getElementById('people-tbody').addEventListener('click', async (e) => {
+    const ticketBtn = e.target.closest('[data-action="use-main-ticket"]');
+    if (ticketBtn) {
+      e.stopPropagation();
+      const person = getPersonById(ticketBtn.dataset.personId);
+      const event = state.events.find(item => item.id === ticketBtn.dataset.eventId);
+      const week = parseInt(ticketBtn.dataset.week);
+      const day = parseInt(ticketBtn.dataset.day);
+      const result = await useTicketForPerson(person, event, week, day);
+      if (!result.ok) { toast(result.message, 'error'); return; }
+      toast(`Ticket usato. Rimasti: ${getTicketRemainingForPerson(person)}`, 'success');
+      applyFilters();
+      if (state.currentId === person.id) renderDetail();
+      return;
+    }
+
     const btn = e.target.closest('[data-action="toggle-main-presence"]');
     if (!btn) return;
     e.stopPropagation();
@@ -312,6 +328,14 @@ function bindGlobalEvents() {
       btn.innerHTML = present ? '✅ Presente' : '📋 Segna';
     }
   });
+
+  // Purchase CTA from main table
+  document.getElementById('people-tbody').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="open-purchases"]');
+    if (!btn) return;
+    e.stopPropagation();
+    showAcquisti(btn.dataset.personId);
+  });
 }
 
 // ============================================================
@@ -320,6 +344,7 @@ function bindGlobalEvents() {
 async function init() {
   bindGlobalEvents();
   bindDetailEvents();
+  bindPurchaseEvents();
   try {
     state.people = await dbGetAll();
     // Normalize legacy assistenza values to 'Si'/'No' and ensure visibilityHidden/eta exists
@@ -330,6 +355,7 @@ async function init() {
       if (p.eventId === undefined) p.eventId = null;
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
       if (p.eventIdManual === undefined) p.eventIdManual = false;
+      normalizePersonPurchases(p);
     });
     // Load events and presences
     state.events = await dbGetAllFrom(EVENTS_STORE);
@@ -338,6 +364,7 @@ async function init() {
     // Ensure static events exist and auto-assign people
     await ensureStaticEvents();
     await autoAssignAllPeopleToEvents();
+    if (syncAllPurchasesState()) await dbBulkPut(state.people);
   } catch (err) {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');

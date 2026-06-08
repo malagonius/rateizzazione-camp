@@ -54,7 +54,8 @@ async function importExcel(file) {
       installments,
       assistenza: normalizeAssistenza(row[23]),
       eta: row[24] != null && row[24] !== '' ? num(row[24]) : null,
-      visibilityHidden: false
+      visibilityHidden: false,
+      purchases: []
     });
   }
 
@@ -88,6 +89,22 @@ async function importExcel(file) {
     }
   }
 
+  if (wb.SheetNames.includes('Acquisti')) {
+    const wsAcq = wb.Sheets['Acquisti'];
+    const acqRows = XLSX.utils.sheet_to_json(wsAcq, { header: 1, raw: true, defval: null });
+    const byName = new Map(people.map(p => [String(p.nome || '').trim().toLowerCase(), p]));
+    for (let i = 1; i < acqRows.length; i++) {
+      const nome = String(acqRows[i]?.[0] || '').trim().toLowerCase();
+      const jsonStr = acqRows[i]?.[1];
+      const person = byName.get(nome);
+      if (!person || !jsonStr) continue;
+      try {
+        person.purchases = JSON.parse(jsonStr);
+        normalizePersonPurchases(person);
+      } catch (e) { /* skip invalid */ }
+    }
+  }
+
   await dbClearStore(EVENTS_STORE);
   await dbClearStore(PRESENCES_STORE);
   if (importedEvents.length) await dbBulkPutTo(EVENTS_STORE, importedEvents);
@@ -98,6 +115,8 @@ async function importExcel(file) {
   // Ensure static events and auto-assign after import
   await ensureStaticEvents();
   await autoAssignAllPeopleToEvents();
+  syncAllPurchasesState();
+  await dbBulkPut(people);
 
   applyFilters();
   const evMsg = importedEvents.length ? `, ${importedEvents.length} eventi` : '';
@@ -187,6 +206,18 @@ function exportExcel() {
     }
     const wsPr = XLSX.utils.aoa_to_sheet(prRows);
     XLSX.utils.book_append_sheet(wb, wsPr, 'Presenze');
+  }
+
+  // Purchases sheet — keep package purchases attached by person name for re-import
+  const purchaseRows = [['NOME', 'JSON_DATA']];
+  for (const p of state.people) {
+    if (Array.isArray(p.purchases) && p.purchases.length) {
+      purchaseRows.push([p.nome, JSON.stringify(p.purchases)]);
+    }
+  }
+  if (purchaseRows.length > 1) {
+    const wsAcq = XLSX.utils.aoa_to_sheet(purchaseRows);
+    XLSX.utils.book_append_sheet(wb, wsAcq, 'Acquisti');
   }
 
   const fname = `rateizzazione_camp_${new Date().toISOString().slice(0,10)}.xlsx`;
@@ -310,6 +341,7 @@ function renderList() {
         })()}</td>
         <td>${displayStatus}</td>
         ${renderPresenceColumn(p.id)}
+        <td style="text-align:center;"><button class="btn-table-action" data-action="open-purchases" data-person-id="${escapeHtml(p.id)}" title="Gestisci acquisti">⚙️ Gestisci</button></td>
       </tr>
     `;
   }).join('');

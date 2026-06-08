@@ -587,11 +587,36 @@
 
   /* === Presence === */
   .presence-grid { overflow-x: auto; }
+  .presence-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .presence-legend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .presence-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #f9fafb;
+  }
   .presence-grid table th,
   .presence-grid table td {
     text-align: center;
-    padding: 8px;
-    min-width: 60px;
+    padding: 8px 6px;
+    min-width: 96px;
   }
   .presence-grid table th:first-child,
   .presence-grid table td:first-child {
@@ -599,15 +624,60 @@
     position: sticky;
     left: 0;
     background: var(--surface);
-    min-width: 160px;
+    min-width: 190px;
     z-index: 1;
   }
+  .presence-grid table th:nth-child(2),
+  .presence-grid table td:nth-child(2) {
+    min-width: 58px;
+  }
   .presence-check {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     cursor: pointer;
     accent-color: var(--green);
   }
+  .presence-extra-check {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--primary);
+  }
+  .presence-day-controls {
+    display: grid;
+    grid-template-columns: minmax(58px, 1fr);
+    gap: 4px;
+    align-items: center;
+    justify-items: stretch;
+    min-width: 84px;
+  }
+  .presence-extra-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(26px, 1fr));
+    gap: 4px;
+    width: 100%;
+  }
+  .presence-mini-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    width: 100%;
+    min-height: 28px;
+    padding: 3px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #f9fafb;
+    cursor: pointer;
+  }
+  .presence-mini-check:hover { background: var(--blue-bg); }
+  .presence-mini-check span {
+    font-size: 13px;
+    line-height: 1;
+  }
+  .presence-mini-check.presence-present input { accent-color: var(--green); }
+  .presence-mini-check.presence-extra input { accent-color: var(--primary); }
+  .presence-actions { margin-top: 12px; }
   .btn-present {
     background: var(--green);
     color: white;
@@ -622,6 +692,142 @@
     background: var(--green-bg);
     color: var(--green);
     border: 1px solid var(--green);
+  }
+  .btn-table-action {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--border);
+    padding: 5px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .btn-table-action:hover { background: var(--blue-bg); color: var(--primary-dark); }
+
+  /* === Acquisti === */
+  .purchase-person-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .purchase-person-bar label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 260px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .purchase-person-summary {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 34px;
+  }
+  .purchase-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .purchase-panel {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    background: #f9fafb;
+  }
+  .purchase-panel h3 { margin: 0 0 10px; font-size: 15px; }
+  .purchase-weeks-panel { grid-column: 1 / -1; }
+  .purchase-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .package-option-grid {
+    display: grid;
+    gap: 8px;
+  }
+  .package-option-grid-wide { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .package-option {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2px 8px;
+    align-items: start;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    cursor: pointer;
+  }
+  .package-option.selected {
+    border-color: var(--primary);
+    background: var(--blue-bg);
+  }
+  .package-option input { margin-top: 3px; accent-color: var(--primary); }
+  .package-title { font-weight: 700; font-size: 13px; }
+  .package-price {
+    grid-column: 2;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .discount-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+  }
+  .discount-grid label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .week-disabled { color: var(--muted); opacity: 0.65; }
+  .purchase-quote {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f9fafb;
+    border: 1px solid var(--border);
+  }
+  .quote-item { display: flex; flex-direction: column; gap: 2px; }
+  .quote-item span { color: var(--muted); font-size: 12px; }
+  .quote-item strong { font-size: 16px; }
+  .quote-total strong { color: var(--primary); font-size: 20px; }
+  .purchase-card {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    margin-bottom: 8px;
+  }
+  .purchase-card.compact { grid-template-columns: 1fr auto auto; }
+  .purchase-card.ticket-card { grid-template-columns: 1fr auto auto; align-items: start; }
+  .purchase-meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .purchase-card-amount { text-align: right; display: flex; flex-direction: column; }
+  .purchase-actions { display: flex; flex-direction: column; gap: 6px; align-items: stretch; min-width: 86px; }
+  .purchase-card button { padding: 5px 9px; }
+  .purchase-card .subtle-danger { background: transparent; color: var(--red); border: 1px solid #fecaca; font-size: 12px; }
+  .purchase-card .subtle-danger:hover { background: #fef2f2; color: #991b1b; }
+  .empty-inline {
+    padding: 10px 12px;
+    color: var(--muted);
+    background: #f9fafb;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    font-size: 13px;
   }
   .event-sub-tabs {
     display: flex;

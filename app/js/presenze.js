@@ -4,6 +4,13 @@
 
 const DAY_NAMES = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 const DAY_COUNT = 6; // Monday to Saturday
+const PRESENCE_EXTRA_OPTIONS = [];
+
+function emptyDayMap(value = false) {
+  const map = {};
+  for (let d = 1; d <= DAY_COUNT; d++) map[d] = value;
+  return map;
+}
 
 // ============================================================
 // Print helper — opens a new window with styled content
@@ -24,6 +31,8 @@ function printContent(title, htmlContent) {
   td.center { text-align: center; }
   .summary { font-weight: 600; margin-top: 8px; font-size: 13px; }
   .muted { color: #6b7280; font-size: 11px; }
+  .report-page { break-after: page; page-break-after: always; }
+  .report-page:last-child { break-after: auto; page-break-after: auto; }
   .print-date { font-size: 11px; color: #9ca3af; margin-bottom: 16px; }
   @media print { body { margin: 10px; } }
 </style></head><body>
@@ -42,7 +51,7 @@ function switchTab(tab) {
   document.querySelectorAll('#tab-nav button').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
-  ['view-list', 'view-detail', 'view-events', 'view-event-form', 'view-event-detail', 'view-presences-overview'].forEach(id => {
+  ['view-list', 'view-detail', 'view-acquisti', 'view-events', 'view-event-form', 'view-event-detail', 'view-presences-overview'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
   document.getElementById('btn-back').classList.add('hidden');
@@ -54,6 +63,8 @@ function switchTab(tab) {
     } else {
       document.getElementById('view-list').classList.remove('hidden');
     }
+  } else if (tab === 'acquisti') {
+    showAcquisti(state.currentPurchasePersonId || state.currentId);
   } else if (tab === 'presenze') {
     document.getElementById('view-events').classList.remove('hidden');
     renderEventsList();
@@ -1101,14 +1112,52 @@ function getPresenceKey(eventId, weekNum, personId) {
   return `${eventId}_w${weekNum}_${personId}`;
 }
 
-function getPresenceDays(eventId, weekNum, personId) {
+function normalizePresenceRecord(record) {
+  if (!record) return null;
+  if (!record.days) {
+    const val = record.present === true;
+    record.days = emptyDayMap(val);
+    delete record.present;
+  } else {
+    record.days = { ...emptyDayMap(false), ...record.days };
+  }
+  PRESENCE_EXTRA_OPTIONS.forEach(option => {
+    record[option.key] = { ...emptyDayMap(false), ...(record[option.key] || {}) };
+  });
+  return record;
+}
+
+function getPresenceRecord(eventId, weekNum, personId) {
   const key = getPresenceKey(eventId, weekNum, personId);
-  const record = state.presences.find(pr => pr.id === key);
-  const empty = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false };
-  if (!record) return empty;
-  if (record.days) return { ...empty, ...record.days };
-  const val = record.present === true;
-  return { 1: val, 2: val, 3: val, 4: val, 5: val, 6: val };
+  return normalizePresenceRecord(state.presences.find(pr => pr.id === key));
+}
+
+function createPresenceRecord(eventId, weekNum, personId) {
+  const record = {
+    id: getPresenceKey(eventId, weekNum, personId),
+    eventId,
+    weekNumber: weekNum,
+    personId,
+    days: emptyDayMap(false),
+    markedAt: new Date().toISOString()
+  };
+  PRESENCE_EXTRA_OPTIONS.forEach(option => { record[option.key] = emptyDayMap(false); });
+  state.presences.push(record);
+  return record;
+}
+
+function getPresenceDays(eventId, weekNum, personId) {
+  const record = getPresenceRecord(eventId, weekNum, personId);
+  return record ? { ...emptyDayMap(false), ...record.days } : emptyDayMap(false);
+}
+
+function getPresenceExtraDays(eventId, weekNum, personId, extraKey) {
+  const record = getPresenceRecord(eventId, weekNum, personId);
+  return record ? { ...emptyDayMap(false), ...(record[extraKey] || {}) } : emptyDayMap(false);
+}
+
+function isPresenceExtraMarked(eventId, weekNum, personId, day, extraKey) {
+  return getPresenceExtraDays(eventId, weekNum, personId, extraKey)[day] === true;
 }
 
 function isDayPresent(eventId, weekNum, personId, day) {
@@ -1131,54 +1180,52 @@ function isWeekFullyPresent(eventId, weekNum, personId) {
 }
 
 async function toggleDayPresence(eventId, weekNum, personId, day) {
-  const key = getPresenceKey(eventId, weekNum, personId);
-  let record = state.presences.find(pr => pr.id === key);
+  let record = getPresenceRecord(eventId, weekNum, personId);
 
   if (record) {
-    if (!record.days) {
-      const val = record.present === true;
-      record.days = { 1: val, 2: val, 3: val, 4: val, 5: val, 6: val };
-      delete record.present;
-    }
     record.days[day] = !record.days[day];
+    if (!record.days[day]) {
+      PRESENCE_EXTRA_OPTIONS.forEach(option => { record[option.key][day] = false; });
+    }
     record.markedAt = new Date().toISOString();
   } else {
-    record = {
-      id: key,
-      eventId,
-      weekNumber: weekNum,
-      personId,
-      days: { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false },
-      markedAt: new Date().toISOString()
-    };
+    record = createPresenceRecord(eventId, weekNum, personId);
     record.days[day] = true;
-    state.presences.push(record);
   }
 
   await dbPutTo(PRESENCES_STORE, record);
 }
 
+async function togglePresenceExtra(eventId, weekNum, personId, day, extraKey) {
+  const option = PRESENCE_EXTRA_OPTIONS.find(o => o.key === extraKey);
+  if (!option) return;
+
+  let record = getPresenceRecord(eventId, weekNum, personId);
+  if (!record) record = createPresenceRecord(eventId, weekNum, personId);
+
+  record[extraKey][day] = !record[extraKey][day];
+  if (record[extraKey][day]) record.days[day] = true;
+  record.markedAt = new Date().toISOString();
+
+  await dbPutTo(PRESENCES_STORE, record);
+}
+
 async function toggleAllDays(eventId, weekNum, personId) {
-  const key = getPresenceKey(eventId, weekNum, personId);
   const currentDays = getPresenceDays(eventId, weekNum, personId);
   const allPresent = Object.values(currentDays).every(v => v === true);
   const newVal = !allPresent;
 
-  let record = state.presences.find(pr => pr.id === key);
+  let record = getPresenceRecord(eventId, weekNum, personId);
   if (record) {
-    record.days = { 1: newVal, 2: newVal, 3: newVal, 4: newVal, 5: newVal, 6: newVal };
+    record.days = emptyDayMap(newVal);
+    if (!newVal) {
+      PRESENCE_EXTRA_OPTIONS.forEach(option => { record[option.key] = emptyDayMap(false); });
+    }
     delete record.present;
     record.markedAt = new Date().toISOString();
   } else {
-    record = {
-      id: key,
-      eventId,
-      weekNumber: weekNum,
-      personId,
-      days: { 1: newVal, 2: newVal, 3: newVal, 4: newVal, 5: newVal, 6: newVal },
-      markedAt: new Date().toISOString()
-    };
-    state.presences.push(record);
+    record = createPresenceRecord(eventId, weekNum, personId);
+    record.days = emptyDayMap(newVal);
   }
 
   await dbPutTo(PRESENCES_STORE, record);
@@ -1197,8 +1244,22 @@ function renderPresences() {
   const container = document.getElementById('presence-grid');
   const week = state.currentWeek;
   const groups = getWeekGroups(event, week);
+  const groupedIds = new Set(groups.flatMap(group => group.memberIds));
+  const unassignedEligible = state.people.filter(person =>
+    person.eventId === event.id &&
+    Array.isArray(person.eventWeeks) && person.eventWeeks.includes(week) &&
+    !groupedIds.has(person.id)
+  );
+  const displayGroups = unassignedEligible.length
+    ? groups.concat([{ id: event.id + '_unassigned_' + week, name: 'Non assegnati', memberIds: unassignedEligible.map(person => person.id) }])
+    : groups;
 
-  let html = '<table><thead><tr>';
+  let html = '<div class="presence-toolbar">';
+  html += '<div class="presence-legend"><span><strong>✓</strong> Presente</span></div>';
+  html += '<button id="btn-week-extra-report" class="ghost">🖨️ Report settimana</button>';
+  html += '</div>';
+
+  html += '<table><thead><tr>';
   html += '<th>Gruppo / Persona</th>';
   html += '<th class="day-header" title="Seleziona tutti i giorni">Tutti</th>';
   for (let d = 1; d <= DAY_COUNT; d++) {
@@ -1206,7 +1267,7 @@ function renderPresences() {
   }
   html += '</tr></thead><tbody>';
 
-  for (const group of groups) {
+  for (const group of displayGroups) {
     html += `<tr style="background:#f0f0f0;"><td colspan="${DAY_COUNT + 2}"><strong>${escapeHtml(group.name)}</strong> (${group.memberIds.length})</td></tr>`;
 
     for (const memberId of group.memberIds) {
@@ -1219,18 +1280,23 @@ function renderPresences() {
       html += `<td>${escapeHtml(person.nome)}${person.eta != null ? ` <span style="color:var(--muted);font-size:12px;">(${person.eta} anni)</span>` : ''}</td>`;
       html += `<td style="text-align:center;"><input type="checkbox" class="select-all-check presence-check-all" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" ${allChecked ? 'checked' : ''} title="Tutti i giorni" /></td>`;
       for (let d = 1; d <= DAY_COUNT; d++) {
-        html += `<td style="text-align:center;"><input type="checkbox" class="presence-check" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" data-day="${d}" ${days[d] ? 'checked' : ''} /></td>`;
+        html += `<td><div class="presence-day-controls">
+          <label class="presence-mini-check presence-present" title="Presente ${DAY_NAMES[d - 1]}">
+            <input type="checkbox" class="presence-check" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" data-day="${d}" ${days[d] ? 'checked' : ''} />
+            <span aria-hidden="true">✓</span>
+          </label>
+        </div></td>`;
       }
       html += '</tr>';
     }
   }
 
-  const allMembers = groups.flatMap(g => g.memberIds);
+  const allMembers = displayGroups.flatMap(g => g.memberIds);
   const presentCount = allMembers.filter(id => isPresent(event.id, week, id)).length;
   html += `<tr class="presence-summary-row"><td>Totale presenti</td><td colspan="${DAY_COUNT + 1}" style="text-align:center;">${presentCount} / ${allMembers.length}</td></tr>`;
   html += '</tbody></table>';
 
-  html += '<div style="margin-top:12px;"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button></div>';
+  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button></div>';
 
   container.innerHTML = html;
 
@@ -1238,7 +1304,7 @@ function renderPresences() {
     cb.addEventListener('change', async (e) => {
       const { eventId, week: w, personId, day } = e.target.dataset;
       await toggleDayPresence(eventId, parseInt(w), personId, parseInt(day));
-      updatePresenceRow(container, event, parseInt(w), personId, groups);
+      updatePresenceRow(container, event, parseInt(w), personId, displayGroups);
     });
   });
 
@@ -1246,13 +1312,18 @@ function renderPresences() {
     cb.addEventListener('change', async (e) => {
       const { eventId, week: w, personId } = e.target.dataset;
       await toggleAllDays(eventId, parseInt(w), personId);
-      updatePresenceRow(container, event, parseInt(w), personId, groups);
+      updatePresenceRow(container, event, parseInt(w), personId, displayGroups);
     });
   });
 
   const overviewBtn = container.querySelector('#btn-presences-overview');
   if (overviewBtn) {
     overviewBtn.addEventListener('click', () => showPresencesOverview());
+  }
+
+  const reportBtn = container.querySelector('#btn-week-extra-report');
+  if (reportBtn) {
+    reportBtn.addEventListener('click', () => printWeekExtraReport(event.id, week));
   }
 }
 
@@ -1267,10 +1338,123 @@ function updatePresenceRow(container, event, week, personId, groups) {
   const allCb = container.querySelector(`.presence-check-all[data-person-id="${personId}"]`);
   if (allCb) allCb.checked = allChecked;
 
-  const allMembers = groups.flatMap(g => g.memberIds);
+  const allMembers = displayGroups.flatMap(g => g.memberIds);
   const cnt = allMembers.filter(id => isPresent(event.id, week, id)).length;
   const summaryCell = container.querySelector('.presence-summary-row td:last-child');
   if (summaryCell) summaryCell.textContent = `${cnt} / ${allMembers.length}`;
+}
+
+function getWeekMemberEntries(event, weekNum) {
+  const groups = getWeekGroups(event, weekNum);
+  const seen = new Set();
+  const entries = [];
+  for (const group of groups) {
+    for (const memberId of group.memberIds) {
+      if (seen.has(memberId)) continue;
+      const person = getPersonById(memberId);
+      if (!person) continue;
+      seen.add(memberId);
+      entries.push({ id: memberId, person, groupName: group.name });
+    }
+  }
+  return entries;
+}
+
+function getWeekPackageEntries(event, weekNum) {
+  const groupedEntries = getWeekMemberEntries(event, weekNum);
+  const entriesById = new Map(groupedEntries.map(entry => [entry.id, entry]));
+  state.people
+    .filter(person => person.eventId === event.id && Array.isArray(person.eventWeeks) && person.eventWeeks.includes(weekNum))
+    .forEach(person => {
+      if (!entriesById.has(person.id)) entriesById.set(person.id, { id: person.id, person, groupName: 'Non assegnato' });
+    });
+
+  return Array.from(entriesById.values())
+    .map(entry => ({ ...entry, purchase: getPurchaseForWeek(entry.person, weekNum) }))
+    .filter(entry => entry.purchase);
+}
+
+function getDayDate(event, weekNum, day) {
+  const dayDate = getWeekStartMonday(event, weekNum);
+  dayDate.setDate(dayDate.getDate() + (day - 1));
+  return dayDate;
+}
+
+function formatReportNames(entries) {
+  if (!entries.length) return '<span class="muted">—</span>';
+  return entries.map(entry => `${escapeHtml(entry.person.nome)} <span class="muted">(${escapeHtml(entry.groupName)})</span>`).join('<br>');
+}
+
+function renderPackageReportSection(title, subtitle, entries, emptyMessage = 'Nessuna persona in questa lista.') {
+  let html = `<section class="report-page"><h1>${escapeHtml(title)}</h1>`;
+  if (subtitle) html += `<h2>${escapeHtml(subtitle)}</h2>`;
+  html += `<div class="summary">Totale: ${entries.length}</div>`;
+  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th><th>Pacchetto</th><th>Pranzo</th><th>Ingresso</th><th>Uscita</th></tr></thead><tbody>';
+
+  for (const entry of entries) {
+    const addon = getPurchaseAddonInfo(entry.purchase);
+    const hasLunch = entry.purchase.basePackage === 'pranzo';
+    html += `<tr>
+      <td>${escapeHtml(entry.person.nome)}</td>
+      <td class="muted">${escapeHtml(entry.groupName)}</td>
+      <td>${escapeHtml(getPurchasePackageText(entry.purchase))}</td>
+      <td>${hasLunch ? 'Pranzo' : 'No pranzo'}</td>
+      <td>${addon.preLabel ? escapeHtml(addon.preLabel) : '<span class="muted">9:00</span>'}</td>
+      <td>${addon.postLabel ? escapeHtml(addon.postLabel) : '<span class="muted">17:00</span>'}</td>
+    </tr>`;
+  }
+
+  if (!entries.length) html += `<tr><td colspan="6" class="center muted">${escapeHtml(emptyMessage)}</td></tr>`;
+  html += '</tbody></table></section>';
+  return html;
+}
+
+function printWeekExtraReport(eventId, weekNum) {
+  const event = state.events.find(e => e.id === eventId);
+  if (!event) return;
+
+  const startDate = getWeekStartMonday(event, weekNum);
+  const saturday = getDayDate(event, weekNum, DAY_COUNT);
+  const entries = getWeekPackageEntries(event, weekNum);
+  const preEntries = entries.filter(entry => getPurchaseAddonInfo(entry.purchase).preLabel);
+  const postEntries = entries.filter(entry => getPurchaseAddonInfo(entry.purchase).postLabel);
+  const pre730Entries = entries.filter(entry => getPurchaseAddonInfo(entry.purchase).preLabel.includes('7:30'));
+  const pre800Entries = entries.filter(entry => getPurchaseAddonInfo(entry.purchase).preLabel.includes('8:00'));
+  const exit1700Entries = entries.filter(entry => !getPurchaseAddonInfo(entry.purchase).postLabel);
+  const exit1800Entries = entries.filter(entry => getPurchaseAddonInfo(entry.purchase).postLabel);
+  const lunchEntries = entries.filter(entry => entry.purchase.basePackage === 'pranzo');
+  const noLunchEntries = entries.filter(entry => entry.purchase.basePackage === 'no_pranzo');
+  const weekSubtitle = `Settimana ${weekNum}: ${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })} - ${saturday.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+
+  let html = `<section class="report-page"><h1>Report settimana — ${escapeHtml(event.name)}</h1>`;
+  html += `<h2>${escapeHtml(weekSubtitle)}</h2>`;
+  html += `<div class="summary">Pacchetti acquistati: ${entries.length} · Pre: ${preEntries.length} · Post: ${postEntries.length}</div>`;
+  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th><th>Pacchetto</th><th>Ingresso anticipato</th><th>Post uscita</th><th class="center">Importo</th></tr></thead><tbody>';
+
+  for (const entry of entries) {
+    const addon = getPurchaseAddonInfo(entry.purchase);
+    html += `<tr>
+      <td>${escapeHtml(entry.person.nome)}</td>
+      <td class="muted">${escapeHtml(entry.groupName)}</td>
+      <td>${escapeHtml(getPurchasePackageText(entry.purchase))}</td>
+      <td>${addon.preLabel ? escapeHtml(addon.preLabel) : '<span class="muted">—</span>'}</td>
+      <td>${addon.postLabel ? escapeHtml(addon.postLabel) : '<span class="muted">—</span>'}</td>
+      <td class="center">${fmtMoney(entry.purchase.finalAmount)}</td>
+    </tr>`;
+  }
+
+  if (!entries.length) html += '<tr><td colspan="6" class="center muted">Nessun pacchetto acquistato per questa settimana.</td></tr>';
+
+  html += '</tbody></table></section>';
+
+  html += renderPackageReportSection('Ingresso pre 7:30', weekSubtitle, pre730Entries);
+  html += renderPackageReportSection('Ingresso pre 8:00', weekSubtitle, pre800Entries);
+  html += renderPackageReportSection('Uscita 17:00', weekSubtitle, exit1700Entries);
+  html += renderPackageReportSection('Post uscita 18:00', weekSubtitle, exit1800Entries);
+  html += renderPackageReportSection('Pranzo', weekSubtitle, lunchEntries);
+  html += renderPackageReportSection('No pranzo', weekSubtitle, noLunchEntries);
+
+  printContent(`Report settimana ${event.name} ${weekNum}`, html);
 }
 
 // ============================================================
@@ -1376,8 +1560,10 @@ function showWeekDetailModal(eventId, weekNum, personId) {
 
   const days = getPresenceDays(eventId, weekNum, personId);
   const daysPresent = countDaysPresent(eventId, weekNum, personId);
+  const purchase = getPurchaseForWeek(person, weekNum);
 
-  let html = '<table class="week-detail-table"><thead><tr><th>Giorno</th><th>Data</th><th>Presente</th></tr></thead><tbody>';
+  let html = `<div class="summary" style="margin-bottom:10px;">Pacchetto: ${escapeHtml(getPurchasePackageText(purchase))}</div>`;
+  html += '<table class="week-detail-table"><thead><tr><th>Giorno</th><th>Data</th><th>Presente</th></tr></thead><tbody>';
 
   for (let d = 1; d <= DAY_COUNT; d++) {
     const dayDate = new Date(startDate);
@@ -1469,9 +1655,11 @@ function printPersonDetail(eventId, personId) {
     const startDate = getWeekStartMonday(event, w);
     const days = getPresenceDays(eventId, w, personId);
     const dp = countDaysPresent(eventId, w, personId);
+    const purchase = getPurchaseForWeek(person, w);
     grandTotal += dp;
 
     html += `<h3 style="margin:16px 0 4px;font-size:14px;">Settimana ${w} — ${startDate.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</h3>`;
+    html += `<div class="summary">Pacchetto: ${escapeHtml(getPurchasePackageText(purchase))}</div>`;
     html += '<table><thead><tr><th>Giorno</th><th>Data</th><th>Presente</th></tr></thead><tbody>';
     for (let d = 1; d <= DAY_COUNT; d++) {
       const dayDate = new Date(startDate);
@@ -1519,6 +1707,20 @@ function renderPresenceColumn(personId) {
   if (!event || !event.startDate) return '';
   const week = getCurrentWeekNumber(event);
   const day = getCurrentDayOfWeek(event);
+
+  if (typeof getTicketBundlePurchases === 'function' && getTicketBundlePurchases(person).length) {
+    const remaining = getTicketRemainingForPerson(person);
+    const dateKey = week && day ? localDateKey(getDayDate(event, week, day)) : null;
+    const usedToday = dateKey ? hasTicketUseOnDate(person, dateKey) : false;
+    const disabled = !week || !day || remaining <= 0 || usedToday;
+    const label = usedToday ? 'Ticket usato' : remaining <= 0 ? 'Ticket finiti' : `Usa ticket (${remaining})`;
+    return `<td style="text-align:center;">
+      <button class="btn-present ${usedToday ? 'marked' : ''}" data-action="use-main-ticket" data-person-id="${escapeHtml(personId)}" data-event-id="${escapeHtml(event.id)}" data-week="${week || ''}" data-day="${day || ''}" ${disabled ? 'disabled' : ''}>
+        ${label}
+      </button>
+    </td>`;
+  }
+
   const present = day ? isDayPresent(event.id, week, personId, day) : isPresent(event.id, week, personId);
   return `<td style="text-align:center;">
     <button class="btn-present ${present ? 'marked' : ''}" data-action="toggle-main-presence" data-person-id="${escapeHtml(personId)}" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-day="${day || ''}">

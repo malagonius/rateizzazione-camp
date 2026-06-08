@@ -28,6 +28,7 @@
 
 <nav class="tab-nav" id="tab-nav">
   <button class="active" data-tab="rateizzazione">📋 Rateizzazione</button>
+  <button data-tab="acquisti">🛒 Acquisti</button>
   <button data-tab="presenze">📅 Presenze</button>
 </nav>
 
@@ -67,6 +68,7 @@
               <th data-sort="prossima_rata">Prossima rata <span class="sort-arrow"></span></th>
               <th data-sort="status">Stato <span class="sort-arrow"></span></th>
               <th id="th-presenza" class="hidden">Presenza</th>
+              <th>Azioni</th>
             </tr>
           </thead>
           <tbody id="people-tbody"></tbody>
@@ -85,6 +87,7 @@
       <div class="detail-header">
         <h2 id="detail-title">Dettaglio</h2>
         <div class="row-actions">
+          <button id="btn-detail-purchases" class="ghost">🛒 Acquisti</button>
           <button id="btn-delete-person" class="danger">🗑️ Elimina persona</button>
         </div>
       </div>
@@ -115,6 +118,9 @@
       <h3 style="margin-bottom: 8px;">Assegnazione Evento</h3>
       <div id="d-event-assignment" style="margin-bottom: 12px;"></div>
       <div id="d-event-weeks" class="event-weeks-checkboxes" style="margin-bottom: 16px;"></div>
+
+      <h3 style="margin-bottom: 8px;">Acquisti</h3>
+      <div id="d-purchases-summary" class="detail-purchases-summary"></div>
 
       <h3 style="margin-bottom: 8px;">Rate</h3>
       <div class="table-wrap">
@@ -154,6 +160,68 @@
           <div class="stat-value" id="sum-status">—</div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ========== ACQUISTI: PACKAGE PURCHASES ========== -->
+  <section id="view-acquisti" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2>🛒 Acquisti pacchetti</h2>
+      </div>
+      <div class="purchase-person-bar">
+        <label>Bambino/a
+          <select id="purchase-person-select"></select>
+        </label>
+        <div id="purchase-person-summary" class="purchase-person-summary"></div>
+      </div>
+
+      <div class="purchase-layout" id="purchase-view-content">
+        <div class="purchase-panel">
+          <h3>Pacchetto principale</h3>
+          <div id="purchase-base-options" class="package-option-grid"></div>
+        </div>
+
+        <div class="purchase-panel">
+          <h3>Pre / post uscita</h3>
+          <div id="purchase-addon-options" class="package-option-grid package-option-grid-wide"></div>
+        </div>
+
+        <div class="purchase-panel purchase-weeks-panel">
+          <div class="purchase-panel-header">
+            <h3>Settimane</h3>
+            <div class="row-actions">
+              <button type="button" id="purchase-select-all" class="ghost">Seleziona disponibili</button>
+              <button type="button" id="purchase-clear-weeks" class="secondary">Svuota</button>
+            </div>
+          </div>
+          <div id="purchase-weeks" class="event-weeks-grid"></div>
+        </div>
+
+        <div class="purchase-panel">
+          <h3>Sconti personalizzati</h3>
+          <div class="discount-grid">
+            <label>Tipo sconto
+              <select id="purchase-discount-type">
+                <option value="none">Nessuno</option>
+                <option value="amount">Importo fisso</option>
+                <option value="percent">Percentuale</option>
+              </select>
+            </label>
+            <label>Valore
+              <input type="number" id="purchase-discount-value" min="0" step="0.01" value="0" />
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div id="purchase-quote" class="purchase-quote"></div>
+      <div class="row-actions" style="margin-top:12px;justify-content:flex-start;">
+        <button id="btn-save-purchase">💾 Registra acquisto</button>
+      </div>
+
+      <h3 style="margin: 20px 0 8px;">Acquisti registrati</h3>
+      <div id="purchase-list"></div>
     </div>
   </section>
 
@@ -313,6 +381,7 @@
 <script src="js/db.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/backup.js"></script>
+<script src="js/acquisti.js"></script>
 <script src="js/rateizzazione_detail.js"></script>
 <script src="js/presenze.js"></script>
 <script src="js/rateizzazione.js"></script>

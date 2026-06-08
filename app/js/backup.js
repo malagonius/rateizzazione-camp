@@ -158,6 +158,7 @@ function scheduleBackupRestoreCheck() {
           state.presences = await dbGetAllFrom(PRESENCES_STORE);
           await ensureStaticEvents();
           await autoAssignAllPeopleToEvents();
+          if (syncAllPurchasesState()) await dbBulkPut(state.people);
           applyFilters();
           toast('Dati ripristinati dal backup', 'success');
         }
