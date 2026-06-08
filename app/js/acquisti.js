@@ -5,7 +5,7 @@
 const CAMP_BASE_PACKAGES = {
   pranzo: { key: 'pranzo', label: 'Pranzo', shortLabel: 'Pranzo', rates: { one: 90, four: 340, thirteen: 1040 } },
   no_pranzo: { key: 'no_pranzo', label: 'No pranzo', shortLabel: 'No pranzo', rates: { one: 80, four: 300, thirteen: 910 } },
-  ticket_10: { key: 'ticket_10', label: '10 ticket', shortLabel: '10 ticket', rates: { one: 180, four: 180, thirteen: 180 }, isTicketBundle: true, ticketTotal: 10, fixedPrice: 180 }
+  ticket_10: { key: 'ticket_10', label: '10 ticket', shortLabel: '10 ticket', rates: { one: 170, four: 170, thirteen: 170 }, isTicketBundle: true, ticketTotal: 10, fixedPrice: 180 }
 };
 
 const CAMP_ADDON_PACKAGES = {
