@@ -801,6 +801,13 @@
   .quote-item { display: flex; flex-direction: column; gap: 2px; }
   .quote-item span { color: var(--muted); font-size: 12px; }
   .quote-item strong { font-size: 16px; }
+  .quote-insurance {
+    padding: 8px;
+    border-radius: 8px;
+    background: #ecfdf5;
+    border: 1px solid #bbf7d0;
+  }
+  .quote-insurance strong { color: #047857; }
   .quote-total strong { color: var(--primary); font-size: 20px; }
   .purchase-card {
     display: grid;

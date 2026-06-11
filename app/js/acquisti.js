@@ -17,6 +17,8 @@ const CAMP_ADDON_PACKAGES = {
   prepost_800: { key: 'prepost_800', label: 'Pre 8:00 + post', shortLabel: 'Pre 8:00 + post', rates: { one: 55, four: 180, thirteen: 455 }, preLabel: 'Ingresso 8:00', postLabel: 'Uscita 18:00' }
 };
 
+const CAMP_INSURANCE_STANDARD = 30;
+const CAMP_INSURANCE_BUNNY_FIRST = 50;
 const DEFAULT_PURCHASE_FORM = { basePackage: 'pranzo', addonPackage: 'none', selectedWeeks: [], discountType: 'none', discountValue: 0 };
 state.currentPurchasePersonId = null;
 state.purchaseForm = { ...DEFAULT_PURCHASE_FORM };
@@ -31,19 +33,59 @@ function calculateTieredPrice(weekCount, rates) {
   return Math.floor(weekCount / 4) * rates.four + (weekCount % 4) * rates.one;
 }
 
-function calculatePackageQuote({ weeks, selectedWeeks, basePackage, addonPackage, discountType, discountValue }) {
+function getFirstPurchaseId(person) {
+  const purchases = Array.isArray(person?.purchases) ? person.purchases : [];
+  if (!purchases.length) return null;
+  return purchases.reduce((first, purchase, index) => {
+    const currentTime = Date.parse(purchase.createdAt || '') || index;
+    const firstTime = Date.parse(first.purchase.createdAt || '') || first.index;
+    return currentTime < firstTime ? { purchase, index } : first;
+  }, { purchase: purchases[0], index: 0 }).purchase.id || null;
+}
+
+function getInsuranceEventId(person, event = null, purchase = null) {
+  if (event?.id) return event.id;
+  if (purchase?.eventId) return purchase.eventId;
+  if (!person) return null;
+  if (!person.eventIdManual) return getEventForAge(person.eta);
+  return person.eventId || getEventForAge(person.eta);
+}
+
+function getCampInsuranceRate(person, event = null, purchase = null) {
+  return getInsuranceEventId(person, event, purchase) === 'bunny_camp'
+    ? CAMP_INSURANCE_BUNNY_FIRST
+    : CAMP_INSURANCE_STANDARD;
+}
+
+function getPurchaseInsuranceAmount(person, purchase, firstPurchaseId, event = null) {
+  if (!purchase || !firstPurchaseId || purchase.id !== firstPurchaseId) return 0;
+  return getCampInsuranceRate(person, event, purchase);
+}
+
+function getPurchaseFormInsurance(person, event) {
+  if (!person) return { amount: 0, label: 'Assicurazione' };
+  const hasPurchases = Array.isArray(person?.purchases) && person.purchases.length > 0;
+  const amount = hasPurchases ? 0 : getCampInsuranceRate(person, event);
+  return {
+    amount,
+    label: amount > 0 ? 'Assicurazione' : 'Assicurazione gia conteggiata'
+  };
+}
+
+function calculatePackageQuote({ weeks, selectedWeeks, basePackage, addonPackage, discountType, discountValue, insuranceAmount = 0 }) {
   const sourceWeeks = weeks || selectedWeeks || [];
   const weekCount = Array.from(new Set(sourceWeeks.map(w => parseInt(w)).filter(w => !isNaN(w)))).length;
   const base = CAMP_BASE_PACKAGES[basePackage] || CAMP_BASE_PACKAGES.pranzo;
   const addon = CAMP_ADDON_PACKAGES[addonPackage] || CAMP_ADDON_PACKAGES.none;
   const baseAmount = base.isTicketBundle ? num(base.fixedPrice) : calculateTieredPrice(weekCount, base.rates);
   const addonAmount = base.isTicketBundle ? 0 : calculateTieredPrice(weekCount, addon.rates);
-  const grossAmount = baseAmount + addonAmount;
+  const cleanInsuranceAmount = Math.max(0, num(insuranceAmount));
+  const grossAmount = baseAmount + addonAmount + cleanInsuranceAmount;
   const cleanDiscountValue = Math.max(0, num(discountValue));
   let discountAmount = 0;
   if (discountType === 'amount') discountAmount = Math.min(grossAmount, cleanDiscountValue);
   if (discountType === 'percent') discountAmount = Math.min(grossAmount, grossAmount * cleanDiscountValue / 100);
-  return { baseAmount, addonAmount, grossAmount, discountAmount, finalAmount: Math.max(0, grossAmount - discountAmount) };
+  return { baseAmount, addonAmount, insuranceAmount: cleanInsuranceAmount, grossAmount, discountAmount, finalAmount: Math.max(0, grossAmount - discountAmount) };
 }
 
 function normalizePersonPurchases(person) {
@@ -52,6 +94,9 @@ function normalizePersonPurchases(person) {
   person.purchases.forEach(purchase => {
     if (!purchase.id) purchase.id = uid();
     if (!purchase.createdAt) purchase.createdAt = new Date().toISOString();
+  });
+  const firstPurchaseId = getFirstPurchaseId(person);
+  person.purchases.forEach(purchase => {
     if (!Array.isArray(purchase.weeks)) purchase.weeks = [];
     purchase.weeks = purchase.weeks.map(w => parseInt(w)).filter(w => !isNaN(w)).sort((a, b) => a - b);
     if (!CAMP_BASE_PACKAGES[purchase.basePackage]) purchase.basePackage = 'pranzo';
@@ -63,6 +108,7 @@ function normalizePersonPurchases(person) {
       purchase.ticketTotal = num(purchase.ticketTotal) || CAMP_BASE_PACKAGES.ticket_10.ticketTotal;
       if (!Array.isArray(purchase.ticketUses)) purchase.ticketUses = [];
     }
+    purchase.insuranceAmount = getPurchaseInsuranceAmount(person, purchase, firstPurchaseId);
     Object.assign(purchase, calculatePackageQuote(purchase));
   });
   return person.purchases;
@@ -300,11 +346,15 @@ function renderPurchaseSummary(person, event) {
 function renderPurchaseQuote() {
   const quoteEl = document.getElementById('purchase-quote');
   if (!quoteEl) return;
-  const quote = calculatePackageQuote({ ...state.purchaseForm, weeks: state.purchaseForm.selectedWeeks });
+  const person = getPurchasePerson();
+  const event = getPersonEventForPurchases(person);
+  const insurance = getPurchaseFormInsurance(person, event);
+  const quote = calculatePackageQuote({ ...state.purchaseForm, weeks: state.purchaseForm.selectedWeeks, insuranceAmount: insurance.amount });
   quoteEl.innerHTML = `
     <div class="quote-item"><span>Settimane</span><strong>${state.purchaseForm.selectedWeeks.length}</strong></div>
     <div class="quote-item"><span>Pacchetto principale</span><strong>${fmtMoney(quote.baseAmount)}</strong></div>
     <div class="quote-item"><span>Pre / post</span><strong>${fmtMoney(quote.addonAmount)}</strong></div>
+    <div class="quote-item quote-insurance"><span>${escapeHtml(insurance.label)}</span><strong>${fmtMoney(quote.insuranceAmount)}</strong></div>
     <div class="quote-item"><span>Sconto</span><strong>-${fmtMoney(quote.discountAmount)}</strong></div>
     <div class="quote-item quote-total"><span>Totale acquisto</span><strong>${fmtMoney(quote.finalAmount)}</strong></div>`;
 }
@@ -318,7 +368,7 @@ function renderPurchaseList(person) {
   list.innerHTML = purchases.map(purchase => `
     <div class="purchase-card" data-purchase-id="${escapeHtml(purchase.id)}">
       <div><strong>${escapeHtml(getPurchasePackageText(purchase))}</strong><div class="purchase-meta">${escapeHtml(isTicketBundlePackage(purchase.basePackage) ? `${getTicketRemaining(purchase)}/${purchase.ticketTotal} ticket rimasti` : getPurchaseWeekLabel(purchase.weeks))} - ${purchase.createdAt ? fmtDateDisplay(purchase.createdAt) : ''}</div></div>
-      <div class="purchase-card-amount"><strong>${fmtMoney(purchase.finalAmount)}</strong>${purchase.discountAmount ? `<span class="purchase-meta">sconto ${fmtMoney(purchase.discountAmount)}</span>` : ''}</div>
+      <div class="purchase-card-amount"><strong>${fmtMoney(purchase.finalAmount)}</strong>${purchase.insuranceAmount ? `<span class="purchase-meta">assicurazione ${fmtMoney(purchase.insuranceAmount)}</span>` : ''}${purchase.discountAmount ? `<span class="purchase-meta">sconto ${fmtMoney(purchase.discountAmount)}</span>` : ''}</div>
       <button class="danger" data-action="remove-purchase" data-purchase-id="${escapeHtml(purchase.id)}" title="Rimuovi acquisto">x</button>
     </div>`).join('');
 }
@@ -341,7 +391,7 @@ function renderDetailPurchases(person) {
     return `
     <div class="purchase-card compact ${isTicket ? 'ticket-card' : ''}" data-purchase-id="${escapeHtml(purchase.id)}">
       <div><strong>${escapeHtml(getPurchasePackageText(purchase))}</strong><div class="purchase-meta">${escapeHtml(detail)}</div></div>
-      <div class="purchase-card-amount"><strong>${fmtMoney(purchase.finalAmount)}</strong></div>
+      <div class="purchase-card-amount"><strong>${fmtMoney(purchase.finalAmount)}</strong>${purchase.insuranceAmount ? `<span class="purchase-meta">assicurazione ${fmtMoney(purchase.insuranceAmount)}</span>` : ''}</div>
       <div class="purchase-actions">
         ${isTicket ? `<button class="ghost" data-action="use-detail-ticket" data-purchase-id="${escapeHtml(purchase.id)}" ${ticketDisabled ? 'disabled' : ''}>${usedToday ? 'Ticket usato' : 'Usa ticket'}</button>` : ''}
         <button class="danger subtle-danger" data-action="remove-detail-purchase" data-purchase-id="${escapeHtml(purchase.id)}" title="Rimuovi acquisto">Rimuovi</button>
@@ -396,7 +446,8 @@ async function savePurchase() {
   if (!isTicket && !weeks.length) { toast('Seleziona almeno una settimana.', 'error'); return; }
   const duplicate = weeks.find(week => getPurchasedWeeks(person).has(week));
   if (duplicate) { toast(`La settimana ${duplicate} e gia stata acquistata.`, 'error'); return; }
-  const quote = calculatePackageQuote({ ...state.purchaseForm, weeks });
+  const insurance = getPurchaseFormInsurance(person, event);
+  const quote = calculatePackageQuote({ ...state.purchaseForm, weeks, insuranceAmount: insurance.amount });
   normalizePersonPurchases(person).push({
     id: uid(),
     createdAt: new Date().toISOString(),
