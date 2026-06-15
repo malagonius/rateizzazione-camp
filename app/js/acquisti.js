@@ -12,7 +12,7 @@ const CAMP_ADDON_PACKAGES = {
   none: { key: 'none', label: 'Nessun extra', shortLabel: 'Nessun extra', rates: { one: 0, four: 0, thirteen: 0 }, preLabel: '', postLabel: '' },
   pre_730: { key: 'pre_730', label: 'Pre 7:30-9:00', shortLabel: 'Pre 7:30', rates: { one: 35, four: 120, thirteen: 325 }, preLabel: 'Ingresso 7:30', postLabel: '' },
   pre_800: { key: 'pre_800', label: 'Pre 8:00-9:00', shortLabel: 'Pre 8:00', rates: { one: 30, four: 100, thirteen: 260 }, preLabel: 'Ingresso 8:00', postLabel: '' },
-  post: { key: 'post', label: 'Post 17:00-18:00', shortLabel: 'Post', rates: { one: 35, four: 120, thirteen: 325 }, preLabel: '', postLabel: 'Uscita 18:00' },
+  post: { key: 'post', label: 'Post 17:00-18:00', shortLabel: 'Post', rates: { one: 30, four: 100, thirteen: 260 }, preLabel: '', postLabel: 'Uscita 18:00' },
   prepost_730: { key: 'prepost_730', label: 'Pre 7:30 + post', shortLabel: 'Pre 7:30 + post', rates: { one: 60, four: 200, thirteen: 520 }, preLabel: 'Ingresso 7:30', postLabel: 'Uscita 18:00' },
   prepost_800: { key: 'prepost_800', label: 'Pre 8:00 + post', shortLabel: 'Pre 8:00 + post', rates: { one: 55, four: 180, thirteen: 455 }, preLabel: 'Ingresso 8:00', postLabel: 'Uscita 18:00' }
 };

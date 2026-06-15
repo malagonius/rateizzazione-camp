@@ -14,7 +14,7 @@
 // 13 IPOTESI LUGLIO, 14 LUGLIO REALE, 15 DATA,
 // 16 IPOTESI AGOSTO, 17 AGOSTO REALE, 18 DATA,
 // 19 IPOTESI SETTEMBRE, 20 SETTEMBRE REALE, 21 DATA,
-// 22 RESIDUO REALE, 23 ASSISTENZA
+// 22 RESIDUO REALE, 23 ASSISTENZA, 24 ETÀ, 25 ALLERGIE
 // ============================================================
 async function importExcel(file) {
   const buf = await file.arrayBuffer();
@@ -22,6 +22,8 @@ async function importExcel(file) {
   const ws = wb.Sheets[wb.SheetNames[0]];
   const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: true, defval: null });
   if (!rows.length) throw new Error('Foglio vuoto');
+  const headerRow = rows[0] || [];
+  const allergieCol = headerRow.findIndex(h => normHeader(h) === 'ALLERGIE');
 
   const people = [];
   // Skip header row (index 0)
@@ -54,6 +56,7 @@ async function importExcel(file) {
       installments,
       assistenza: normalizeAssistenza(row[23]),
       eta: row[24] != null && row[24] !== '' ? num(row[24]) : null,
+      allergie: allergieCol >= 0 && row[allergieCol] != null ? String(row[allergieCol]).trim() : '',
       visibilityHidden: false,
       purchases: []
     });
@@ -135,7 +138,7 @@ function exportExcel() {
     'IPOTESI RATA LUGLIO', 'RATA LUGLIO REALE', 'DATA',
     'IPOTESI RATA AGOSTO', 'RATA AGOSTO REALE', 'DATA',
     'IPOTESI RATA SETTEMBRE', 'RATA SETTEMBRE REALE', 'DATA',
-    'RESIDUO REALE', 'ASSISTENZA', 'ETÀ',
+    'RESIDUO REALE', 'ASSISTENZA', 'ETÀ', 'ALLERGIE',
     'TOTALE PAGATO', 'STATO'
   ];
 
@@ -158,6 +161,7 @@ function exportExcel() {
     row.push(num(p.totale) - paid); // residuo
     row.push(p.assistenza || '');
     row.push(p.eta != null ? p.eta : '');
+    row.push(p.allergie || '');
     row.push(paid);
     row.push(STATUS_LABEL[statusOf(p)]);
     data.push(row);

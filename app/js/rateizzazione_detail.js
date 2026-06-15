@@ -33,6 +33,7 @@ function renderDetail() {
   document.getElementById('d-dataIscrizione').value = p.dataIscrizione || '';
   document.getElementById('d-assistenza').value = (p.assistenza === 'Si') ? 'Si' : 'No';
   document.getElementById('d-eta').value = p.eta != null ? p.eta : '';
+  document.getElementById('d-allergie').value = p.allergie || '';
 
   renderEventAssignment();
   renderDetailPurchases(p);
@@ -196,7 +197,8 @@ function bindDetailEvents() {
     'd-totale': 'totale',
     'd-dataIscrizione': 'dataIscrizione',
     'd-eta': 'eta',
-    'd-assistenza': 'assistenza'
+    'd-assistenza': 'assistenza',
+    'd-allergie': 'allergie'
   };
   Object.entries(map).forEach(([id, field]) => {
     document.getElementById(id).addEventListener('input', async (e) => {

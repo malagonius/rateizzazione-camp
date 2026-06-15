@@ -831,6 +831,7 @@ function renderGroups() {
       <div class="group-card" data-group-idx="${gIdx}">
         <div class="group-card-header">
           <input type="text" class="group-name-input" data-group-idx="${gIdx}" value="${escapeHtml(group.name)}" />
+          <button class="group-icon-btn" data-action="print-group" data-group-idx="${gIdx}" title="Stampa dettaglio gruppo">🖨️</button>
           ${removeBtn}
         </div>
         <div class="group-member-count">${members.length} persone</div>
@@ -981,6 +982,13 @@ function setupDragAndDrop() {
   });
 
   container.addEventListener('click', async (e) => {
+    const printBtn = e.target.closest('[data-action="print-group"]');
+    if (printBtn) {
+      e.stopPropagation();
+      printGroupDetail(parseInt(printBtn.dataset.groupIdx));
+      return;
+    }
+
     const btn = e.target.closest('[data-action="remove-member"]');
     if (!btn) return;
     e.stopPropagation();
@@ -1047,6 +1055,48 @@ function setupDragAndDrop() {
     renderGroups();
     toast('Gruppo rimosso', 'success');
   });
+}
+
+function printGroupDetail(groupIdx) {
+  const event = getCurrentEvent();
+  if (!event) return;
+  const groups = getWeekGroups(event, state.currentWeek);
+  const group = groups[groupIdx];
+  if (!group) return;
+
+  const weekNum = state.currentWeek;
+  const monday = getWeekStartMonday(event, weekNum);
+  const saturday = new Date(monday);
+  saturday.setDate(saturday.getDate() + (DAY_COUNT - 1));
+  const weekSubtitle = `Settimana ${weekNum}: ${monday.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })} - ${saturday.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}`;
+  const members = group.memberIds.map(id => getPersonById(id)).filter(Boolean);
+  const notes = (group.descriptions || []).map(desc => String(desc || '').trim()).filter(Boolean);
+
+  let html = `<h1>${escapeHtml(group.name)}</h1>`;
+  html += `<h2>${escapeHtml(event.name)} - ${escapeHtml(weekSubtitle)}</h2>`;
+  html += `<div class="summary">Totale persone: ${members.length}</div>`;
+
+  if (notes.length) {
+    html += '<table><thead><tr><th>Capitani / Note</th></tr></thead><tbody>';
+    for (const note of notes) html += `<tr><td>${escapeHtml(note)}</td></tr>`;
+    html += '</tbody></table>';
+  }
+
+  html += '<table><thead><tr><th>Persona</th><th>Età</th><th>Telefono</th><th>Allergie</th></tr></thead><tbody>';
+  for (const person of members) {
+    const age = person.eta != null ? `${person.eta} anni` : '';
+    const allergies = String(person.allergie || '').trim();
+    html += `<tr>
+      <td>${escapeHtml(person.nome)}</td>
+      <td>${age ? escapeHtml(age) : '<span class="muted">—</span>'}</td>
+      <td>${person.telefono ? escapeHtml(person.telefono) : '<span class="muted">—</span>'}</td>
+      <td>${allergies ? escapeHtml(allergies) : '<span class="muted">—</span>'}</td>
+    </tr>`;
+  }
+  if (!members.length) html += '<tr><td colspan="4" class="center muted">Nessuna persona nel gruppo.</td></tr>';
+  html += '</tbody></table>';
+
+  printContent(`Gruppo ${group.name}`, html);
 }
 
 // ============================================================
@@ -1385,26 +1435,31 @@ function formatReportNames(entries) {
   return entries.map(entry => `${escapeHtml(entry.person.nome)} <span class="muted">(${escapeHtml(entry.groupName)})</span>`).join('<br>');
 }
 
-function renderPackageReportSection(title, subtitle, entries, emptyMessage = 'Nessuna persona in questa lista.') {
+function renderPackageReportSection(title, subtitle, entries, emptyMessage = 'Nessuna persona in questa lista.', showAllergies = false) {
   let html = `<section class="report-page"><h1>${escapeHtml(title)}</h1>`;
   if (subtitle) html += `<h2>${escapeHtml(subtitle)}</h2>`;
   html += `<div class="summary">Totale: ${entries.length}</div>`;
-  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th><th>Pacchetto</th><th>Pranzo</th><th>Ingresso</th><th>Uscita</th></tr></thead><tbody>';
+  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th><th>Pacchetto</th><th>Pranzo</th><th>Ingresso</th><th>Uscita</th>';
+  if (showAllergies) html += '<th>Allergie</th>';
+  html += '</tr></thead><tbody>';
 
   for (const entry of entries) {
     const addon = getPurchaseAddonInfo(entry.purchase);
     const hasLunch = entry.purchase.basePackage === 'pranzo';
+    const allergie = String(entry.person.allergie || '').trim();
     html += `<tr>
       <td>${escapeHtml(entry.person.nome)}</td>
       <td class="muted">${escapeHtml(entry.groupName)}</td>
       <td>${escapeHtml(getPurchasePackageText(entry.purchase))}</td>
       <td>${hasLunch ? 'Pranzo' : 'No pranzo'}</td>
       <td>${addon.preLabel ? escapeHtml(addon.preLabel) : '<span class="muted">9:00</span>'}</td>
-      <td>${addon.postLabel ? escapeHtml(addon.postLabel) : '<span class="muted">17:00</span>'}</td>
+      <td>${addon.postLabel ? escapeHtml(addon.postLabel) : '<span class="muted">17:00</span>'}</td>`;
+    if (showAllergies) html += `<td>${allergie ? escapeHtml(allergie) : '<span class="muted">—</span>'}</td>`;
+    html += `
     </tr>`;
   }
 
-  if (!entries.length) html += `<tr><td colspan="6" class="center muted">${escapeHtml(emptyMessage)}</td></tr>`;
+  if (!entries.length) html += `<tr><td colspan="${showAllergies ? 7 : 6}" class="center muted">${escapeHtml(emptyMessage)}</td></tr>`;
   html += '</tbody></table></section>';
   return html;
 }
@@ -1429,7 +1484,7 @@ function printWeekExtraReport(eventId, weekNum) {
   let html = `<section class="report-page"><h1>Report settimana — ${escapeHtml(event.name)}</h1>`;
   html += `<h2>${escapeHtml(weekSubtitle)}</h2>`;
   html += `<div class="summary">Pacchetti acquistati: ${entries.length} · Pre: ${preEntries.length} · Post: ${postEntries.length}</div>`;
-  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th><th>Pacchetto</th><th>Ingresso anticipato</th><th>Post uscita</th><th class="center">Importo</th></tr></thead><tbody>';
+  html += '<table><thead><tr><th>Persona</th><th>Gruppo</th><th>Pacchetto</th><th>Ingresso anticipato</th><th>Post uscita</th></tr></thead><tbody>';
 
   for (const entry of entries) {
     const addon = getPurchaseAddonInfo(entry.purchase);
@@ -1439,11 +1494,10 @@ function printWeekExtraReport(eventId, weekNum) {
       <td>${escapeHtml(getPurchasePackageText(entry.purchase))}</td>
       <td>${addon.preLabel ? escapeHtml(addon.preLabel) : '<span class="muted">—</span>'}</td>
       <td>${addon.postLabel ? escapeHtml(addon.postLabel) : '<span class="muted">—</span>'}</td>
-      <td class="center">${fmtMoney(entry.purchase.finalAmount)}</td>
     </tr>`;
   }
 
-  if (!entries.length) html += '<tr><td colspan="6" class="center muted">Nessun pacchetto acquistato per questa settimana.</td></tr>';
+  if (!entries.length) html += '<tr><td colspan="5" class="center muted">Nessun pacchetto acquistato per questa settimana.</td></tr>';
 
   html += '</tbody></table></section>';
 
@@ -1451,7 +1505,7 @@ function printWeekExtraReport(eventId, weekNum) {
   html += renderPackageReportSection('Ingresso pre 8:00', weekSubtitle, pre800Entries);
   html += renderPackageReportSection('Uscita 17:00', weekSubtitle, exit1700Entries);
   html += renderPackageReportSection('Post uscita 18:00', weekSubtitle, exit1800Entries);
-  html += renderPackageReportSection('Pranzo', weekSubtitle, lunchEntries);
+  html += renderPackageReportSection('Pranzo', weekSubtitle, lunchEntries, 'Nessuna persona in questa lista.', true);
   html += renderPackageReportSection('No pranzo', weekSubtitle, noLunchEntries);
 
   printContent(`Report settimana ${event.name} ${weekNum}`, html);

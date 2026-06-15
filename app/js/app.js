@@ -36,6 +36,7 @@ function bindGlobalEvents() {
       totale: 0,
       dataIscrizione: null,
       eta: null,
+      allergie: '',
       installments: DEFAULT_INSTALLMENTS.map(t => ({
         key: t.key, label: t.label, ipotesi: 0, reale: 0, data: null, metodo: '', iban: ''
       })),
@@ -352,6 +353,7 @@ async function init() {
       p.assistenza = normalizeAssistenza(p.assistenza);
       if (p.visibilityHidden === undefined) p.visibilityHidden = false;
       if (p.eta === undefined) p.eta = null;
+      if (p.allergie === undefined) p.allergie = '';
       if (p.eventId === undefined) p.eventId = null;
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
       if (p.eventIdManual === undefined) p.eventIdManual = false;
