@@ -37,6 +37,8 @@ function bindGlobalEvents() {
       dataIscrizione: null,
       eta: null,
       allergie: '',
+      deleghe: '',
+      saggio: false,
       installments: DEFAULT_INSTALLMENTS.map(t => ({
         key: t.key, label: t.label, ipotesi: 0, reale: 0, data: null, metodo: '', iban: ''
       })),
@@ -354,6 +356,8 @@ async function init() {
       if (p.visibilityHidden === undefined) p.visibilityHidden = false;
       if (p.eta === undefined) p.eta = null;
       if (p.allergie === undefined) p.allergie = '';
+      if (p.deleghe === undefined) p.deleghe = '';
+      p.saggio = normalizeBoolean(p.saggio);
       if (p.eventId === undefined) p.eventId = null;
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
       if (p.eventIdManual === undefined) p.eventIdManual = false;

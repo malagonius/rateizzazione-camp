@@ -14,7 +14,7 @@
 // 13 IPOTESI LUGLIO, 14 LUGLIO REALE, 15 DATA,
 // 16 IPOTESI AGOSTO, 17 AGOSTO REALE, 18 DATA,
 // 19 IPOTESI SETTEMBRE, 20 SETTEMBRE REALE, 21 DATA,
-// 22 RESIDUO REALE, 23 ASSISTENZA, 24 ETÀ, 25 ALLERGIE
+// 22 RESIDUO REALE, 23 ASSISTENZA, 24 ETÀ, 25 ALLERGIE, 26 DELEGHE, 27 SAGGIO
 // ============================================================
 async function importExcel(file) {
   const buf = await file.arrayBuffer();
@@ -24,6 +24,8 @@ async function importExcel(file) {
   if (!rows.length) throw new Error('Foglio vuoto');
   const headerRow = rows[0] || [];
   const allergieCol = headerRow.findIndex(h => normHeader(h) === 'ALLERGIE');
+  const delegheCol = headerRow.findIndex(h => normHeader(h) === 'DELEGHE');
+  const saggioCol = headerRow.findIndex(h => normHeader(h) === 'SAGGIO');
 
   const people = [];
   // Skip header row (index 0)
@@ -57,6 +59,8 @@ async function importExcel(file) {
       assistenza: normalizeAssistenza(row[23]),
       eta: row[24] != null && row[24] !== '' ? num(row[24]) : null,
       allergie: allergieCol >= 0 && row[allergieCol] != null ? String(row[allergieCol]).trim() : '',
+      deleghe: delegheCol >= 0 && row[delegheCol] != null ? String(row[delegheCol]).trim() : '',
+      saggio: saggioCol >= 0 ? normalizeBoolean(row[saggioCol]) : false,
       visibilityHidden: false,
       purchases: []
     });
@@ -138,7 +142,7 @@ function exportExcel() {
     'IPOTESI RATA LUGLIO', 'RATA LUGLIO REALE', 'DATA',
     'IPOTESI RATA AGOSTO', 'RATA AGOSTO REALE', 'DATA',
     'IPOTESI RATA SETTEMBRE', 'RATA SETTEMBRE REALE', 'DATA',
-    'RESIDUO REALE', 'ASSISTENZA', 'ETÀ', 'ALLERGIE',
+    'RESIDUO REALE', 'ASSISTENZA', 'ETÀ', 'ALLERGIE', 'DELEGHE', 'SAGGIO',
     'TOTALE PAGATO', 'STATO'
   ];
 
@@ -162,6 +166,8 @@ function exportExcel() {
     row.push(p.assistenza || '');
     row.push(p.eta != null ? p.eta : '');
     row.push(p.allergie || '');
+    row.push(p.deleghe || '');
+    row.push(p.saggio ? 'Si' : 'No');
     row.push(paid);
     row.push(STATUS_LABEL[statusOf(p)]);
     data.push(row);

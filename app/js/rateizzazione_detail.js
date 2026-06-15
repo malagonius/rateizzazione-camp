@@ -34,6 +34,8 @@ function renderDetail() {
   document.getElementById('d-assistenza').value = (p.assistenza === 'Si') ? 'Si' : 'No';
   document.getElementById('d-eta').value = p.eta != null ? p.eta : '';
   document.getElementById('d-allergie').value = p.allergie || '';
+  document.getElementById('d-deleghe').value = p.deleghe || '';
+  document.getElementById('d-saggio').checked = !!p.saggio;
 
   renderEventAssignment();
   renderDetailPurchases(p);
@@ -198,7 +200,8 @@ function bindDetailEvents() {
     'd-dataIscrizione': 'dataIscrizione',
     'd-eta': 'eta',
     'd-assistenza': 'assistenza',
-    'd-allergie': 'allergie'
+    'd-allergie': 'allergie',
+    'd-deleghe': 'deleghe'
   };
   Object.entries(map).forEach(([id, field]) => {
     document.getElementById(id).addEventListener('input', async (e) => {
@@ -213,6 +216,13 @@ function bindDetailEvents() {
       renderDetailSummary();
       await persistCurrent();
     });
+  });
+
+  document.getElementById('d-saggio').addEventListener('change', async (e) => {
+    const p = getCurrent();
+    if (!p) return;
+    p.saggio = e.target.checked;
+    await persistCurrent();
   });
 
   // Installments table — delegate

@@ -82,6 +82,13 @@ function normalizeAssistenza(v) {
   return 'No';
 }
 
+function normalizeBoolean(v) {
+  if (v === true) return true;
+  if (v === false || v == null) return false;
+  const s = String(v).trim().toLowerCase();
+  return ['si', 'sì', 'yes', 'y', 's', 'true', '1', 'x'].includes(s);
+}
+
 function num(v) {
   if (v === null || v === undefined || v === '') return 0;
   const n = Number(String(v).replace(',', '.'));

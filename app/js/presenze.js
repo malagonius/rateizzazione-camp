@@ -31,6 +31,7 @@ function printContent(title, htmlContent) {
   td.center { text-align: center; }
   .summary { font-weight: 600; margin-top: 8px; font-size: 13px; }
   .muted { color: #6b7280; font-size: 11px; }
+  .name-extra { display: block; color: #6b7280; font-size: 11px; margin-top: 2px; }
   .report-page { break-after: page; page-break-after: always; }
   .report-page:last-child { break-after: auto; page-break-after: auto; }
   .print-date { font-size: 11px; color: #9ca3af; margin-bottom: 16px; }
@@ -1346,7 +1347,7 @@ function renderPresences() {
   html += `<tr class="presence-summary-row"><td>Totale presenti</td><td colspan="${DAY_COUNT + 1}" style="text-align:center;">${presentCount} / ${allMembers.length}</td></tr>`;
   html += '</tbody></table>';
 
-  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button></div>';
+  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button> <button id="btn-presences-saggio" class="ghost">🖨️ Saggio</button></div>';
 
   container.innerHTML = html;
 
@@ -1369,6 +1370,11 @@ function renderPresences() {
   const overviewBtn = container.querySelector('#btn-presences-overview');
   if (overviewBtn) {
     overviewBtn.addEventListener('click', () => showPresencesOverview());
+  }
+
+  const saggioBtn = container.querySelector('#btn-presences-saggio');
+  if (saggioBtn) {
+    saggioBtn.addEventListener('click', () => printSaggioList());
   }
 
   const reportBtn = container.querySelector('#btn-week-extra-report');
@@ -1435,6 +1441,12 @@ function formatReportNames(entries) {
   return entries.map(entry => `${escapeHtml(entry.person.nome)} <span class="muted">(${escapeHtml(entry.groupName)})</span>`).join('<br>');
 }
 
+function formatPersonNameWithDeleghe(person) {
+  const deleghe = String(person.deleghe || '').trim();
+  if (!deleghe) return escapeHtml(person.nome);
+  return `${escapeHtml(person.nome)}<span class="name-extra">(${escapeHtml(deleghe)})</span>`;
+}
+
 function renderPackageReportSection(title, subtitle, entries, emptyMessage = 'Nessuna persona in questa lista.', showAllergies = false) {
   let html = `<section class="report-page"><h1>${escapeHtml(title)}</h1>`;
   if (subtitle) html += `<h2>${escapeHtml(subtitle)}</h2>`;
@@ -1448,7 +1460,7 @@ function renderPackageReportSection(title, subtitle, entries, emptyMessage = 'Ne
     const hasLunch = entry.purchase.basePackage === 'pranzo';
     const allergie = String(entry.person.allergie || '').trim();
     html += `<tr>
-      <td>${escapeHtml(entry.person.nome)}</td>
+      <td>${formatPersonNameWithDeleghe(entry.person)}</td>
       <td class="muted">${escapeHtml(entry.groupName)}</td>
       <td>${escapeHtml(getPurchasePackageText(entry.purchase))}</td>
       <td>${hasLunch ? 'Pranzo' : 'No pranzo'}</td>
@@ -1489,7 +1501,7 @@ function printWeekExtraReport(eventId, weekNum) {
   for (const entry of entries) {
     const addon = getPurchaseAddonInfo(entry.purchase);
     html += `<tr>
-      <td>${escapeHtml(entry.person.nome)}</td>
+      <td>${formatPersonNameWithDeleghe(entry.person)}</td>
       <td class="muted">${escapeHtml(entry.groupName)}</td>
       <td>${escapeHtml(getPurchasePackageText(entry.purchase))}</td>
       <td>${addon.preLabel ? escapeHtml(addon.preLabel) : '<span class="muted">—</span>'}</td>
@@ -1509,6 +1521,30 @@ function printWeekExtraReport(eventId, weekNum) {
   html += renderPackageReportSection('No pranzo', weekSubtitle, noLunchEntries);
 
   printContent(`Report settimana ${event.name} ${weekNum}`, html);
+}
+
+function printSaggioList() {
+  const entries = state.people
+    .filter(person => normalizeBoolean(person.saggio))
+    .slice()
+    .sort((a, b) => {
+      const ageA = a.eta == null || a.eta === '' ? Number.POSITIVE_INFINITY : Number(a.eta);
+      const ageB = b.eta == null || b.eta === '' ? Number.POSITIVE_INFINITY : Number(b.eta);
+      if (ageA !== ageB) return ageA - ageB;
+      return String(a.nome || '').localeCompare(String(b.nome || ''), 'it');
+    });
+
+  let html = '<h1>Saggio</h1>';
+  html += `<div class="summary">Totale bambini: ${entries.length}</div>`;
+  html += '<table><thead><tr><th>Nome</th><th>Eta</th></tr></thead><tbody>';
+  for (const person of entries) {
+    const age = person.eta != null && person.eta !== '' ? `${escapeHtml(person.eta)} anni` : '<span class="muted">—</span>';
+    html += `<tr><td>${escapeHtml(person.nome)}</td><td>${age}</td></tr>`;
+  }
+  if (!entries.length) html += '<tr><td colspan="2" class="center muted">Nessun bambino selezionato per il saggio.</td></tr>';
+  html += '</tbody></table>';
+
+  printContent('Saggio', html);
 }
 
 // ============================================================
