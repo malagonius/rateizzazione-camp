@@ -3,6 +3,55 @@
  * ============================================================ */
 
 // ============================================================
+// JSON IMPORT — reads the backup envelope { id, createdAt, data: { people, events, presences } }
+// ============================================================
+async function importJSON(file) {
+  const text = await file.text();
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch (e) {
+    throw new Error('File JSON non valido');
+  }
+
+  // Support both raw structure and the backup envelope
+  const data = (parsed && parsed.data) ? parsed.data : parsed;
+
+  const people    = Array.isArray(data.people)    ? data.people    : [];
+  const events    = Array.isArray(data.events)    ? data.events    : [];
+  const presences = Array.isArray(data.presences) ? data.presences : [];
+
+  if (!people.length) throw new Error('Nessuna persona trovata nel file JSON');
+
+  // Normalise each person to guarantee required fields exist
+  people.forEach(p => {
+    if (!p.id)            p.id = uid();
+    if (!p.installments)  p.installments = DEFAULT_INSTALLMENTS.map(t => ({ key: t.key, label: t.label, ipotesi: 0, reale: 0, data: null, metodo: '', iban: '' }));
+    if (!p.purchases)     p.purchases = [];
+    if (!p.eventWeeks)    p.eventWeeks = [];
+    normalizePersonPurchases(p);
+  });
+
+  // Clear existing DB data and persist the imported data
+  await dbClear();
+  await dbClearStore(EVENTS_STORE);
+  await dbClearStore(PRESENCES_STORE);
+  await dbBulkPut(people);
+  if (events.length)    await dbBulkPutTo(EVENTS_STORE, events);
+  if (presences.length) await dbBulkPutTo(PRESENCES_STORE, presences);
+
+  state.people    = people;
+  state.events    = events;
+  state.presences = presences;
+
+  syncAllPurchasesState();
+  applyFilters();
+
+  const evMsg = events.length ? `, ${events.length} eventi` : '';
+  toast(`Importate ${people.length} persone${evMsg}`, 'success');
+}
+
+// ============================================================
 // Excel IMPORT
 // Strategy: parse first sheet with header row 1 then map by
 // position because headers have ambiguous "DATA" labels.

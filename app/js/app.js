@@ -12,7 +12,7 @@ function bindGlobalEvents() {
     const file = e.target.files[0];
     if (!file) return;
     try {
-      await importExcel(file);
+      await importJSON(file);
     } catch (err) {
       console.error(err);
       toast('Errore importazione: ' + err.message, 'error');

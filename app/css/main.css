@@ -239,16 +239,6 @@
     color: var(--muted);
     font-weight: 500;
   }
-  .field-grid label.field-checkbox {
-    flex-direction: row;
-    align-items: center;
-    align-self: end;
-    min-height: 38px;
-  }
-  .field-grid label.field-checkbox input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-  }
   .installments-table th, .installments-table td { padding: 8px; }
   .installments-table input, .installments-table select { width: 100%; min-width: 80px; }
   .installments-table tr.inst-paid { background: var(--green-bg); }

@@ -1289,6 +1289,48 @@ async function togglePresence(eventId, weekNum, personId) {
 // ============================================================
 // Presences rendering — day-level checkboxes
 // ============================================================
+
+/** Build the presences table HTML for a given event/week/displayGroups (reusable for print). */
+function buildPresenceTableHtml(event, week, displayGroups) {
+  let tableHtml = '<table><thead><tr>';
+  tableHtml += '<th>Gruppo / Persona</th>';
+  tableHtml += '<th class="day-header" title="Seleziona tutti i giorni">Tutti</th>';
+  for (let d = 1; d <= DAY_COUNT; d++) {
+    tableHtml += `<th class="day-header">${DAY_NAMES[d - 1]}</th>`;
+  }
+  tableHtml += '</tr></thead><tbody>';
+
+  for (const group of displayGroups) {
+    tableHtml += `<tr style="background:#f0f0f0;"><td colspan="${DAY_COUNT + 2}"><strong>${escapeHtml(group.name)}</strong> (${group.memberIds.length})</td></tr>`;
+
+    for (const memberId of group.memberIds) {
+      const person = getPersonById(memberId);
+      if (!person) continue;
+      const days = getPresenceDays(event.id, week, memberId);
+      const allChecked = Object.values(days).every(v => v === true);
+
+      tableHtml += '<tr>';
+      tableHtml += `<td>${escapeHtml(person.nome)}${person.eta != null ? ` <span style="color:var(--muted);font-size:12px;">(${person.eta} anni)</span>` : ''}</td>`;
+      tableHtml += `<td style="text-align:center;"><input type="checkbox" class="select-all-check presence-check-all" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" ${allChecked ? 'checked' : ''} title="Tutti i giorni" /></td>`;
+      for (let d = 1; d <= DAY_COUNT; d++) {
+        tableHtml += `<td><div class="presence-day-controls">
+          <label class="presence-mini-check presence-present" title="Presente ${DAY_NAMES[d - 1]}">
+            <input type="checkbox" class="presence-check" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" data-day="${d}" ${days[d] ? 'checked' : ''} />
+            <span aria-hidden="true">✓</span>
+          </label>
+        </div></td>`;
+      }
+      tableHtml += '</tr>';
+    }
+  }
+
+  const allMembers = displayGroups.flatMap(g => g.memberIds);
+  const presentCount = allMembers.filter(id => isPresent(event.id, week, id)).length;
+  tableHtml += `<tr class="presence-summary-row"><td>Totale presenti</td><td colspan="${DAY_COUNT + 1}" style="text-align:center;">${presentCount} / ${allMembers.length}</td></tr>`;
+  tableHtml += '</tbody></table>';
+  return tableHtml;
+}
+
 function renderPresences() {
   const event = getCurrentEvent();
   if (!event) return;
@@ -1310,44 +1352,9 @@ function renderPresences() {
   html += '<button id="btn-week-extra-report" class="ghost">🖨️ Report settimana</button>';
   html += '</div>';
 
-  html += '<table><thead><tr>';
-  html += '<th>Gruppo / Persona</th>';
-  html += '<th class="day-header" title="Seleziona tutti i giorni">Tutti</th>';
-  for (let d = 1; d <= DAY_COUNT; d++) {
-    html += `<th class="day-header">${DAY_NAMES[d - 1]}</th>`;
-  }
-  html += '</tr></thead><tbody>';
+  html += buildPresenceTableHtml(event, week, displayGroups);
 
-  for (const group of displayGroups) {
-    html += `<tr style="background:#f0f0f0;"><td colspan="${DAY_COUNT + 2}"><strong>${escapeHtml(group.name)}</strong> (${group.memberIds.length})</td></tr>`;
-
-    for (const memberId of group.memberIds) {
-      const person = getPersonById(memberId);
-      if (!person) continue;
-      const days = getPresenceDays(event.id, week, memberId);
-      const allChecked = Object.values(days).every(v => v === true);
-
-      html += '<tr>';
-      html += `<td>${escapeHtml(person.nome)}${person.eta != null ? ` <span style="color:var(--muted);font-size:12px;">(${person.eta} anni)</span>` : ''}</td>`;
-      html += `<td style="text-align:center;"><input type="checkbox" class="select-all-check presence-check-all" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" ${allChecked ? 'checked' : ''} title="Tutti i giorni" /></td>`;
-      for (let d = 1; d <= DAY_COUNT; d++) {
-        html += `<td><div class="presence-day-controls">
-          <label class="presence-mini-check presence-present" title="Presente ${DAY_NAMES[d - 1]}">
-            <input type="checkbox" class="presence-check" data-event-id="${escapeHtml(event.id)}" data-week="${week}" data-person-id="${escapeHtml(memberId)}" data-day="${d}" ${days[d] ? 'checked' : ''} />
-            <span aria-hidden="true">✓</span>
-          </label>
-        </div></td>`;
-      }
-      html += '</tr>';
-    }
-  }
-
-  const allMembers = displayGroups.flatMap(g => g.memberIds);
-  const presentCount = allMembers.filter(id => isPresent(event.id, week, id)).length;
-  html += `<tr class="presence-summary-row"><td>Totale presenti</td><td colspan="${DAY_COUNT + 1}" style="text-align:center;">${presentCount} / ${allMembers.length}</td></tr>`;
-  html += '</tbody></table>';
-
-  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button> <button id="btn-presences-saggio" class="ghost">🖨️ Saggio</button></div>';
+  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button></div>';
 
   container.innerHTML = html;
 
@@ -1544,7 +1551,7 @@ function printSaggioList() {
   if (!entries.length) html += '<tr><td colspan="2" class="center muted">Nessun bambino selezionato per il saggio.</td></tr>';
   html += '</tbody></table>';
 
-  printContent('Saggio', html);
+  printContent(`Report settimana ${event.name} ${weekNum}`, html);
 }
 
 // ============================================================
