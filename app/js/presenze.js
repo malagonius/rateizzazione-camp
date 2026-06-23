@@ -1527,6 +1527,22 @@ function printWeekExtraReport(eventId, weekNum) {
   html += renderPackageReportSection('Pranzo', weekSubtitle, lunchEntries, 'Nessuna persona in questa lista.', true);
   html += renderPackageReportSection('No pranzo', weekSubtitle, noLunchEntries);
 
+  const groups = getWeekGroups(event, weekNum);
+  const groupedIds = new Set(groups.flatMap(g => g.memberIds));
+  const unassignedEligible = state.people.filter(person =>
+    person.eventId === event.id &&
+    Array.isArray(person.eventWeeks) && person.eventWeeks.includes(weekNum) &&
+    !groupedIds.has(person.id)
+  );
+  const displayGroups = unassignedEligible.length
+    ? groups.concat([{ id: event.id + '_unassigned_' + weekNum, name: 'Non assegnati', memberIds: unassignedEligible.map(p => p.id) }])
+    : groups;
+
+  html += `<section class="report-page"><h1>Presenze — ${escapeHtml(event.name)}</h1>`;
+  html += `<h2>${escapeHtml(weekSubtitle)}</h2>`;
+  html += buildPresenceTableHtml(event, weekNum, displayGroups);
+  html += '</section>';
+
   printContent(`Report settimana ${event.name} ${weekNum}`, html);
 }
 
