@@ -1354,7 +1354,7 @@ function renderPresences() {
 
   html += buildPresenceTableHtml(event, week, displayGroups);
 
-  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button></div>';
+  html += '<div class="presence-actions"><button id="btn-presences-overview" class="ghost">📊 Riepilogo completo</button> <button id="btn-presences-saggio" class="ghost">🖨️ Saggio</button></div>';
 
   container.innerHTML = html;
 
@@ -1567,7 +1567,7 @@ function printSaggioList() {
   if (!entries.length) html += '<tr><td colspan="2" class="center muted">Nessun bambino selezionato per il saggio.</td></tr>';
   html += '</tbody></table>';
 
-  printContent(`Report settimana ${event.name} ${weekNum}`, html);
+  printContent('Saggio', html);
 }
 
 // ============================================================
