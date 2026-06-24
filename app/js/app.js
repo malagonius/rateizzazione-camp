@@ -156,8 +156,16 @@ function bindGlobalEvents() {
     // Determine target state: if any row is currently visible, hide all; otherwise show all
     const anyVisible = state.people.some(p => !p.visibilityHidden);
     const newHiddenState = anyVisible; // true = hide all, false = show all
-    
-    // Apply to every person and persist
+
+    // Require password to show amounts
+    if (!newHiddenState) {
+      const password = await promptPassword('Inserisci la password per visualizzare gli importi:');
+      if (password === null) return;
+      if (password !== PASSWORD) {
+        toast('Password errata', 'error');
+        return;
+      }
+    }
     state.people.forEach(p => { p.visibilityHidden = newHiddenState; });
     await dbBulkPut(state.people);
     

@@ -128,7 +128,9 @@ async function ensureStaticEvents() {
           descriptions: [''],
           memberIds: [],
           isDefault: true,
-          ageGroupId: cat.id
+          ageGroupId: cat.id,
+          ageMin: cat.ageMin,
+          ageMax: cat.ageMax
         }));
       } else {
         defaultGroups = [{
@@ -197,12 +199,14 @@ function getPersonById(id) {
 // Form groups for current week based on person event assignments
 // ============================================================
 
-/** Get the Vivi Camp age category id for a given age */
-function getViviAgeGroupId(age) {
+/** Get the Vivi Camp age category id for a given age, using the event's current bracket groups */
+function getViviAgeGroupId(groups, age) {
   if (age == null || isNaN(Number(age))) return null;
   const a = Number(age);
-  for (const cat of VIVI_CAMP_AGE_GROUPS) {
-    if (a >= cat.ageMin && a <= cat.ageMax) return cat.id;
+  for (const g of groups) {
+    if (g.isDefault && g.ageGroupId && g.ageMin != null && g.ageMax != null) {
+      if (a >= Number(g.ageMin) && a <= Number(g.ageMax)) return g.ageGroupId;
+    }
   }
   return null;
 }
@@ -224,17 +228,24 @@ function ensureDefaultGroups(event, weekNum) {
       });
     }
   } else if (event.id === 'vivi_camp') {
-    // Vivi Camp: one default group per age category
-    for (const cat of VIVI_CAMP_AGE_GROUPS) {
-      const exists = groups.some(g => g.isDefault && g.ageGroupId === cat.id);
+    // Vivi Camp: one default group per age bracket (user-configured)
+    // Use week 1 brackets as template; fall back to defaults if not yet initialized
+    const templateBrackets = (event.weekGroups[1] || []).filter(g => g.isDefault && g.ageGroupId);
+    const srcBrackets = templateBrackets.length
+      ? templateBrackets
+      : VIVI_CAMP_AGE_GROUPS.map(cat => ({ id: event.id + '_' + cat.id, name: cat.label, ageGroupId: cat.id, ageMin: cat.ageMin, ageMax: cat.ageMax }));
+    for (const tmpl of srcBrackets) {
+      const exists = groups.some(g => g.isDefault && g.ageGroupId === tmpl.ageGroupId);
       if (!exists) {
         groups.push({
-          id: event.id + '_' + cat.id,
-          name: cat.label,
+          id: tmpl.id,
+          name: tmpl.name,
           descriptions: [''],
           memberIds: [],
           isDefault: true,
-          ageGroupId: cat.id
+          ageGroupId: tmpl.ageGroupId,
+          ageMin: tmpl.ageMin,
+          ageMax: tmpl.ageMax
         });
       }
     }
@@ -278,25 +289,27 @@ async function formGroupsForWeek() {
       }
     }
 
-    // Bucket people by age category
+    // Determine age brackets from current week's default groups
+    const ageBrackets = groups.filter(g => g.isDefault && g.ageGroupId);
+    // Bucket people by age bracket
     const buckets = {};
-    for (const cat of VIVI_CAMP_AGE_GROUPS) {
-      buckets[cat.id] = [];
+    for (const bracket of ageBrackets) {
+      buckets[bracket.ageGroupId] = [];
     }
     const unmatched = [];
     for (const p of eligiblePeople) {
-      const catId = getViviAgeGroupId(p.eta);
-      if (catId && buckets[catId]) {
+      const catId = getViviAgeGroupId(groups, p.eta);
+      if (catId && buckets[catId] !== undefined) {
         buckets[catId].push(p);
       } else {
         unmatched.push(p);
       }
     }
 
-    // For each age category, assign to default group; if > 15, create overflow groups
-    for (const cat of VIVI_CAMP_AGE_GROUPS) {
-      const kids = buckets[cat.id];
-      const defaultGroup = groups.find(g => g.isDefault && g.ageGroupId === cat.id);
+    // For each age bracket, assign to default group; if > max size, create overflow groups
+    for (const bracket of ageBrackets) {
+      const kids = buckets[bracket.ageGroupId];
+      const defaultGroup = groups.find(g => g.isDefault && g.ageGroupId === bracket.ageGroupId);
       if (!defaultGroup) continue;
 
       if (kids.length <= VIVI_CAMP_MAX_GROUP_SIZE) {
@@ -311,12 +324,12 @@ async function formGroupsForWeek() {
         const allGroupsForCat = [defaultGroup];
         for (let g = 1; g < numGroups; g++) {
           const overflow = {
-            id: event.id + '_' + cat.id + '_overflow_' + g,
-            name: cat.label + ' (Gruppo ' + (g + 1) + ')',
+            id: event.id + '_' + bracket.ageGroupId + '_overflow_' + g,
+            name: bracket.name + ' (Gruppo ' + (g + 1) + ')',
             descriptions: [''],
             memberIds: [],
             isDefault: false,
-            ageGroupId: cat.id
+            ageGroupId: bracket.ageGroupId
           };
           // Insert after the default group for this category
           const defaultIdx = groups.indexOf(defaultGroup);
@@ -325,7 +338,7 @@ async function formGroupsForWeek() {
         }
 
         // Rename default to indicate it's group 1
-        defaultGroup.name = cat.label + ' (Gruppo 1)';
+        defaultGroup.name = bracket.name + ' (Gruppo 1)';
 
         // Distribute kids evenly
         for (let i = 0; i < kids.length; i++) {
@@ -597,13 +610,20 @@ async function saveEventSettings() {
   for (let w = 1; w <= numWeeks; w++) {
     if (!event.weekGroups[w]) {
       if (event.id === 'vivi_camp') {
-        event.weekGroups[w] = VIVI_CAMP_AGE_GROUPS.map(cat => ({
-          id: event.id + '_' + cat.id,
-          name: cat.label,
-          descriptions: [''],
+        // Copy bracket config from week 1 (user-defined), fall back to defaults
+        const templateBrackets = (event.weekGroups[1] || []).filter(g => g.isDefault && g.ageGroupId);
+        const srcBrackets = templateBrackets.length
+          ? templateBrackets
+          : VIVI_CAMP_AGE_GROUPS.map(cat => ({ id: event.id + '_' + cat.id, name: cat.label, ageGroupId: cat.id, ageMin: cat.ageMin, ageMax: cat.ageMax }));
+        event.weekGroups[w] = srcBrackets.map(tmpl => ({
+          id: tmpl.id,
+          name: tmpl.name,
+          descriptions: tmpl.descriptions ? JSON.parse(JSON.stringify(tmpl.descriptions)) : [''],
           memberIds: [],
           isDefault: true,
-          ageGroupId: cat.id
+          ageGroupId: tmpl.ageGroupId,
+          ageMin: tmpl.ageMin,
+          ageMax: tmpl.ageMax
         }));
       } else {
         event.weekGroups[w] = [{
@@ -633,17 +653,27 @@ async function resetEvent() {
 
   if (!confirm(`Resettare "${event.name}"? Tutti i gruppi e le presenze verranno cancellati. Le persone manterranno l'assegnazione.`)) return;
 
+  // Save bracket config before clearing (preserve user-defined age brackets)
+  const savedBrackets = event.weekGroups && event.weekGroups[1]
+    ? event.weekGroups[1].filter(g => g.isDefault && g.ageGroupId)
+    : null;
+
   // Clear week groups
   event.weekGroups = {};
   for (let w = 1; w <= event.numWeeks; w++) {
     if (event.id === 'vivi_camp') {
-      event.weekGroups[w] = VIVI_CAMP_AGE_GROUPS.map(cat => ({
-        id: event.id + '_' + cat.id,
-        name: cat.label,
+      const srcBrackets = savedBrackets && savedBrackets.length
+        ? savedBrackets
+        : VIVI_CAMP_AGE_GROUPS.map(cat => ({ id: event.id + '_' + cat.id, name: cat.label, ageGroupId: cat.id, ageMin: cat.ageMin, ageMax: cat.ageMax }));
+      event.weekGroups[w] = srcBrackets.map(tmpl => ({
+        id: tmpl.id,
+        name: tmpl.name,
         descriptions: [''],
         memberIds: [],
         isDefault: true,
-        ageGroupId: cat.id
+        ageGroupId: tmpl.ageGroupId,
+        ageMin: tmpl.ageMin,
+        ageMax: tmpl.ageMax
       }));
     } else {
       event.weekGroups[w] = [{
@@ -823,9 +853,20 @@ function renderGroups() {
       `;
     }).join('');
 
-    // Only non-default groups can be removed
-    const removeBtn = !group.isDefault
+    // Default vivi_camp bracket groups can also be removed (user-defined)
+    const canRemove = !group.isDefault || (event.id === 'vivi_camp' && group.ageGroupId);
+    const removeBtn = canRemove
       ? `<button class="member-remove" data-action="remove-group" data-group-idx="${gIdx}" title="Rimuovi gruppo">🗑️</button>`
+      : '';
+
+    const ageRangeHtml = (event.id === 'vivi_camp' && group.isDefault && group.ageGroupId)
+      ? `<div class="group-age-range">
+          <span>Fascia d'età:</span>
+          <input type="number" min="0" max="99" class="group-age-min" data-group-idx="${gIdx}" value="${group.ageMin ?? ''}" placeholder="Min" />
+          <span>–</span>
+          <input type="number" min="0" max="99" class="group-age-max" data-group-idx="${gIdx}" value="${group.ageMax ?? ''}" placeholder="Max" />
+          <span>anni</span>
+        </div>`
       : '';
 
     return `
@@ -835,6 +876,7 @@ function renderGroups() {
           <button class="group-icon-btn" data-action="print-group" data-group-idx="${gIdx}" title="Stampa dettaglio gruppo">🖨️</button>
           ${removeBtn}
         </div>
+        ${ageRangeHtml}
         <div class="group-member-count">${members.length} persone</div>
         <div class="group-descriptions">
           <div class="desc-label">Capitani / Note:</div>
@@ -848,10 +890,11 @@ function renderGroups() {
   }).join('');
 
   // Add group button
+  const addGroupLabel = (event.id === 'vivi_camp') ? 'Aggiungi fascia d\'età' : 'Aggiungi gruppo';
   html += `
     <div class="add-group-card" data-action="add-group">
       <span style="font-size:24px;">➕</span>
-      <span>Aggiungi gruppo</span>
+      <span>${addGroupLabel}</span>
     </div>
   `;
 
@@ -965,6 +1008,25 @@ function setupDragAndDrop() {
         await dbPutTo(EVENTS_STORE, event);
       }
     }
+    if (e.target.classList.contains('group-age-min') || e.target.classList.contains('group-age-max')) {
+      const isMin = e.target.classList.contains('group-age-min');
+      const gIdx = parseInt(e.target.dataset.groupIdx);
+      const event = getCurrentEvent();
+      if (!event) return;
+      const groups = getWeekGroups(event, state.currentWeek);
+      if (groups[gIdx] && groups[gIdx].isDefault && groups[gIdx].ageGroupId) {
+        const val = e.target.value === '' ? null : Number(e.target.value);
+        const prop = isMin ? 'ageMin' : 'ageMax';
+        const ageGroupId = groups[gIdx].ageGroupId;
+        // Propagate to all weeks
+        for (let w = 1; w <= event.numWeeks; w++) {
+          const wGroups = getWeekGroups(event, w);
+          const g = wGroups.find(g => g.isDefault && g.ageGroupId === ageGroupId);
+          if (g) g[prop] = val;
+        }
+        await dbPutTo(EVENTS_STORE, event);
+      }
+    }
   });
 
   container.addEventListener('focusout', async (e) => {
@@ -1026,18 +1088,40 @@ function setupDragAndDrop() {
     if (!addBtn) return;
     const event = getCurrentEvent();
     if (!event) return;
-    const groups = getWeekGroups(event, state.currentWeek);
-    const newGroup = {
-      id: event.id + '_custom_' + Date.now(),
-      name: 'Nuovo gruppo',
-      descriptions: [''],
-      memberIds: [],
-      isDefault: false
-    };
-    groups.push(newGroup);
-    await dbPutTo(EVENTS_STORE, event);
-    renderGroups();
-    toast('Gruppo aggiunto', 'success');
+    if (event.id === 'vivi_camp') {
+      // Add a new age bracket across all weeks
+      const newAgeGroupId = 'bracket_' + Date.now();
+      const newId = event.id + '_' + newAgeGroupId;
+      for (let w = 1; w <= event.numWeeks; w++) {
+        const wGroups = getWeekGroups(event, w);
+        wGroups.push({
+          id: newId,
+          name: 'Nuova fascia',
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true,
+          ageGroupId: newAgeGroupId,
+          ageMin: null,
+          ageMax: null
+        });
+      }
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+      toast('Fascia d\'et\u00e0 aggiunta', 'success');
+    } else {
+      const groups = getWeekGroups(event, state.currentWeek);
+      const newGroup = {
+        id: event.id + '_custom_' + Date.now(),
+        name: 'Nuovo gruppo',
+        descriptions: [''],
+        memberIds: [],
+        isDefault: false
+      };
+      groups.push(newGroup);
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+      toast('Gruppo aggiunto', 'success');
+    }
   });
 
   // Remove group button
@@ -1049,9 +1133,22 @@ function setupDragAndDrop() {
     const event = getCurrentEvent();
     if (!event) return;
     const groups = getWeekGroups(event, state.currentWeek);
-    if (!groups[gIdx] || groups[gIdx].isDefault) return;
-    if (!confirm(`Rimuovere il gruppo "${groups[gIdx].name}"? I membri verranno spostati tra i non assegnati.`)) return;
-    groups.splice(gIdx, 1);
+    if (!groups[gIdx]) return;
+    const group = groups[gIdx];
+    // Non-bracket default groups cannot be removed
+    if (group.isDefault && !(event.id === 'vivi_camp' && group.ageGroupId)) return;
+    if (!confirm(`Rimuovere il gruppo "${group.name}"? I membri verranno spostati tra i non assegnati.`)) return;
+    if (group.isDefault && event.id === 'vivi_camp' && group.ageGroupId) {
+      // Remove this bracket from all weeks
+      const ageGroupId = group.ageGroupId;
+      for (let w = 1; w <= event.numWeeks; w++) {
+        const wGroups = getWeekGroups(event, w);
+        const idx = wGroups.findIndex(g => g.isDefault && g.ageGroupId === ageGroupId);
+        if (idx >= 0) wGroups.splice(idx, 1);
+      }
+    } else {
+      groups.splice(gIdx, 1);
+    }
     await dbPutTo(EVENTS_STORE, event);
     renderGroups();
     toast('Gruppo rimosso', 'success');
