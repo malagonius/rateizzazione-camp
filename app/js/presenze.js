@@ -923,6 +923,180 @@ function renderGroups() {
   setupDragAndDrop();
 }
 
+function setupGroupEventListeners() {
+  const container = document.getElementById('groups-container');
+
+  // Remove group button
+  container.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="remove-group"]');
+    if (!btn) return;
+    e.stopPropagation();
+    const gIdx = parseInt(btn.dataset.groupIdx);
+    const event = getCurrentEvent();
+    if (!event) return;
+    const groups = getWeekGroups(event, state.currentWeek);
+    if (!groups[gIdx]) return;
+    const group = groups[gIdx];
+    // Non-bracket default groups cannot be removed
+    if (group.isDefault && !(event.id === 'vivi_camp' && group.ageGroupId)) return;
+    if (!confirm(`Rimuovere il gruppo "${group.name}"? I membri verranno spostati tra i non assegnati.`)) return;
+    if (group.isDefault && event.id === 'vivi_camp' && group.ageGroupId) {
+      // Remove this bracket from all weeks
+      const ageGroupId = group.ageGroupId;
+      for (let w = 1; w <= event.numWeeks; w++) {
+        const wGroups = getWeekGroups(event, w);
+        const idx = wGroups.findIndex(g => g.isDefault && g.ageGroupId === ageGroupId);
+        if (idx >= 0) wGroups.splice(idx, 1);
+      }
+    } else {
+      groups.splice(gIdx, 1);
+    }
+    await dbPutTo(EVENTS_STORE, event);
+    renderGroups();
+    toast('Gruppo rimosso', 'success');
+  });
+
+  // Add group button
+  container.addEventListener('click', async (e) => {
+    const addBtn = e.target.closest('[data-action="add-group"]');
+    if (!addBtn) return;
+    const event = getCurrentEvent();
+    if (!event) return;
+    if (event.id === 'vivi_camp') {
+      // Add a new age bracket across all weeks
+      const newAgeGroupId = 'bracket_' + Date.now();
+      const newId = event.id + '_' + newAgeGroupId;
+      for (let w = 1; w <= event.numWeeks; w++) {
+        const wGroups = getWeekGroups(event, w);
+        wGroups.push({
+          id: newId,
+          name: 'Nuova fascia',
+          descriptions: [''],
+          memberIds: [],
+          isDefault: true,
+          ageGroupId: newAgeGroupId,
+          ageMin: null,
+          ageMax: null
+        });
+      }
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+      toast('Fascia d\'et\u00e0 aggiunta', 'success');
+    } else {
+      const groups = getWeekGroups(event, state.currentWeek);
+      const newGroup = {
+        id: event.id + '_custom_' + Date.now(),
+        name: 'Nuovo gruppo',
+        descriptions: [''],
+        memberIds: [],
+        isDefault: false
+      };
+      groups.push(newGroup);
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+      toast('Gruppo aggiunto', 'success');
+    }
+  });
+
+  // Remove member button
+  container.addEventListener('click', async (e) => {
+    const printBtn = e.target.closest('[data-action="print-group"]');
+    if (printBtn) {
+      e.stopPropagation();
+      printGroupDetail(parseInt(printBtn.dataset.groupIdx));
+      return;
+    }
+
+    const btn = e.target.closest('[data-action="remove-member"]');
+    if (!btn) return;
+    e.stopPropagation();
+    const personId = btn.dataset.personId;
+    const gIdx = parseInt(btn.dataset.groupIdx);
+    const event = getCurrentEvent();
+    const groups = getWeekGroups(event, state.currentWeek);
+    if (event && groups[gIdx]) {
+      groups[gIdx].memberIds = groups[gIdx].memberIds.filter(id => id !== personId);
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+    }
+  });
+
+  // Remove description button
+  container.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="remove-desc"]');
+    if (!btn) return;
+    e.stopPropagation();
+    const gIdx = parseInt(btn.dataset.groupIdx);
+    const dIdx = parseInt(btn.dataset.descIdx);
+    if (dIdx === 0) return;
+    const event = getCurrentEvent();
+    const groups = getWeekGroups(event, state.currentWeek);
+    if (event && groups[gIdx]) {
+      groups[gIdx].descriptions.splice(dIdx, 1);
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+    }
+  });
+
+  // Text input handlers
+  container.addEventListener('input', async (e) => {
+    if (e.target.classList.contains('group-name-input')) {
+      const gIdx = parseInt(e.target.dataset.groupIdx);
+      const event = getCurrentEvent();
+      const groups = getWeekGroups(event, state.currentWeek);
+      if (event && groups[gIdx]) {
+        groups[gIdx].name = e.target.value;
+        await dbPutTo(EVENTS_STORE, event);
+      }
+    }
+    if (e.target.classList.contains('group-desc-input')) {
+      const gIdx = parseInt(e.target.dataset.groupIdx);
+      const dIdx = parseInt(e.target.dataset.descIdx);
+      const event = getCurrentEvent();
+      const groups = getWeekGroups(event, state.currentWeek);
+      if (event && groups[gIdx]) {
+        groups[gIdx].descriptions[dIdx] = e.target.value;
+        await dbPutTo(EVENTS_STORE, event);
+      }
+    }
+    if (e.target.classList.contains('group-age-min') || e.target.classList.contains('group-age-max')) {
+      const isMin = e.target.classList.contains('group-age-min');
+      const gIdx = parseInt(e.target.dataset.groupIdx);
+      const event = getCurrentEvent();
+      if (!event) return;
+      const groups = getWeekGroups(event, state.currentWeek);
+      if (groups[gIdx] && groups[gIdx].isDefault && groups[gIdx].ageGroupId) {
+        const val = e.target.value === '' ? null : Number(e.target.value);
+        const prop = isMin ? 'ageMin' : 'ageMax';
+        const ageGroupId = groups[gIdx].ageGroupId;
+        // Propagate to all weeks
+        for (let w = 1; w <= event.numWeeks; w++) {
+          const wGroups = getWeekGroups(event, w);
+          const g = wGroups.find(g => g.isDefault && g.ageGroupId === ageGroupId);
+          if (g) g[prop] = val;
+        }
+        await dbPutTo(EVENTS_STORE, event);
+      }
+    }
+  });
+
+  // Focus out handler for descriptions
+  container.addEventListener('focusout', async (e) => {
+    if (!e.target.classList.contains('group-desc-input')) return;
+    const gIdx = parseInt(e.target.dataset.groupIdx);
+    const dIdx = parseInt(e.target.dataset.descIdx);
+    const event = getCurrentEvent();
+    const groups = getWeekGroups(event, state.currentWeek);
+    if (!event || !groups[gIdx]) return;
+    const descs = groups[gIdx].descriptions;
+    if (dIdx === descs.length - 1 && e.target.value.trim() !== '') {
+      descs.push('');
+      await dbPutTo(EVENTS_STORE, event);
+      renderGroups();
+    }
+  });
+}
+
 function setupDragAndDrop() {
   const container = document.getElementById('groups-container');
 
@@ -986,172 +1160,6 @@ function setupDragAndDrop() {
 
     await dbPutTo(EVENTS_STORE, event);
     renderGroups();
-  });
-
-  container.addEventListener('input', async (e) => {
-    if (e.target.classList.contains('group-name-input')) {
-      const gIdx = parseInt(e.target.dataset.groupIdx);
-      const event = getCurrentEvent();
-      const groups = getWeekGroups(event, state.currentWeek);
-      if (event && groups[gIdx]) {
-        groups[gIdx].name = e.target.value;
-        await dbPutTo(EVENTS_STORE, event);
-      }
-    }
-    if (e.target.classList.contains('group-desc-input')) {
-      const gIdx = parseInt(e.target.dataset.groupIdx);
-      const dIdx = parseInt(e.target.dataset.descIdx);
-      const event = getCurrentEvent();
-      const groups = getWeekGroups(event, state.currentWeek);
-      if (event && groups[gIdx]) {
-        groups[gIdx].descriptions[dIdx] = e.target.value;
-        await dbPutTo(EVENTS_STORE, event);
-      }
-    }
-    if (e.target.classList.contains('group-age-min') || e.target.classList.contains('group-age-max')) {
-      const isMin = e.target.classList.contains('group-age-min');
-      const gIdx = parseInt(e.target.dataset.groupIdx);
-      const event = getCurrentEvent();
-      if (!event) return;
-      const groups = getWeekGroups(event, state.currentWeek);
-      if (groups[gIdx] && groups[gIdx].isDefault && groups[gIdx].ageGroupId) {
-        const val = e.target.value === '' ? null : Number(e.target.value);
-        const prop = isMin ? 'ageMin' : 'ageMax';
-        const ageGroupId = groups[gIdx].ageGroupId;
-        // Propagate to all weeks
-        for (let w = 1; w <= event.numWeeks; w++) {
-          const wGroups = getWeekGroups(event, w);
-          const g = wGroups.find(g => g.isDefault && g.ageGroupId === ageGroupId);
-          if (g) g[prop] = val;
-        }
-        await dbPutTo(EVENTS_STORE, event);
-      }
-    }
-  });
-
-  container.addEventListener('focusout', async (e) => {
-    if (!e.target.classList.contains('group-desc-input')) return;
-    const gIdx = parseInt(e.target.dataset.groupIdx);
-    const dIdx = parseInt(e.target.dataset.descIdx);
-    const event = getCurrentEvent();
-    const groups = getWeekGroups(event, state.currentWeek);
-    if (!event || !groups[gIdx]) return;
-    const descs = groups[gIdx].descriptions;
-    if (dIdx === descs.length - 1 && e.target.value.trim() !== '') {
-      descs.push('');
-      await dbPutTo(EVENTS_STORE, event);
-      renderGroups();
-    }
-  });
-
-  container.addEventListener('click', async (e) => {
-    const printBtn = e.target.closest('[data-action="print-group"]');
-    if (printBtn) {
-      e.stopPropagation();
-      printGroupDetail(parseInt(printBtn.dataset.groupIdx));
-      return;
-    }
-
-    const btn = e.target.closest('[data-action="remove-member"]');
-    if (!btn) return;
-    e.stopPropagation();
-    const personId = btn.dataset.personId;
-    const gIdx = parseInt(btn.dataset.groupIdx);
-    const event = getCurrentEvent();
-    const groups = getWeekGroups(event, state.currentWeek);
-    if (event && groups[gIdx]) {
-      groups[gIdx].memberIds = groups[gIdx].memberIds.filter(id => id !== personId);
-      await dbPutTo(EVENTS_STORE, event);
-      renderGroups();
-    }
-  });
-
-  container.addEventListener('click', async (e) => {
-    const btn = e.target.closest('[data-action="remove-desc"]');
-    if (!btn) return;
-    e.stopPropagation();
-    const gIdx = parseInt(btn.dataset.groupIdx);
-    const dIdx = parseInt(btn.dataset.descIdx);
-    if (dIdx === 0) return;
-    const event = getCurrentEvent();
-    const groups = getWeekGroups(event, state.currentWeek);
-    if (event && groups[gIdx]) {
-      groups[gIdx].descriptions.splice(dIdx, 1);
-      await dbPutTo(EVENTS_STORE, event);
-      renderGroups();
-    }
-  });
-
-  // Add group button
-  container.addEventListener('click', async (e) => {
-    const addBtn = e.target.closest('[data-action="add-group"]');
-    if (!addBtn) return;
-    const event = getCurrentEvent();
-    if (!event) return;
-    if (event.id === 'vivi_camp') {
-      // Add a new age bracket across all weeks
-      const newAgeGroupId = 'bracket_' + Date.now();
-      const newId = event.id + '_' + newAgeGroupId;
-      for (let w = 1; w <= event.numWeeks; w++) {
-        const wGroups = getWeekGroups(event, w);
-        wGroups.push({
-          id: newId,
-          name: 'Nuova fascia',
-          descriptions: [''],
-          memberIds: [],
-          isDefault: true,
-          ageGroupId: newAgeGroupId,
-          ageMin: null,
-          ageMax: null
-        });
-      }
-      await dbPutTo(EVENTS_STORE, event);
-      renderGroups();
-      toast('Fascia d\'et\u00e0 aggiunta', 'success');
-    } else {
-      const groups = getWeekGroups(event, state.currentWeek);
-      const newGroup = {
-        id: event.id + '_custom_' + Date.now(),
-        name: 'Nuovo gruppo',
-        descriptions: [''],
-        memberIds: [],
-        isDefault: false
-      };
-      groups.push(newGroup);
-      await dbPutTo(EVENTS_STORE, event);
-      renderGroups();
-      toast('Gruppo aggiunto', 'success');
-    }
-  });
-
-  // Remove group button
-  container.addEventListener('click', async (e) => {
-    const btn = e.target.closest('[data-action="remove-group"]');
-    if (!btn) return;
-    e.stopPropagation();
-    const gIdx = parseInt(btn.dataset.groupIdx);
-    const event = getCurrentEvent();
-    if (!event) return;
-    const groups = getWeekGroups(event, state.currentWeek);
-    if (!groups[gIdx]) return;
-    const group = groups[gIdx];
-    // Non-bracket default groups cannot be removed
-    if (group.isDefault && !(event.id === 'vivi_camp' && group.ageGroupId)) return;
-    if (!confirm(`Rimuovere il gruppo "${group.name}"? I membri verranno spostati tra i non assegnati.`)) return;
-    if (group.isDefault && event.id === 'vivi_camp' && group.ageGroupId) {
-      // Remove this bracket from all weeks
-      const ageGroupId = group.ageGroupId;
-      for (let w = 1; w <= event.numWeeks; w++) {
-        const wGroups = getWeekGroups(event, w);
-        const idx = wGroups.findIndex(g => g.isDefault && g.ageGroupId === ageGroupId);
-        if (idx >= 0) wGroups.splice(idx, 1);
-      }
-    } else {
-      groups.splice(gIdx, 1);
-    }
-    await dbPutTo(EVENTS_STORE, event);
-    renderGroups();
-    toast('Gruppo rimosso', 'success');
   });
 }
 

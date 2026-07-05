@@ -356,6 +356,7 @@ async function init() {
   bindGlobalEvents();
   bindDetailEvents();
   bindPurchaseEvents();
+  setupGroupEventListeners();  // Set up listeners once at initialization
   try {
     state.people = await dbGetAll();
     // Normalize legacy assistenza values to 'Si'/'No' and ensure visibilityHidden/eta exists
