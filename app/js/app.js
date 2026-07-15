@@ -20,11 +20,17 @@ function bindGlobalEvents() {
     e.target.value = '';
   });
 
-  // Export
-  document.getElementById('btn-export').addEventListener('click', () => {
-    if (!state.people.length) { toast('Nessun dato da esportare', 'error'); return; }
-    try { exportExcel(); }
-    catch (err) { console.error(err); toast('Errore esportazione: ' + err.message, 'error'); }
+  // Export backup (manual)
+  document.getElementById('btn-export').addEventListener('click', async () => {
+    const hasData = state.people.length || state.events.length || state.presences.length;
+    if (!hasData) { toast('Nessun dato da esportare', 'error'); return; }
+    try {
+      await createManualBackup();
+      toast('Backup esportato', 'success');
+    } catch (err) {
+      console.error(err);
+      toast('Errore esportazione backup: ' + err.message, 'error');
+    }
   });
 
   // Add new person

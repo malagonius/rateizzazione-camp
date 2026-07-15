@@ -47,6 +47,31 @@ function _downloadJSON(dateKey, data) {
   URL.revokeObjectURL(url);
 }
 
+function _manualBackupKey() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mi = String(d.getMinutes()).padStart(2, '0');
+  const ss = String(d.getSeconds()).padStart(2, '0');
+  const ms = String(d.getMilliseconds()).padStart(3, '0');
+  return `${yyyy}_${mm}_${dd}_${hh}${mi}${ss}_${ms}`;
+}
+
+async function createManualBackup() {
+  const backupKey = _manualBackupKey();
+  const snapshot = await _createBackupSnapshot();
+  const backupRecord = {
+    id: backupKey,
+    createdAt: new Date().toISOString(),
+    data: snapshot,
+  };
+  await dbPutTo(BACKUPS_STORE, backupRecord);
+  _downloadJSON(backupKey, backupRecord);
+  return backupKey;
+}
+
 async function runDailyBackup() {
   const dateKey = _backupDateKey();
   try {
