@@ -1,6 +1,8 @@
 /* ============================================================
  * db.js — IndexedDB helpers
- * ============================================================ */
+ * ============================================================
+ * Database identifiers are centralized in app/config/db.config.js.
+ */
 
 const CAMP_DB = window.CAMP_DB_CONFIG;
 const DB_NAME = CAMP_DB.name;
@@ -15,18 +17,10 @@ function openDB() {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
     req.onupgradeneeded = (e) => {
       const db = e.target.result;
-      if (!db.objectStoreNames.contains(STORE)) {
-        db.createObjectStore(STORE, { keyPath: 'id' });
-      }
-      if (!db.objectStoreNames.contains(EVENTS_STORE)) {
-        db.createObjectStore(EVENTS_STORE, { keyPath: 'id' });
-      }
-      if (!db.objectStoreNames.contains(PRESENCES_STORE)) {
-        db.createObjectStore(PRESENCES_STORE, { keyPath: 'id' });
-      }
-      if (!db.objectStoreNames.contains(BACKUPS_STORE)) {
-        db.createObjectStore(BACKUPS_STORE, { keyPath: 'id' });
-      }
+      if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(EVENTS_STORE)) db.createObjectStore(EVENTS_STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(PRESENCES_STORE)) db.createObjectStore(PRESENCES_STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(BACKUPS_STORE)) db.createObjectStore(BACKUPS_STORE, { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
@@ -84,7 +78,6 @@ async function dbBulkPut(items) {
   });
 }
 
-// Generic DB helpers for events & presences
 async function dbGetAllFrom(storeName) {
   const db = await openDB();
   return new Promise((resolve, reject) => {
