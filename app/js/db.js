@@ -2,12 +2,13 @@
  * db.js — IndexedDB helpers
  * ============================================================ */
 
-const DB_NAME = 'rateizzazione-camp';
-const DB_VERSION = 3;
-const STORE = 'people';
-const EVENTS_STORE = 'events';
-const PRESENCES_STORE = 'presences';
-const BACKUPS_STORE = 'backups';
+const CAMP_DB = window.CAMP_DB_CONFIG;
+const DB_NAME = CAMP_DB.name;
+const DB_VERSION = CAMP_DB.version;
+const STORE = CAMP_DB.stores.people;
+const EVENTS_STORE = CAMP_DB.stores.events;
+const PRESENCES_STORE = CAMP_DB.stores.presences;
+const BACKUPS_STORE = CAMP_DB.stores.backups;
 
 function openDB() {
   return new Promise((resolve, reject) => {
