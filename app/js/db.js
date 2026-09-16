@@ -4,6 +4,10 @@
  * Database identifiers are centralized in app/config/db.config.js.
  */
 
+if (!window.CAMP_DB_CONFIG) {
+  document.write('<script src="config/db.config.js"><\/script>');
+}
+
 const CAMP_DB = window.CAMP_DB_CONFIG;
 const DB_NAME = CAMP_DB.name;
 const DB_VERSION = CAMP_DB.version;
