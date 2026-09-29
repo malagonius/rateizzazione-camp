@@ -273,6 +273,12 @@ function updateServiceCatalogOptions() {
   if (!select || !optionSelect || !info) return;
 
   const person = state.people.find(p => p.id === state.currentServicesPersonId);
+  if (!select.options.length) {
+    select.innerHTML = SERVIZI_CATALOG.map(service =>
+      `<option value="${escapeHtml(service.id)}">${escapeHtml(service.nome)}</option>`
+    ).join('');
+  }
+
   const service = getServiceDefinition(select.value);
 
   optionSelect.innerHTML = '';
