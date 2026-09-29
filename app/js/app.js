@@ -218,6 +218,12 @@ function bindGlobalEvents() {
     state.currentServicesPersonId = document.getElementById('services-person-select').value;
     renderServicesTab();
   });
+  document.getElementById('service-catalog-select').addEventListener('change', () => {
+    updateServiceCatalogOptions();
+  });
+  document.getElementById('service-option-select').addEventListener('change', () => {
+    updateServiceCatalogOptions();
+  });
   document.getElementById('btn-add-service').addEventListener('click', addAdditionalService);
   document.getElementById('services-list').addEventListener('click', async (e) => {
     const btn = e.target.closest('[data-action="remove-service"]');
