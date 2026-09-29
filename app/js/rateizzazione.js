@@ -47,6 +47,7 @@ async function importJSON(file) {
   state.presences = presences;
 
   syncAllPurchasesState();
+  await dbBulkPut(people);
   applyFilters();
 
   const evMsg = events.length ? `, ${events.length} eventi` : '';
