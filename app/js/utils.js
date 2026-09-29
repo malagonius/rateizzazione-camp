@@ -101,7 +101,7 @@ function totalPaid(person) {
 }
 
 function statusOf(person) {
-  const due = num(person.totale);
+  const due = getTotalDue(person);
   const paid = totalPaid(person);
   if (due <= 0 && paid <= 0) return 'unpaid';
   if (paid <= 0) return 'unpaid';
