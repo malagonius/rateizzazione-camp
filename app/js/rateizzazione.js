@@ -30,6 +30,8 @@ async function importJSON(file) {
     if (!p.purchases)     p.purchases = [];
     if (!p.eventWeeks)    p.eventWeeks = [];
     normalizePersonPurchases(p);
+    normalizePersonServices(p);
+    syncPersonServiceInstallments(p);
   });
 
   // Clear existing DB data and persist the imported data
