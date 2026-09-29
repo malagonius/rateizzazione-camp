@@ -249,8 +249,20 @@
           <select id="services-person-select"></select>
         </label>
       </div>
-      <div class="row-actions" style="margin-top:12px;justify-content:flex-start;">
-        <button id="btn-add-service">➕ Aggiungi servizio</button>
+      <div class="purchase-panel" style="margin-top:12px;">
+        <h3>Nuovo servizio</h3>
+        <div class="discount-grid">
+          <label>Servizio
+            <select id="service-catalog-select"></select>
+          </label>
+          <label>Fascia / opzione
+            <select id="service-option-select"></select>
+          </label>
+        </div>
+        <div id="service-price-info" class="purchase-meta" style="margin-top:8px;"></div>
+        <div class="row-actions" style="margin-top:12px;justify-content:flex-start;">
+          <button id="btn-add-service">➕ Registra servizio</button>
+        </div>
       </div>
       <h3 style="margin:20px 0 8px;">Servizi sottoscritti</h3>
       <div id="services-list"></div>
