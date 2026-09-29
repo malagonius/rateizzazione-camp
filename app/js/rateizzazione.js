@@ -358,7 +358,7 @@ function renderList() {
   empty.classList.add('hidden');
 
   const rowsHtml = state.filtered.map(p => {
-    const due = num(p.totale);
+    const due = getTotalDue(p);
     const paid = totalPaid(p);
     const residuo = due - paid;
     const status = statusOf(p);
@@ -421,7 +421,7 @@ function renderList() {
 
 function renderStats() {
   const total = state.people.length;
-  const totalDue = state.people.reduce((s, p) => s + num(p.totale), 0);
+  const totalDue = state.people.reduce((s, p) => s + getTotalDue(p), 0);
   const totalPaidAll = state.people.reduce((s, p) => s + totalPaid(p), 0);
   const totalResiduo = totalDue - totalPaidAll;
   const counts = { paid: 0, partial: 0, unpaid: 0, overpaid: 0 };
