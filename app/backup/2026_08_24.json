@@ -1,0 +1,93 @@
+{
+  "id": "2026_08_24",
+  "createdAt": "2026-08-24T06:15:17.395Z",
+  "data": {
+    "people": [],
+    "events": [
+      {
+        "id": "bunny_camp",
+        "name": "BUNNY CAMP 2026",
+        "startDate": null,
+        "numWeeks": 1,
+        "ageMin": 0,
+        "ageMax": 3,
+        "emoji": "🐰",
+        "weekGroups": {
+          "1": [
+            {
+              "id": "bunny_camp_group",
+              "name": "BUNNY CAMP 2026",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "vivi_camp",
+        "name": "VIVI CAMP 2026",
+        "startDate": null,
+        "numWeeks": 1,
+        "ageMin": 4,
+        "ageMax": 13,
+        "emoji": "🌟",
+        "weekGroups": {
+          "1": [
+            {
+              "id": "vivi_camp_vivi_3_5",
+              "name": "3-5 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_3_5",
+              "ageMin": 3,
+              "ageMax": 5
+            },
+            {
+              "id": "vivi_camp_vivi_6_7",
+              "name": "6-7 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_6_7",
+              "ageMin": 6,
+              "ageMax": 7
+            },
+            {
+              "id": "vivi_camp_vivi_8_10",
+              "name": "8-10 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_8_10",
+              "ageMin": 8,
+              "ageMax": 10
+            },
+            {
+              "id": "vivi_camp_vivi_11_13",
+              "name": "11-13 anni",
+              "descriptions": [
+                ""
+              ],
+              "memberIds": [],
+              "isDefault": true,
+              "ageGroupId": "vivi_11_13",
+              "ageMin": 11,
+              "ageMax": 13
+            }
+          ]
+        }
+      }
+    ],
+    "presences": []
+  }
+}
