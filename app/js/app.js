@@ -388,7 +388,7 @@ async function init() {
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
       if (p.eventIdManual === undefined) p.eventIdManual = false;
       normalizePersonPurchases(p);
-      if (syncPersonServiceInstallments(p)) await dbPut(p);
+      syncPersonServiceInstallments(p);
     });
     // Load events and presences
     state.events = await dbGetAllFrom(EVENTS_STORE);
