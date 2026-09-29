@@ -29,6 +29,7 @@
 <nav class="tab-nav" id="tab-nav">
   <button class="active" data-tab="rateizzazione">📋 Rateizzazione</button>
   <button data-tab="acquisti">🛒 Acquisti</button>
+  <button data-tab="servizi">🧩 Servizi aggiuntivi</button>
   <button data-tab="presenze">📅 Presenze</button>
 </nav>
 
@@ -131,6 +132,9 @@
       <h3 style="margin-bottom: 8px;">Acquisti</h3>
       <div id="d-purchases-summary" class="detail-purchases-summary"></div>
 
+      <h3 style="margin-bottom: 8px;">Servizi aggiuntivi</h3>
+      <div id="d-services-summary" class="detail-services-summary" style="margin-bottom:16px;"></div>
+
       <h3 style="margin-bottom: 8px;">Rate</h3>
       <div class="table-wrap">
         <table class="installments-table">
@@ -231,6 +235,25 @@
 
       <h3 style="margin: 20px 0 8px;">Acquisti registrati</h3>
       <div id="purchase-list"></div>
+    </div>
+  </section>
+
+  <!-- ========== SERVIZI AGGIUNTIVI ========== -->
+  <section id="view-servizi" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2>🧩 Servizi aggiuntivi</h2>
+      </div>
+      <div class="purchase-person-bar">
+        <label>Bambino/a
+          <select id="services-person-select"></select>
+        </label>
+      </div>
+      <div class="row-actions" style="margin-top:12px;justify-content:flex-start;">
+        <button id="btn-add-service">➕ Aggiungi servizio</button>
+      </div>
+      <h3 style="margin:20px 0 8px;">Servizi sottoscritti</h3>
+      <div id="services-list"></div>
     </div>
   </section>
 
@@ -391,6 +414,7 @@
 <script src="js/utils.js"></script>
 <script src="js/backup.js"></script>
 <script src="js/acquisti.js"></script>
+<script src="js/servizi.js"></script>
 <script src="js/rateizzazione_detail.js"></script>
 <script src="js/presenze.js"></script>
 <script src="js/rateizzazione.js"></script>
