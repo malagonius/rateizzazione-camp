@@ -1061,3 +1061,17 @@
     height: 16px;
     cursor: pointer;
   }
+
+
+/* Additional services */
+.detail-services-summary { display:flex; flex-direction:column; gap:8px; }
+.detail-service-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--surface);
+}

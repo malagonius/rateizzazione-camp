@@ -52,7 +52,7 @@ function switchTab(tab) {
   document.querySelectorAll('#tab-nav button').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === tab);
   });
-  ['view-list', 'view-detail', 'view-acquisti', 'view-events', 'view-event-form', 'view-event-detail', 'view-presences-overview'].forEach(id => {
+  ['view-list', 'view-detail', 'view-acquisti', 'view-servizi', 'view-events', 'view-event-form', 'view-event-detail', 'view-presences-overview'].forEach(id => {
     document.getElementById(id).classList.add('hidden');
   });
   document.getElementById('btn-back').classList.add('hidden');
@@ -66,6 +66,9 @@ function switchTab(tab) {
     }
   } else if (tab === 'acquisti') {
     showAcquisti(state.currentPurchasePersonId || state.currentId);
+  } else if (tab === 'servizi') {
+    document.getElementById('view-servizi').classList.remove('hidden');
+    renderServicesTab();
   } else if (tab === 'presenze') {
     document.getElementById('view-events').classList.remove('hidden');
     renderEventsList();

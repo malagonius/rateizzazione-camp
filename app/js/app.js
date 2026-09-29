@@ -20,11 +20,17 @@ function bindGlobalEvents() {
     e.target.value = '';
   });
 
-  // Export
-  document.getElementById('btn-export').addEventListener('click', () => {
-    if (!state.people.length) { toast('Nessun dato da esportare', 'error'); return; }
-    try { exportExcel(); }
-    catch (err) { console.error(err); toast('Errore esportazione: ' + err.message, 'error'); }
+  // Export backup (manual)
+  document.getElementById('btn-export').addEventListener('click', async () => {
+    const hasData = state.people.length || state.events.length || state.presences.length;
+    if (!hasData) { toast('Nessun dato da esportare', 'error'); return; }
+    try {
+      await createManualBackup();
+      toast('Backup esportato', 'success');
+    } catch (err) {
+      console.error(err);
+      toast('Errore esportazione backup: ' + err.message, 'error');
+    }
   });
 
   // Add new person
@@ -46,7 +52,8 @@ function bindGlobalEvents() {
       visibilityHidden: false,
       eventId: null,
       eventWeeks: [],
-      purchases: []
+      purchases: [],
+      serviziAggiuntivi: []
     };
     state.people.push(newP);
     await dbPut(newP);
@@ -207,6 +214,22 @@ function bindGlobalEvents() {
   });
 
   // --- Tab navigation ---
+  document.getElementById('services-person-select').addEventListener('change', () => {
+    state.currentServicesPersonId = document.getElementById('services-person-select').value;
+    renderServicesTab();
+  });
+  document.getElementById('service-catalog-select').addEventListener('change', () => {
+    updateServiceCatalogOptions();
+  });
+  document.getElementById('service-option-select').addEventListener('change', () => {
+    updateServiceCatalogOptions();
+  });
+  document.getElementById('btn-add-service').addEventListener('click', addAdditionalService);
+  document.getElementById('services-list').addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="remove-service"]');
+    if (btn) await removeAdditionalService(btn.dataset.serviceId);
+  });
+
   document.querySelectorAll('#tab-nav button[data-tab]').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
@@ -371,15 +394,17 @@ async function init() {
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
       if (p.eventIdManual === undefined) p.eventIdManual = false;
       normalizePersonPurchases(p);
+      syncPersonServiceInstallments(p);
     });
     // Load events and presences
+    const servicesChanged = state.people.some(p => syncPersonServiceInstallments(p));
     state.events = await dbGetAllFrom(EVENTS_STORE);
     state.presences = await dbGetAllFrom(PRESENCES_STORE);
 
     // Ensure static events exist and auto-assign people
     await ensureStaticEvents();
     await autoAssignAllPeopleToEvents();
-    if (syncAllPurchasesState()) await dbBulkPut(state.people);
+    if (servicesChanged || syncAllPurchasesState()) await dbBulkPut(state.people);
   } catch (err) {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');

@@ -19,8 +19,8 @@
       </svg>
     </button>
     <input type="file" id="file-input" accept=".json" class="hidden" />
-    <button id="btn-import" class="secondary">📥 Importa JSON</button>
-    <button id="btn-export" class="danger">📤 Esporta Excel</button>
+    <button id="btn-import" class="secondary">📥 Importa backup IndexedDB</button>
+    <button id="btn-export" class="danger">📤 Esporta backup</button>
     <button id="btn-add" class="ghost">➕ Nuova persona</button>
     <button id="btn-clear" class="danger" title="Cancella tutti i dati">🗑️ Reset</button>
   </div>
@@ -29,6 +29,7 @@
 <nav class="tab-nav" id="tab-nav">
   <button class="active" data-tab="rateizzazione">📋 Rateizzazione</button>
   <button data-tab="acquisti">🛒 Acquisti</button>
+  <button data-tab="servizi">🧩 Servizi aggiuntivi</button>
   <button data-tab="presenze">📅 Presenze</button>
 </nav>
 
@@ -98,7 +99,7 @@
         <label>Telefono
           <input type="text" id="d-telefono" />
         </label>
-        <label>Totale dovuto (€)
+        <label>Totale base (€)
           <input type="number" id="d-totale" step="0.01" min="0" />
         </label>
         <label>Data iscrizione
@@ -130,6 +131,9 @@
 
       <h3 style="margin-bottom: 8px;">Acquisti</h3>
       <div id="d-purchases-summary" class="detail-purchases-summary"></div>
+
+      <h3 style="margin-bottom: 8px;">Servizi aggiuntivi</h3>
+      <div id="d-services-summary" class="detail-services-summary" style="margin-bottom:16px;"></div>
 
       <h3 style="margin-bottom: 8px;">Rate</h3>
       <div class="table-wrap">
@@ -231,6 +235,37 @@
 
       <h3 style="margin: 20px 0 8px;">Acquisti registrati</h3>
       <div id="purchase-list"></div>
+    </div>
+  </section>
+
+  <!-- ========== SERVIZI AGGIUNTIVI ========== -->
+  <section id="view-servizi" class="hidden">
+    <div class="card">
+      <div class="detail-header">
+        <h2>🧩 Servizi aggiuntivi</h2>
+      </div>
+      <div class="purchase-person-bar">
+        <label>Bambino/a
+          <select id="services-person-select"></select>
+        </label>
+      </div>
+      <div class="purchase-panel" style="margin-top:12px;">
+        <h3>Nuovo servizio</h3>
+        <div class="discount-grid">
+          <label>Servizio
+            <select id="service-catalog-select"></select>
+          </label>
+          <label>Fascia / opzione
+            <select id="service-option-select"></select>
+          </label>
+        </div>
+        <div id="service-price-info" class="purchase-meta" style="margin-top:8px;"></div>
+        <div class="row-actions" style="margin-top:12px;justify-content:flex-start;">
+          <button id="btn-add-service">➕ Registra servizio</button>
+        </div>
+      </div>
+      <h3 style="margin:20px 0 8px;">Servizi sottoscritti</h3>
+      <div id="services-list"></div>
     </div>
   </section>
 
@@ -387,10 +422,17 @@
 </div>
 
 <!-- JS: load order matters -->
+<script>
+  // Active configuration mode
+  window.CAMP_ACTIVE_MODE = 'bunny-summer';
+</script>
+<script src="config/db.config.js"></script>
+<script src="config/utils.config.js"></script>
 <script src="js/db.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/backup.js"></script>
 <script src="js/acquisti.js"></script>
+<script src="js/servizi.js"></script>
 <script src="js/rateizzazione_detail.js"></script>
 <script src="js/presenze.js"></script>
 <script src="js/rateizzazione.js"></script>

@@ -39,6 +39,7 @@ function renderDetail() {
 
   renderEventAssignment();
   renderDetailPurchases(p);
+  renderServicesSummary(p);
   renderInstallments();
   renderDetailSummary();
 }
@@ -89,7 +90,7 @@ function isValidIBAN(iban) {
 
 function renderDetailSummary() {
   const p = getCurrent();
-  const due = num(p.totale);
+  const due = getTotalDue(p);
   const paid = totalPaid(p);
   const residuo = due - paid;
   const status = statusOf(p);

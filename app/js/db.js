@@ -1,31 +1,30 @@
 /* ============================================================
  * db.js — IndexedDB helpers
- * ============================================================ */
+ * ============================================================
+ * Database identifiers are centralized in app/config/db.config.js.
+ */
 
-const DB_NAME = 'rateizzazione-camp';
-const DB_VERSION = 3;
-const STORE = 'people';
-const EVENTS_STORE = 'events';
-const PRESENCES_STORE = 'presences';
-const BACKUPS_STORE = 'backups';
+if (!window.CAMP_DB_CONFIG) {
+  document.write('<script src="config/db.config.js"><\/script>');
+}
+
+const CAMP_DB = window.CAMP_DB_CONFIG;
+const DB_NAME = CAMP_DB.name;
+const DB_VERSION = CAMP_DB.version;
+const STORE = CAMP_DB.stores.people;
+const EVENTS_STORE = CAMP_DB.stores.events;
+const PRESENCES_STORE = CAMP_DB.stores.presences;
+const BACKUPS_STORE = CAMP_DB.stores.backups;
 
 function openDB() {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
     req.onupgradeneeded = (e) => {
       const db = e.target.result;
-      if (!db.objectStoreNames.contains(STORE)) {
-        db.createObjectStore(STORE, { keyPath: 'id' });
-      }
-      if (!db.objectStoreNames.contains(EVENTS_STORE)) {
-        db.createObjectStore(EVENTS_STORE, { keyPath: 'id' });
-      }
-      if (!db.objectStoreNames.contains(PRESENCES_STORE)) {
-        db.createObjectStore(PRESENCES_STORE, { keyPath: 'id' });
-      }
-      if (!db.objectStoreNames.contains(BACKUPS_STORE)) {
-        db.createObjectStore(BACKUPS_STORE, { keyPath: 'id' });
-      }
+      if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(EVENTS_STORE)) db.createObjectStore(EVENTS_STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(PRESENCES_STORE)) db.createObjectStore(PRESENCES_STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(BACKUPS_STORE)) db.createObjectStore(BACKUPS_STORE, { keyPath: 'id' });
     };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
@@ -83,7 +82,6 @@ async function dbBulkPut(items) {
   });
 }
 
-// Generic DB helpers for events & presences
 async function dbGetAllFrom(storeName) {
   const db = await openDB();
   return new Promise((resolve, reject) => {
