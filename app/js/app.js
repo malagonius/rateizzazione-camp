@@ -52,7 +52,8 @@ function bindGlobalEvents() {
       visibilityHidden: false,
       eventId: null,
       eventWeeks: [],
-      purchases: []
+      purchases: [],
+      serviziAggiuntivi: []
     };
     state.people.push(newP);
     await dbPut(newP);
@@ -213,6 +214,16 @@ function bindGlobalEvents() {
   });
 
   // --- Tab navigation ---
+  document.getElementById('services-person-select').addEventListener('change', () => {
+    state.currentServicesPersonId = document.getElementById('services-person-select').value;
+    renderServicesTab();
+  });
+  document.getElementById('btn-add-service').addEventListener('click', addAdditionalService);
+  document.getElementById('services-list').addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-action="remove-service"]');
+    if (btn) await removeAdditionalService(btn.dataset.serviceId);
+  });
+
   document.querySelectorAll('#tab-nav button[data-tab]').forEach(btn => {
     btn.addEventListener('click', () => switchTab(btn.dataset.tab));
   });
@@ -377,6 +388,7 @@ async function init() {
       if (!Array.isArray(p.eventWeeks)) p.eventWeeks = [];
       if (p.eventIdManual === undefined) p.eventIdManual = false;
       normalizePersonPurchases(p);
+      if (syncPersonServiceInstallments(p)) await dbPut(p);
     });
     // Load events and presences
     state.events = await dbGetAllFrom(EVENTS_STORE);
