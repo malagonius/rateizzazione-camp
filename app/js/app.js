@@ -391,13 +391,14 @@ async function init() {
       syncPersonServiceInstallments(p);
     });
     // Load events and presences
+    const servicesChanged = state.people.some(p => syncPersonServiceInstallments(p));
     state.events = await dbGetAllFrom(EVENTS_STORE);
     state.presences = await dbGetAllFrom(PRESENCES_STORE);
 
     // Ensure static events exist and auto-assign people
     await ensureStaticEvents();
     await autoAssignAllPeopleToEvents();
-    if (syncAllPurchasesState()) await dbBulkPut(state.people);
+    if (servicesChanged || syncAllPurchasesState()) await dbBulkPut(state.people);
   } catch (err) {
     console.error('DB load error', err);
     toast('Errore caricamento dati: ' + err.message, 'error');
