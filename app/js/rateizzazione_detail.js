@@ -39,6 +39,7 @@ function renderDetail() {
 
   renderEventAssignment();
   renderDetailPurchases(p);
+  renderServicesSummary(p);
   renderInstallments();
   renderDetailSummary();
 }
