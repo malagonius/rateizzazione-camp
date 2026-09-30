@@ -112,7 +112,13 @@ function renderDetailSummary() {
   const due = visibleInstallments.reduce((sum, { inst }) => sum + num(inst.ipotesi), 0);
   const paid = visibleInstallments.reduce((sum, { inst }) => sum + num(inst.reale), 0);
   const residuo = due - paid;
-  const status = statusOf(p);
+  let status = 'unpaid';
+  if (due > 0 || paid > 0) {
+    if (paid <= 0) status = 'unpaid';
+    else if (paid >= due - 0.01 && paid <= due + 0.01) status = 'paid';
+    else if (paid > due) status = 'overpaid';
+    else status = 'partial';
+  }
   document.getElementById('sum-totale').textContent = fmtMoney(due);
   document.getElementById('sum-paid').textContent = fmtMoney(paid);
   document.getElementById('sum-residuo').textContent = fmtMoney(residuo);
