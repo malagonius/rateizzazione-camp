@@ -1075,3 +1075,15 @@
   border-radius:8px;
   background:var(--surface);
 }
+
+
+/* Searchable person selector */
+.searchable-select{position:relative;width:100%;min-width:260px}
+.searchable-select-native{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.searchable-select-input{width:100%;box-sizing:border-box;padding:8px 36px 8px 12px;font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text)}
+.searchable-select-input:focus,.searchable-select.open .searchable-select-input{outline:none;border-color:var(--primary);box-shadow:0 0 0 2px var(--blue-bg)}
+.searchable-select::after{content:'⌄';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.searchable-select-dropdown{position:absolute;z-index:1000;left:0;right:0;top:calc(100% + 4px);max-height:260px;overflow-y:auto;background:var(--surface);border:1px solid var(--border);border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:4px}
+.searchable-select-option{display:block;width:100%;padding:8px 10px;border:0;border-radius:4px;background:transparent;color:var(--text);text-align:left;font:inherit;cursor:pointer}
+.searchable-select-option:hover,.searchable-select-option.selected{background:var(--blue-bg)}
+.searchable-select-empty{padding:10px;color:var(--muted);font-size:13px}
