@@ -4,6 +4,7 @@
 
 function showDetail(id) {
   state.currentId = id;
+  state.detailPaymentTab = 'rateizzazione';
   document.getElementById('view-list').classList.add('hidden');
   document.getElementById('view-detail').classList.remove('hidden');
   document.getElementById('btn-back').classList.remove('hidden');
@@ -40,14 +41,31 @@ function renderDetail() {
   renderEventAssignment();
   renderDetailPurchases(p);
   renderServicesSummary(p);
+  renderDetailPaymentTabs();
   renderInstallments();
   renderDetailSummary();
+}
+
+function getDetailInstallments(person = getCurrent()) {
+  if (!person || !Array.isArray(person.installments)) return [];
+  const isServices = state.detailPaymentTab === 'servizi';
+  return person.installments
+    .map((inst, idx) => ({ inst, idx }))
+    .filter(({ inst }) => isServices ? inst.serviceBilling === true : inst.serviceBilling !== true);
+}
+
+function renderDetailPaymentTabs() {
+  const tabs = document.querySelectorAll('#detail-payment-tabs button');
+  tabs.forEach(button => {
+    button.classList.toggle('active', button.dataset.paymentTab === (state.detailPaymentTab || 'rateizzazione'));
+  });
 }
 
 function renderInstallments() {
   const p = getCurrent();
   const tbody = document.getElementById('installments-tbody');
-  tbody.innerHTML = p.installments.map((inst, idx) => {
+  const visibleInstallments = getDetailInstallments(p);
+  tbody.innerHTML = visibleInstallments.map(({ inst, idx }) => {
     const ipotesi = num(inst.ipotesi);
     const reale = num(inst.reale);
     const metodo = inst.metodo || '';
@@ -90,8 +108,9 @@ function isValidIBAN(iban) {
 
 function renderDetailSummary() {
   const p = getCurrent();
-  const due = getTotalDue(p);
-  const paid = totalPaid(p);
+  const visibleInstallments = getDetailInstallments(p);
+  const due = visibleInstallments.reduce((sum, { inst }) => sum + num(inst.ipotesi), 0);
+  const paid = visibleInstallments.reduce((sum, { inst }) => sum + num(inst.reale), 0);
   const residuo = due - paid;
   const status = statusOf(p);
   document.getElementById('sum-totale').textContent = fmtMoney(due);
@@ -226,6 +245,16 @@ function bindDetailEvents() {
     await persistCurrent();
   });
 
+  // Payment topic tabs
+  document.getElementById('detail-payment-tabs').addEventListener('click', (e) => {
+    const button = e.target.closest('[data-payment-tab]');
+    if (!button) return;
+    state.detailPaymentTab = button.dataset.paymentTab;
+    renderDetailPaymentTabs();
+    renderInstallments();
+    renderDetailSummary();
+  });
+
   // Installments table — delegate
   document.getElementById('installments-tbody').addEventListener('input', async (e) => {
     const tr = e.target.closest('tr[data-idx]');
@@ -234,6 +263,8 @@ function bindDetailEvents() {
     const field = e.target.dataset.field;
     const p = getCurrent();
     if (!p || !p.installments[idx]) return;
+    const visible = getDetailInstallments(p);
+    if (!visible.some(({ idx: visibleIdx }) => visibleIdx === idx)) return;
     let v = e.target.value;
     if (field === 'ipotesi' || field === 'reale') v = num(v);
     if (field === 'iban') v = String(v).toUpperCase();
@@ -260,6 +291,8 @@ function bindDetailEvents() {
     const idx = +tr.dataset.idx;
     const p = getCurrent();
     if (!p || !p.installments[idx]) return;
+    const visible = getDetailInstallments(p);
+    if (!visible.some(({ idx: visibleIdx }) => visibleIdx === idx)) return;
     p.installments[idx].metodo = e.target.value;
     if (e.target.value !== 'Bonifico') {
       p.installments[idx].iban = '';
@@ -274,6 +307,8 @@ function bindDetailEvents() {
     const tr = btn.closest('tr[data-idx]');
     const idx = +tr.dataset.idx;
     const p = getCurrent();
+    const visible = getDetailInstallments(p);
+    if (!visible.some(({ idx: visibleIdx }) => visibleIdx === idx)) return;
     if (!confirm(`Eliminare la rata "${p.installments[idx].label}"?`)) return;
     p.installments.splice(idx, 1);
     await persistCurrent();
@@ -292,7 +327,8 @@ function bindDetailEvents() {
       reale: 0,
       data: null,
       metodo: '',
-      iban: ''
+      iban: '',
+      serviceBilling: state.detailPaymentTab === 'servizi'
     });
     await persistCurrent();
     renderInstallments();
