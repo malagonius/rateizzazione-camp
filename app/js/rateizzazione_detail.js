@@ -63,9 +63,13 @@ function renderDetailPaymentTabs() {
 
 function renderInstallments() {
   const p = getCurrent();
-  const tbody = document.getElementById('installments-tbody');
-  const visibleInstallments = getDetailInstallments(p);
-  tbody.innerHTML = visibleInstallments.map(({ inst, idx }) => {
+  const renderTable = (tbodyId, isServices) => {
+    const tbody = document.getElementById(tbodyId);
+    if (!tbody) return;
+    const visibleInstallments = getDetailInstallments(p).filter(({ inst }) =>
+      isServices ? inst.serviceBilling === true : inst.serviceBilling !== true
+    );
+    tbody.innerHTML = visibleInstallments.map(({ inst, idx }) => {
     const ipotesi = num(inst.ipotesi);
     const reale = num(inst.reale);
     const metodo = inst.metodo || '';
@@ -96,7 +100,15 @@ function renderInstallments() {
         <td><button class="danger" data-action="del-inst" title="Elimina rata">✕</button></td>
       </tr>
     `;
-  }).join('');
+    }).join('');
+  };
+
+  renderTable('installments-tbody-rateizzazione', false);
+  renderTable('installments-tbody-servizi', true);
+
+  const isServices = state.detailPaymentTab === 'servizi';
+  document.getElementById('detail-payment-table-rateizzazione')?.classList.toggle('hidden', isServices);
+  document.getElementById('detail-payment-table-servizi')?.classList.toggle('hidden', !isServices);
 }
 
 // Basic IBAN validation: 2 letters + 2 digits + up to 30 alphanumeric chars
@@ -262,7 +274,7 @@ function bindDetailEvents() {
   });
 
   // Installments table — delegate
-  document.getElementById('installments-tbody').addEventListener('input', async (e) => {
+  document.getElementById('detail-payment-tables').addEventListener('input', async (e) => {
     const tr = e.target.closest('tr[data-idx]');
     if (!tr) return;
     const idx = +tr.dataset.idx;
@@ -290,7 +302,7 @@ function bindDetailEvents() {
   });
 
   // Handle metodo select change (needs change event for selects + re-render to show/hide IBAN)
-  document.getElementById('installments-tbody').addEventListener('change', async (e) => {
+  document.getElementById('detail-payment-tables').addEventListener('change', async (e) => {
     if (e.target.dataset.field !== 'metodo') return;
     const tr = e.target.closest('tr[data-idx]');
     if (!tr) return;
@@ -307,7 +319,7 @@ function bindDetailEvents() {
     renderInstallments();
   });
 
-  document.getElementById('installments-tbody').addEventListener('click', async (e) => {
+  document.getElementById('detail-payment-tables').addEventListener('click', async (e) => {
     const btn = e.target.closest('[data-action="del-inst"]');
     if (!btn) return;
     const tr = btn.closest('tr[data-idx]');
