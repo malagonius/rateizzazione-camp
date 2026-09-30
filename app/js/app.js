@@ -123,6 +123,18 @@ function bindGlobalEvents() {
     } catch (e) { /* ignore */ }
   });
 
+  // Rateizzazione payment topic tabs
+  const ratePaymentTabs = document.getElementById('rateizzazione-payment-tabs');
+  if (ratePaymentTabs) {
+    ratePaymentTabs.addEventListener('click', (e) => {
+      const button = e.target.closest('[data-rate-payment-tab]');
+      if (!button) return;
+      state.rateizzazionePaymentTab = button.dataset.ratePaymentTab;
+      renderRateizzazionePaymentTabs();
+      applyFilters();
+    });
+  }
+
   // Search & filter
   document.getElementById('search').addEventListener('input', (e) => {
     state.search = e.target.value;
