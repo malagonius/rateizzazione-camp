@@ -290,6 +290,35 @@ function exportExcel() {
 // ============================================================
 // LIST view rendering
 // ============================================================
+function getListPaymentInstallments(person, tab = state.rateizzazionePaymentTab || 'rateizzazione') {
+  if (!person || !Array.isArray(person.installments)) return [];
+  const isServices = tab === 'servizi';
+  return person.installments.filter(inst => isServices ? inst.serviceBilling === true : inst.serviceBilling !== true);
+}
+function getListPaymentTotals(person, tab = state.rateizzazionePaymentTab || 'rateizzazione') {
+  const installments = getListPaymentInstallments(person, tab);
+  const due = installments.reduce((sum, inst) => sum + num(inst.ipotesi), 0);
+  const paid = installments.reduce((sum, inst) => sum + num(inst.reale), 0);
+  return { due, paid, residuo: due - paid };
+}
+function getListPaymentStatus(person, tab = state.rateizzazionePaymentTab || 'rateizzazione') {
+  const { due, paid } = getListPaymentTotals(person, tab);
+  if (due <= 0 && paid <= 0) return 'unpaid';
+  if (paid <= 0) return 'unpaid';
+  if (paid >= due - 0.01 && paid <= due + 0.01) return 'paid';
+  if (paid > due) return 'overpaid';
+  return 'partial';
+}
+function getListNextUnpaidInstallment(person, tab = state.rateizzazionePaymentTab || 'rateizzazione') {
+  return getListPaymentInstallments(person, tab).find(i => !num(i.reale));
+}
+function renderRateizzazionePaymentTabs() {
+  const active = state.rateizzazionePaymentTab || 'rateizzazione';
+  document.querySelectorAll('#rateizzazione-payment-tabs button').forEach(button => {
+    button.classList.toggle('active', button.dataset.ratePaymentTab === active);
+  });
+}
+
 function applyFilters() {
   const q = state.search.trim().toLowerCase();
   let arr = state.people.filter(p => {
@@ -302,7 +331,7 @@ function applyFilters() {
         if (p.assistenza !== 'Si') return false;
       } else if (state.statusFilter === 'in_ritardo') {
         // Show people who have any unpaid installment with a past or missing date
-        const next = nextUnpaidInstallment(p);
+        const next = getListNextUnpaidInstallment(p);
         if (!next) return false; // fully paid, not late
         if (!next.data) return true; // no date set but unpaid → considered late
         const now = new Date();
@@ -322,17 +351,17 @@ function applyFilters() {
   arr.sort((a, b) => {
     let av, bv;
     switch (state.sortKey) {
-      case 'paid':    av = totalPaid(a); bv = totalPaid(b); break;
-      case 'residuo': av = num(a.totale) - totalPaid(a); bv = num(b.totale) - totalPaid(b); break;
-      case 'status':  av = statusOf(a); bv = statusOf(b); break;
+      case 'paid':    av = getListPaymentTotals(a).paid; bv = getListPaymentTotals(b).paid; break;
+      case 'residuo': av = num(a.totale) - getListPaymentTotals(a).paid; bv = num(b.totale) - getListPaymentTotals(b).paid; break;
+      case 'status':  av = getListPaymentStatus(a); bv = getListPaymentStatus(b); break;
       case 'prossima_rata': {
-        const na = nextUnpaidInstallment(a);
-        const nb = nextUnpaidInstallment(b);
+        const na = getListNextUnpaidInstallment(a);
+        const nb = getListNextUnpaidInstallment(b);
         av = na && na.data ? na.data : 'zzzz';
         bv = nb && nb.data ? nb.data : 'zzzz';
         break;
       }
-      case 'totale':  av = num(a.totale); bv = num(b.totale); break;
+      case 'totale':  av = getListPaymentTotals(a).due; bv = getListPaymentTotals(b).due; break;
       case 'telefono':av = a.telefono || ''; bv = b.telefono || ''; break;
       default:        av = (a.nome || '').toLowerCase(); bv = (b.nome || '').toLowerCase();
     }
@@ -361,10 +390,8 @@ function renderList() {
   empty.classList.add('hidden');
 
   const rowsHtml = state.filtered.map(p => {
-    const due = getTotalDue(p);
-    const paid = totalPaid(p);
-    const residuo = due - paid;
-    const status = statusOf(p);
+    const { due, paid, residuo } = getListPaymentTotals(p);
+    const status = getListPaymentStatus(p);
     
     // Row visibility is determined solely by its own state
     const isCensored = !!p.visibilityHidden;
@@ -397,7 +424,7 @@ function renderList() {
         <td class="num" style="color: var(--green);">${displayPaid}</td>
         <td class="num" style="color: ${residuo > 0.01 ? 'var(--red)' : 'var(--muted)'};">${displayResiduo}</td>
         <td>${(() => {
-          const next = nextUnpaidInstallment(p);
+          const next = getListNextUnpaidInstallment(p);
           if (!next) return '<span style="color:var(--muted);">—</span>';
           return next.data ? fmtDateDisplay(next.data) : `<span style="color:var(--orange, #e67e22);">${escapeHtml(next.label)}</span>`;
         })()}</td>
@@ -424,11 +451,11 @@ function renderList() {
 
 function renderStats() {
   const total = state.people.length;
-  const totalDue = state.people.reduce((s, p) => s + getTotalDue(p), 0);
-  const totalPaidAll = state.people.reduce((s, p) => s + totalPaid(p), 0);
+  const totalDue = state.people.reduce((s, p) => s + getListPaymentTotals(p).due, 0);
+  const totalPaidAll = state.people.reduce((s, p) => s + getListPaymentTotals(p).paid, 0);
   const totalResiduo = totalDue - totalPaidAll;
   const counts = { paid: 0, partial: 0, unpaid: 0, overpaid: 0 };
-  state.people.forEach(p => counts[statusOf(p)]++);
+  state.people.forEach(p => counts[getListPaymentStatus(p)]++);
 
   const hiddenAmount = '€ •••••••';
   const displayDue = state.amountsVisible ? fmtMoney(totalDue) : hiddenAmount;
