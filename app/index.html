@@ -140,20 +140,37 @@
         <button type="button" class="active" data-payment-tab="rateizzazione">📋 Rateizzazione</button>
         <button type="button" data-payment-tab="servizi">🧩 Servizi aggiuntivi</button>
       </div>
-      <div class="table-wrap">
-        <table class="installments-table">
-          <thead>
-            <tr>
-              <th>Rata</th>
-              <th class="num">Ipotesi (€)</th>
-              <th class="num">Pagato reale (€)</th>
-              <th>Data pagamento</th>
-              <th>Metodo di pagamento</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="installments-tbody"></tbody>
-        </table>
+      <div id="detail-payment-tables">
+        <div id="detail-payment-table-rateizzazione" class="table-wrap">
+          <table class="installments-table">
+            <thead>
+              <tr>
+                <th>Rata</th>
+                <th class="num">Ipotesi (€)</th>
+                <th class="num">Pagato reale (€)</th>
+                <th>Data pagamento</th>
+                <th>Metodo di pagamento</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="installments-tbody-rateizzazione"></tbody>
+          </table>
+        </div>
+        <div id="detail-payment-table-servizi" class="table-wrap hidden">
+          <table class="installments-table">
+            <thead>
+              <tr>
+                <th>Servizio / rata</th>
+                <th class="num">Ipotesi (€)</th>
+                <th class="num">Pagato reale (€)</th>
+                <th>Data pagamento</th>
+                <th>Metodo di pagamento</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="installments-tbody-servizi"></tbody>
+          </table>
+        </div>
       </div>
       <div style="margin-top: 12px;">
         <button id="btn-add-installment" class="ghost">➕ Aggiungi rata</button>
