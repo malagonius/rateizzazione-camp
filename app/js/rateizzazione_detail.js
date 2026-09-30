@@ -46,9 +46,9 @@ function renderDetail() {
   renderDetailSummary();
 }
 
-function getDetailInstallments(person = getCurrent()) {
+function getDetailInstallments(person = getCurrent(), tab = state.detailPaymentTab) {
   if (!person || !Array.isArray(person.installments)) return [];
-  const isServices = state.detailPaymentTab === 'servizi';
+  const isServices = tab === 'servizi';
   return person.installments
     .map((inst, idx) => ({ inst, idx }))
     .filter(({ inst }) => isServices ? inst.serviceBilling === true : inst.serviceBilling !== true);
@@ -66,9 +66,7 @@ function renderInstallments() {
   const renderTable = (tbodyId, isServices) => {
     const tbody = document.getElementById(tbodyId);
     if (!tbody) return;
-    const visibleInstallments = getDetailInstallments(p).filter(({ inst }) =>
-      isServices ? inst.serviceBilling === true : inst.serviceBilling !== true
-    );
+    const visibleInstallments = getDetailInstallments(p, isServices ? 'servizi' : 'rateizzazione');
     tbody.innerHTML = visibleInstallments.map(({ inst, idx }) => {
     const ipotesi = num(inst.ipotesi);
     const reale = num(inst.reale);
