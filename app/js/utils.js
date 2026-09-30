@@ -118,6 +118,89 @@ function nextUnpaidInstallment(person) {
 
 const STATUS_LABEL = CAMP_UTILS.statusLabels;
 
+
+// ============================================================
+// Searchable person selector (Select2-style, dependency-free)
+// ============================================================
+function setupSearchableSelect(selectId, placeholder = 'Cerca bambino/a...') {
+  const select = document.getElementById(selectId);
+  if (!select) return;
+  let wrapper = select.parentElement?.querySelector('.searchable-select');
+  if (!wrapper) {
+    wrapper = document.createElement('div');
+    wrapper.className = 'searchable-select';
+    select.parentElement.insertBefore(wrapper, select);
+    wrapper.appendChild(select);
+    select.classList.add('searchable-select-native');
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'searchable-select-input';
+    input.placeholder = placeholder;
+    input.autocomplete = 'off';
+    input.setAttribute('aria-label', placeholder);
+
+    const dropdown = document.createElement('div');
+    dropdown.className = 'searchable-select-dropdown';
+    dropdown.hidden = true;
+    wrapper.appendChild(input);
+    wrapper.appendChild(dropdown);
+
+    const close = () => {
+      dropdown.hidden = true;
+      wrapper.classList.remove('open');
+    };
+
+    const render = () => {
+      const query = input.value.trim().toLocaleLowerCase('it');
+      const options = Array.from(select.options).filter(option =>
+        !query || option.textContent.toLocaleLowerCase('it').includes(query)
+      );
+      dropdown.innerHTML = options.length
+        ? options.map(option => '<button type="button" class="searchable-select-option' +
+            (option.value === select.value ? ' selected' : '') +
+            '" data-value="' + escapeHtml(option.value) + '">' +
+            escapeHtml(option.textContent) + '</button>').join('')
+        : '<div class="searchable-select-empty">Nessun risultato</div>';
+
+      dropdown.querySelectorAll('.searchable-select-option').forEach(option => {
+        option.addEventListener('click', () => {
+          select.value = option.dataset.value;
+          input.value = select.options[select.selectedIndex]?.textContent || '';
+          close();
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      });
+    };
+
+    input.addEventListener('focus', () => {
+      input.select();
+      render();
+      dropdown.hidden = false;
+      wrapper.classList.add('open');
+    });
+    input.addEventListener('input', () => {
+      render();
+      dropdown.hidden = false;
+      wrapper.classList.add('open');
+    });
+    input.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        input.value = select.options[select.selectedIndex]?.textContent || '';
+        close();
+      }
+    });
+    document.addEventListener('click', event => {
+      if (!wrapper.contains(event.target)) close();
+    });
+    wrapper._searchInput = input;
+  }
+  wrapper._searchInput.value = select.options[select.selectedIndex]?.textContent || '';
+  if (wrapper._searchInput.value) {
+    wrapper._searchInput.placeholder = placeholder;
+  }
+}
+
 function toast(msg, type = '') {
   const t = document.getElementById('toast');
   t.textContent = msg;
