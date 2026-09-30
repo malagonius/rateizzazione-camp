@@ -294,6 +294,7 @@ function renderPurchasePersonSelect() {
   select.innerHTML = state.people.slice().sort((a, b) => (a.nome || '').localeCompare(b.nome || '', 'it'))
     .map(person => `<option value="${escapeHtml(person.id)}" ${person.id === state.currentPurchasePersonId ? 'selected' : ''}>${escapeHtml(person.nome || 'Senza nome')}</option>`).join('');
 }
+  setupSearchableSelect('purchase-person-select');
 
 function formatPurchaseWeekLabel(event, week) {
   if (!event || !event.startDate) return `S${week}`;
