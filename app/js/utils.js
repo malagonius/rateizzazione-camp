@@ -125,7 +125,9 @@ const STATUS_LABEL = CAMP_UTILS.statusLabels;
 function setupSearchableSelect(selectId, placeholder = 'Cerca bambino/a...') {
   const select = document.getElementById(selectId);
   if (!select) return;
-  let wrapper = select.parentElement?.querySelector('.searchable-select');
+  let wrapper = select.parentElement?.classList.contains('searchable-select')
+    ? select.parentElement
+    : select.parentElement?.querySelector('.searchable-select');
   if (!wrapper) {
     wrapper = document.createElement('div');
     wrapper.className = 'searchable-select';
@@ -151,8 +153,8 @@ function setupSearchableSelect(selectId, placeholder = 'Cerca bambino/a...') {
       wrapper.classList.remove('open');
     };
 
-    const render = () => {
-      const query = input.value.trim().toLocaleLowerCase('it');
+    const render = (filter = input.value) => {
+      const query = filter.trim().toLocaleLowerCase('it');
       const options = Array.from(select.options).filter(option =>
         !query || option.textContent.toLocaleLowerCase('it').includes(query)
       );
@@ -175,7 +177,7 @@ function setupSearchableSelect(selectId, placeholder = 'Cerca bambino/a...') {
 
     input.addEventListener('focus', () => {
       input.select();
-      render();
+      render('');
       dropdown.hidden = false;
       wrapper.classList.add('open');
     });
