@@ -39,6 +39,8 @@ const state = {
   currentEventId: null,
   currentWeek: 1,
   activeTab: 'rateizzazione',
+  rateizzazionePaymentTab: 'rateizzazione',
+  detailPaymentTab: 'rateizzazione',
   eventSubView: 'groups'
 };
 
