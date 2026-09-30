@@ -243,6 +243,8 @@ function renderServicesTab() {
     .map(p => `<option value="${escapeHtml(p.id)}" ${p.id === currentId ? 'selected' : ''}>${escapeHtml(p.nome)}</option>`)
     .join('');
 
+  setupSearchableSelect('services-person-select');
+
   const person = state.people.find(p => p.id === currentId);
   if (!person) {
     list.innerHTML = '<div class="empty">Nessuna persona.</div>';
